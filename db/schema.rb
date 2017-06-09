@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608221145) do
+ActiveRecord::Schema.define(version: 20170609214048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 20170608221145) do
     t.string "state"
     t.string "zip"
     t.string "password_digest"
-    t.boolean "is_admin?"
-    t.boolean "is_manager?"
+    t.boolean "is_admin?", default: false
+    t.boolean "is_manager?", default: false
     t.integer "position_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

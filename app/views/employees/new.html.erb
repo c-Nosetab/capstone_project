@@ -1,8 +1,7 @@
-<%= link_to 'Home', "/employees" %>
 
 <h1>Add New Employee</h1>
 
-<%= form_tag '/employees', method: :get do %>
+<%= form_tag '/employees', method: :post do %>
   <div>
     <h2>First Name: <input type="text" name="first_name"></h2>
   </div>
@@ -31,12 +30,20 @@
     <h2>Zipcode: <input type="text" name="zip"></h2>
   </div>
   <div>
-  <h2>Position:
-    <select value="position_id">
-      <% Position.all.each do |pos| %>
-        <option value="pos.id"><%= pos.position_name %></option>
-      <% end %>
-    </select></h2>
+    <h2>Position:</h2>
+    <h4>Admin rights: <input id="pet_dog" name="is_admin?" type="checkbox" value="true" /></h4>
+
+    <h4>Manager: <input id="pet_dog" name="is_manager?" type="checkbox" value="true" /></h4>
+  </div>
+  <div>
+
+
+    <% Position.all.each do |pos| %>
+      <input id="position_id" name="position_id" type="radio" value="<%= pos.id %>" />
+      <label for="position_id"><%= pos.position_name %></label>
+
+    <% end %>
+
   </div>
   <br>
   <input type="submit" value="Add Employee">

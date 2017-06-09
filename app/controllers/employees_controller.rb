@@ -2,28 +2,34 @@ class EmployeesController < ApplicationController
 
   def index
     @employees = Employee.all
+
+    sort = params[:sort]
+
+    if sort
+      @employees = Employee.where(position_id: sort)
+    end
+
   end
 
   def new
   end
 
   def create
+
     employee = Employee.new(
-                                first_name: params[:first_name],
-                                last_name: params[:last_name],
-                                address: params[:address],
-                                address2: params[:address2],
-                                city: params[:city],
-                                state: params[:state],
-                                zip: params[:zip],
-                                password: params[:password],
-                                password_digest: params[:password_digest],
-                                is_admin?: params[:admin],
-                                is_manager?: params[:manager],
-                                position: params[:position],
-                                phone: params[:phone],
-                                email: params[:email]
-                                )
+                            first_name: params[:first_name],
+                            last_name: params[:last_name],
+                            address: params[:address],
+                            address2: params[:address2],
+                            city: params[:city],
+                            state: params[:state],
+                            zip: params[:zip],
+                            is_admin?: params[:is_admin?],
+                            is_manager?: params[:is_manager?],
+                            position_id: params[:position_id],
+                            phone: params[:phone],
+                            email: params[:email]
+                            )
     if employee.save
       flash[:success] = "Employee Created"
       redirect_to "/employees/#{employee.id}"
@@ -52,11 +58,9 @@ class EmployeesController < ApplicationController
                                city: params[:city],
                                state: params[:state],
                                zip: params[:zip],
-                               password: params[:password],
-                               password_digest: params[:password_digest],
-                               is_admin?: params[:admin],
-                               is_manager?: params[:manager],
-                               position: params[:position],
+                               is_admin?: params[:is_admin?],
+                               is_manager?: params[:is_manager?],
+                               position_id: params[:position_id],
                                phone: params[:phone],
                                email: params[:email]
                               )
@@ -67,9 +71,13 @@ class EmployeesController < ApplicationController
 
   def destroy
     employee = Employee.find(params[:id])
-    employee.delete
 
-    redirect_to '/'
+    if employee.delete
+      flash[:success] = "Employee Successfully Deleted"
+      redirect_to '/employees'
+    else
+      flash[:warning] = "Something went wrong there. Try again."
+    end
   end
 
 

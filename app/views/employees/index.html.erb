@@ -1,6 +1,12 @@
-<%= link_to "Add Employee", '/employees/new' %>
 
 <h1>Employee Info for <%= @employees.first.position.company.name %></h1>
+
+<div>
+  Sort by:
+  <% Position.all.each do |pos|%>
+    <a href="/employees?sort=<%= pos.id %>"><%= pos.position_name %></a>
+  <% end %>
+</div>
 
 <% @employees.each do |employee| %>
   <div class="employee" style="line-height: 12px">
@@ -15,6 +21,8 @@
         <li><%= "#{employee.city}, #{employee.state} #{employee.zip}" %></li>
       </ul>
     </div>
+    manager <%= employee.is_manager? %>
+    admin <%= employee.is_admin? %>
   </div>
   <hr>
 

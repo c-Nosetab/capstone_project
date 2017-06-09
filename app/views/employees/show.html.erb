@@ -1,5 +1,4 @@
 
-<%= link_to 'Home', "/employees" %>
 
 
 <h1>Employee Info</h1>
@@ -16,4 +15,15 @@
         <li><%= "#{@employee.city}, #{@employee.state} #{@employee.zip}" %></li>
       </ul>
     </div>
+  </div>
+
+  A: <%= @employee.is_admin? %> |
+  M: <%= @employee.is_manager? %> |
+
+  <br>
+  <br>
+
+  <div>
+    <%= link_to "Edit", "/employees/#{@employee.id}/edit" %> |
+    <%= link_to "Delete", "/employees/#{@employee.id}", method: :delete %>
   </div>
