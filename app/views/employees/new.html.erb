@@ -1,0 +1,43 @@
+<%= link_to 'Home', "/employees" %>
+
+<h1>Add New Employee</h1>
+
+<%= form_tag '/employees', method: :get do %>
+  <div>
+    <h2>First Name: <input type="text" name="first_name"></h2>
+  </div>
+  <div>
+    <h2>Last Name: <input type="text" name="last_name"></h2>
+  </div>
+  <div>
+      <h2>Phone: <input type="text" name="phone"></h2>
+  </div>
+  <div>
+    <h2>Email: <input type="text" name="Email"></h2>
+  </div>
+  <div>
+    <h2>Address: <input type="text" name="address"></h2>
+  </div>
+  <div>
+    <h2>Address (apt/po): <input type="text" name="first_name"></h2>
+  </div>
+  <div>
+    <h2>City: <input type="text" name="city"></h2>
+  </div>
+  <div>
+    <h2>State: <input type="text" name="state"></h2>
+  </div>
+  <div>
+    <h2>Zipcode: <input type="text" name="zip"></h2>
+  </div>
+  <div>
+  <h2>Position:
+    <select value="position_id">
+      <% Position.all.each do |pos| %>
+        <option value="pos.id"><%= pos.position_name %></option>
+      <% end %>
+    </select></h2>
+  </div>
+  <br>
+  <input type="submit" value="Add Employee">
+<% end %>
