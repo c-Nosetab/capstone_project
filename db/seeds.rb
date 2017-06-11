@@ -8,23 +8,18 @@
 
 
 Company.create!(
-                name: "Bateson's Bistro",
-                phone: "586-365-9999",
+                name: "Devine Deli",
+                phone: "123-456-7890",
                 address: Faker::Address.street_address,
                 address2: Faker::Address.secondary_address,
                 city: Faker::Address.city,
                 state: Faker::Address.state,
                 zip: Faker::Address.zip_code,
-                unique_code: "abcde"
+                unique_code: "12345"
                 )
 
 Position.create!(
                  position_name: "Server",
-                 company_id: 1
-                )
-
-Position.create!(
-                 position_name: "Manager",
                  company_id: 1
                 )
 
@@ -50,8 +45,11 @@ Position.create!(
                  company_id: 1
                 )
 
+array = []
 
-10.times do
+Position.all.each {|pos| array << pos.id}
+
+30.times do
 
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
@@ -66,8 +64,10 @@ Position.create!(
                     city: Faker::Address.city,
                     state: Faker::Address.state,
                     zip: Faker::Address.zip_code,
-                    position_id: rand(1..6),
-                    phone: Faker::PhoneNumber.phone_number
+                    position_id: array.sample,
+                    phone: Faker::PhoneNumber.phone_number,
+                    company_id: 2,
+                    password: "password"
     )
 
 

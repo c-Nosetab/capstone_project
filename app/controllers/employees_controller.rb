@@ -1,7 +1,14 @@
 class EmployeesController < ApplicationController
+  before_action :authenticate_user!
 
   def index
-    @employees = Employee.all
+
+    if current_user.is_admin?
+      @employees = Employee.where(company_id: current_user.company_id)
+    else
+      company = Employee.where(company_id: current_user.company_id)
+      @employees = company.where(position_id: current_user.position_id)
+    end
 
     sort = params[:sort]
 

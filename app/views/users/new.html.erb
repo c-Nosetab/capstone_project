@@ -1,0 +1,31 @@
+<h1>Signup Form</h1>
+
+<%= form_tag '/users', method: :post do %>
+  <div>
+    <%= label_tag :first_name %>
+    <%= text_field_tag :first_name %>
+  </div>
+  <div>
+    <%= label_tag :last_name %>
+    <%= text_field_tag :last_name %>
+  </div>
+  <div>
+    <%= label_tag :email %>
+    <%= email_field_tag :email %>
+  </div>
+  <div>
+    <%= label_tag :password %>
+    <%= password_field_tag :password %>
+  </div>
+  <div>
+    <%= label_tag :password_confirmation %>
+    <%= password_field_tag :password_confirmation %>
+  </div>
+
+  Position: <input type="text" name="position_id" value="<%= params[:pos_id] %>"> (placeholder until email code thing works | should use ?id=number in url)
+  Company ID: <input type="text" name="company_id" value="<%= params[:company_id] %>"> (placeholder until email code thing works | should use ?Com=string in url)
+
+  <br>
+
+  <%= submit_tag "Sign Up" %>
+<% end %>

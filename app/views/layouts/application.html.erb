@@ -10,6 +10,13 @@
 
   <body>
     <a href="/employees">Home</a> <a href="/employees/new">Add Employee</a>
+    <% if current_user %>
+      Logged in as: <a href="/employees/<%= current_user.id %>"><%= "#{current_user.first_name} #{current_user.last_name}" %></a>
+      <%= link_to "Log Out", "/logout" %>
+    <% else %>
+      <a href="/login">Login</a> <a href="/signup">Sign Up</a>
+    <% end %>
+
 
     <% flash.each do |name, message| %>
 
