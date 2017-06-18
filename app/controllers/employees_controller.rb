@@ -6,14 +6,14 @@ class EmployeesController < ApplicationController
     if current_user.is_admin?
       @employees = Employee.where(company_id: current_user.company_id)
     else
-      company = Employee.where(company_id: current_user.company_id)
+      company = Employee.where(company_id: current_user.company_id, )
       @employees = company.where(position_id: current_user.position_id)
     end
 
     sort = params[:sort]
 
     if sort
-      @employees = Employee.where(position_id: sort)
+      @employees = Employee.where(position_id: sort, company_id: current_user.company_id)
     end
 
   end
@@ -23,21 +23,21 @@ class EmployeesController < ApplicationController
 
   def create
 
+    unless current_user.is_admin?
+      redirect_to '/employees'
+    end
+
     employee = Employee.new(
                             first_name: params[:first_name],
                             last_name: params[:last_name],
-                            address: params[:address],
-                            address2: params[:address2],
-                            city: params[:city],
-                            state: params[:state],
-                            zip: params[:zip],
+                            password: "#{params[:last_name]}123",
                             is_admin?: params[:is_admin?],
                             is_manager?: params[:is_manager?],
                             position_id: params[:position_id],
-                            phone: params[:phone],
-                            email: params[:email]
+                            email: params[:email],
+                            company_id: current_user.company_id.to_i
                             )
-    if employee.save
+    if employee.save!
       flash[:success] = "Employee Created"
       redirect_to "/employees/#{employee.id}"
     else
@@ -53,11 +53,13 @@ class EmployeesController < ApplicationController
 
   def edit
     @employee = Employee.find(params[:id])
+    @positions = Position.where(company_id: current_user.company_id)
   end
 
   def update
     employee = Employee.find(params[:id])
-    employee.assign_attributes(
+    if current_user.id == employee.id
+      employee.assign_attributes(
                                first_name: params[:first_name],
                                last_name: params[:last_name],
                                address: params[:address],
@@ -71,7 +73,15 @@ class EmployeesController < ApplicationController
                                phone: params[:phone],
                                email: params[:email]
                               )
-    employee.save
+    elsif current_user.is_admin? && current_user.id != employee.id
+      employee.assign_attributes(
+                               is_admin?: params[:is_admin?],
+                               is_manager?: params[:is_manager?],
+                               position_id: params[:position_id],
+                               email: params[:email]
+                              )
+    end
+      employee.save!
 
     redirect_to "/employees/#{employee.id}"
   end

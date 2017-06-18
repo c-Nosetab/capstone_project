@@ -1,0 +1,30 @@
+<h1>Signup</h1>
+
+<%= form_tag '/companies', method: :post do %>
+  <h1>Your information:</h1>
+  <div>
+    Company Name: <input type="text" name="name">
+  </div>
+  <div>
+    First Name: <input type="text" name="first_name">
+  </div>
+  <div>
+    Last Name: <input type="text" name="last_name">
+  </div>
+  <div>
+    Email: <input type="text" name="email">
+  </div>
+  <br>
+  <div>
+    Password: <input type="text" name="password">
+  </div>
+  <div>
+    Re-enter Password: <input type="text" name="password_confirmation">
+  </div>
+  <br>
+
+  <h2>Company Information:</h2>
+
+  <input type="submit" value="Create Account">
+
+<% end %>

@@ -1,11 +1,14 @@
 class Employee < ApplicationRecord
   has_secure_password
+validates :email, presence: true
+  # validates :email, uniqueness: true
 
   has_many :employees_shifts
   has_many :shifts, through: :employees_shifts
   has_many :availabilities
 
-  belongs_to :position
+  belongs_to :position, optional: true
+  belongs_to :company
 
 
 

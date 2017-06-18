@@ -1,0 +1,74 @@
+<h1>Create a New Shift</h1>
+<hr>
+<%= form_tag '/shifts', method: :post do %>
+   Date of Shift:
+   <br>
+   Month:
+  <select name="month_start">
+    <% (1..12).each do |month| %>
+      <option <%= "selected" if month == Time.now.month %>> <%= month %></option>
+    <% end %>
+  </select>
+  Day:
+  <select name="day_start">
+    <% (1..31).each do |day| %>
+      <option <%= "selected" if day == Time.now.day %> > <%= day %> </option>
+    <% end %>
+  </select>
+  Year:
+  <select name="year_start">
+    <% ((Time.now.year)..(Time.now.year + 5)).each do |year| %>
+      <option><%= year %></option>
+    <% end %>
+  </select>
+  <br><br>
+
+  Time:
+  <div>
+    <select name="hour_start">
+      <%= (0..23).each do |hour| %>
+        <option <%= "selected" if hour == 8 %>><%= hour %></option>
+      <% end %>
+    </select>
+    :
+    <select name="min_start">
+      <%= (00..59).each do |min| %>
+        <option><%= min %></option>
+      <% end %>
+    </select>
+      ---
+    <select name="hour_end">
+      <%= (0..23).each do |hour| %>
+        <option <%= "selected" if hour == 16 %>><%= hour %></option>
+      <% end %>
+    </select>
+    :
+    <select name="min_end">
+      <%= (00..59).each do |min| %>
+        <option><%= min %></option>
+      <% end %>
+    </select>
+
+  </div>
+  <div>
+
+  </div>
+
+  <h2>Shift is for which positions:</h2>
+
+  <div>
+    <select name="position">
+      <% @positions.each do |pos| %>
+        <option value="<%= pos.id %>"><%= pos.position_name %></option>
+      <% end %>
+    </select>
+    -- How Many: <input type="text" name="quantity"></p>
+  </div>
+
+  <br>
+  <%= submit_tag "Submit" %>
+
+<% end %>
+
+
+

@@ -1,0 +1,30 @@
+<h1>Edit Company Info:</h1>
+
+<%= form_tag '/company' do %>
+  <h2>Company Information:</h2>
+  <div>
+    Name: <input type="text" name="name" value="<%= company.name %>">
+  </div>
+  <div>
+    Phone: <input type="text" name="phone" value="<%= company.phone %>">
+  </div>
+  <div>
+    Address: <input type="text" name="address" value="<%= company.address %>">
+  </div>
+  <div>
+    Address 2: <input type="text" name="address2" value="<%= company.address2 %>">
+  </div>
+  <div>
+    City: <input type="text" name="city" value="<%= company.city %>">
+  </div>
+  <div>
+    State: <input type="text" name="state" value="<%= company.state %>">
+  </div>
+  <div>
+    Zipcode: <input type="text" name="zip" value="<%= company.zip %>">
+  </div>
+  <br>
+
+  <input type="submit" value="Edit Info">
+
+<% end %>

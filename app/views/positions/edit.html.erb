@@ -1,0 +1,5 @@
+<h1>Edit Position:</h1>
+<%= form_tag "/positions/#{@position.id}", method: :patch do %>
+  <input type="text" name="position_name" value="<%= @position.position_name %>">
+  <input type="submit" value="Update Position Name">
+<% end %>

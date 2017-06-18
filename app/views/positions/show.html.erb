@@ -1,20 +1,13 @@
 
-<h1>Employee Info for <%= Company.find(current_user.company_id).name %></h1>
-
-<div>
-  Sort by:
-  <% Position.where(company_id: current_user.company_id).each do |pos|%>
-    <a href="/employees?sort=<%= pos.id %>"><%= pos.position_name %></a>
-  <% end %>
-</div>
+<h1><%= @position.position_name %> List:</h1>
+<h4><a href="/positions/<%= @position.id %>/edit">Edit Position Name</a></h4>
+<hr>
 
 <% @employees.each do |employee| %>
   <div class="employee" style="line-height: 12px">
+    <h4><%= employee.company.name %></h4>
     <h2><a href="/employees/<%= employee.id %>">Name: <%= "#{employee.first_name} #{employee.last_name}" %></a></h2>
-
-    <% if current_user.position_id %>
-      <h2>Position: <%= employee.manager? %> <%= employee.position.position_name %></h2>
-    <% end %>
+    <h2>Position: <%= employee.manager? %> <%= employee.position.position_name %></h2>
     <h3>Email: <%= employee.email %></h3>
     <h3>Phone: <%= employee.phone %></h3>
     <h3>Address</h3>
