@@ -18,7 +18,7 @@ class ShiftsController < ApplicationController
     shift = Shift.new(
                       day_of_week: date.strftime('%A').downcase,
                       time_start: date,
-                      time_end: Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_end], params[:min_end]),
+                      time_end: Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_end], params[:min_end]).ne,
                       title: params[:title],
                       is_recurring?: params[:is_recurring?],
                       date: date,
@@ -48,12 +48,13 @@ class ShiftsController < ApplicationController
 
   def show
     @shift = Shift.find(params[:id])
-    @positions = @shift.position_shifts
+    @shift_positions = @shift.position_shifts
+    @positions = Position.where(company_id: current_user.company_id)
     @employees = []
 
     Employee.where(company_id: current_user.company_id).each do |emp|
       emp.availabilities.each do |avail|
-        if avail.day_of_week == @shift.day_of_week && avail.time_start < @shift.time_start && avail.time_end > @shift.time_end
+        if avail.day_of_week == @shift.day_of_week && avail.time_start <= @shift.time_start && avail.time_end >= @shift.time_end
           @employees << emp
         end
       end

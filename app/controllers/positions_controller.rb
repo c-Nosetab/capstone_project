@@ -1,5 +1,5 @@
 class PositionsController < ApplicationController
-
+  before_action :authenticate_user!
 
   def index
     @positions = Position.where(company_id: current_user.company_id)

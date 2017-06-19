@@ -16,5 +16,25 @@ class Shift < ApplicationRecord
     end
   end
 
+  def assigned_ids
+    ids = []
+
+    employees.each do |employee|
+      ids << employee.id
+    end
+
+    ids
+  end
+
+  def position_ids
+    pos_ids = []
+
+    positions.each do |position|
+      pos_ids << position.id
+    end
+
+    pos_ids
+  end
+
 
 end

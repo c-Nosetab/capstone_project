@@ -7,4 +7,5 @@ class Position < ApplicationRecord
 
 
 
+
 end

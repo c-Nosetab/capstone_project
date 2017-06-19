@@ -33,3 +33,11 @@
     <%= link_to "Edit", "/employees/#{@employee.id}/edit" %>
     <%= link_to "Delete", "/employees/#{@employee.id}", method: :delete %>
   </div>
+
+<h2>Upcoming Shifts:</h2>
+<hr>
+<ul>
+  <% @employee.shifts.each do |shift| %>
+   <li><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d') %> -- <%= shift.time_start.localtime.strftime('%I:%M %p') %> -- <%= shift.time_end.localtime.strftime('%I:%M %p') %></li>
+  <% end %>
+</ul>

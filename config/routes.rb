@@ -40,6 +40,12 @@ Rails.application.routes.draw do
   patch '/shifts/:id' => 'shifts#update'
   delete '/shifts/:id' => 'shifts#destroy'
 
+  post '/employee_shifts' => 'employee_shifts#create'
+  delete '/employee_shifts/:id' => 'employee_shifts#destroy'
+
+  post '/position_shifts' => 'position_shifts#create'
+  delete '/position_shifts/:id' => 'position_shifts#destroy'
+
   get '/employee_signup' => 'users#new'
   post '/users' => 'users#create'
 

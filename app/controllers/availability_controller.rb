@@ -10,8 +10,8 @@ class AvailabilityController < ApplicationController
 
   def create
 
-    date_start = Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start] ).localtime
-    date_end = Time.local(params[:year_end], params[:month_end], params[:day_end], params[:hour_end], params[:min_end] ).localtime
+    date_start = Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start] )
+    date_end = Time.local(params[:year_end], params[:month_end], params[:day_end], params[:hour_end], params[:min_end] )
 
     availability = Availability.new(
                                     day_of_week: params[:day_of_week].downcase,
@@ -41,8 +41,8 @@ class AvailabilityController < ApplicationController
   def update
     availability = Availability.find(params[:id])
 
-    date_start = Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start] ).localtime
-    date_end = Time.local(params[:year_end], params[:month_end], params[:day_end], params[:hour_end], params[:min_end] ).localtime
+    date_start = Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start] )
+    date_end = Time.local(params[:year_end], params[:month_end], params[:day_end], params[:hour_end], params[:min_end] )
 
     availability.assign_attributes(
                                    day_of_week: params[:day_of_week].downcase,

@@ -1,10 +1,10 @@
 class Employee < ApplicationRecord
   has_secure_password
-validates :email, presence: true
+  validates :email, presence: true
   # validates :email, uniqueness: true
 
-  has_many :employees_shifts
-  has_many :shifts, through: :employees_shifts
+  has_many :employee_shifts
+  has_many :shifts, through: :employee_shifts
   has_many :availabilities
 
   belongs_to :position, optional: true
@@ -35,6 +35,10 @@ validates :email, presence: true
     if position_id == pos_id
       "checked=\"checked\""
     end
+  end
+
+  def find_shift_assign(shift_id)
+    EmployeeShift.find_by(employee_id: id, shift_id: shift_id).id
   end
 
 end
