@@ -14,9 +14,9 @@
       <%= link_to "Log Out", "/logout" %>
       <br>
       <br>
-      <a href="/employees">See Employees</a> | <a href="/shifts">See Shifts</a> | <a href="/positions">See Positions</a> ----
+      <a href="/employees">See Employees</a> | <a href="/shifts">See Shifts</a> | <a href="/positions">See Positions</a> | <a href="/availability">See Availability</a>
       <% if current_user.is_admin? %>
-        <a href="/employees/new">Add Employee</a> | <a href="/shifts/new">Add Shift</a> | <a href="/positions/new">Add Position</a>
+        ---- <a href="/employees/new">Add Employee</a> | <a href="/shifts/new">Add Shift</a> | <a href="/positions/new">Add Position</a>
       <% end %>
     <% else %>
       <a href="/login">Login</a> <a href="/signup">Sign Up</a>

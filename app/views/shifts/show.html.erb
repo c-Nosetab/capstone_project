@@ -9,10 +9,18 @@
     <h2><%= pos.quantity %> - <%= pos.position.position_name %>:</h2>
     <% pos.quantity.times do %>
       <select>
-        <% Employee.where(position_id: pos.position.id, company_id: current_user.company_id).each do |emp| %>
-          <option><%= "#{emp.first_name} #{emp.last_name} - #{emp.position.position_name}" %></option>
+        <% @employees.each do |emp| %>
+          <% if emp.position_id == pos.position.id %>
+            <option><%= "#{emp.first_name} #{emp.last_name} - #{emp.position.position_name}" %></option>
+
+          <% end %>
         <% end %>
       </select>
       <br>
     <% end %>
   <% end %>
+
+<br>
+<div>
+  <%= link_to "Delete Shift", "/shifts/#{@shift.id}", method: :delete %>
+<

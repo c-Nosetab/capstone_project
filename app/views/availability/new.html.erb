@@ -1,0 +1,90 @@
+<h1>
+Set Availability:
+
+</h1>
+<hr>
+
+
+<%= form_tag "/availability", method: :post do %>
+
+  <h3>Day of Week:</h3>
+  <select name="day_of_week">
+     <option>Monday</option>
+     <option>Tuesday</option>
+     <option>Wednesday</option>
+     <option>Thursday</option>
+     <option>Friday</option>
+     <option>Saturday</option>
+     <option>Sunday</option>
+  </select>
+  <br>
+  <h3>Time:</h3>
+  <select name="hour_start">
+    <%= (0..23).each do |hour| %>
+      <option <%= "selected" if hour == 8 %>><%= hour %></option>
+    <% end %>
+  </select>
+  :
+  <select name="min_start">
+    <%= (00..59).each do |min| %>
+      <option><%= min %></option>
+    <% end %>
+  </select>
+    ---
+  <select name="hour_end">
+    <%= (0..23).each do |hour| %>
+      <option <%= "selected" if hour == 16 %>><%= hour %></option>
+    <% end %>
+  </select>
+  :
+  <select name="min_end">
+    <%= (00..59).each do |min| %>
+      <option><%= min %></option>
+    <% end %>
+  </select>
+
+  <h3>Dates Effective:</h3>
+
+   Month:
+  <select name="month_start">
+    <% (1..12).each do |month| %>
+      <option <%= "selected" if month == Time.now.month %>> <%= month %></option>
+    <% end %>
+  </select>
+  Day:
+  <select name="day_start">
+    <% (1..31).each do |day| %>
+      <option <%= "selected" if day == Time.now.day %> > <%= day %> </option>
+    <% end %>
+  </select>
+  Year:
+  <select name="year_start">
+    <% ((Time.now.year)..(Time.now.year + 5)).each do |year| %>
+      <option><%= year %></option>
+    <% end %>
+  </select>
+
+  <h4>- until -</h4>
+
+   Month:
+  <select name="month_end">
+    <% (1..12).each do |month| %>
+      <option <%= "selected" if month == Time.now.month %>> <%= month %></option>
+    <% end %>
+  </select>
+  Day:
+  <select name="day_end">
+    <% (1..31).each do |day| %>
+      <option <%= "selected" if day == Time.now.day  %> > <%= day %> </option>
+    <% end %>
+  </select>
+  Year:
+  <select name="year_end">
+    <% ((Time.now.year)..(Time.now.year + 5)).each do |year| %>
+      <option <%= "selected" if year == Time.now.year + 1 %>><%= year %></option>
+    <% end %>
+  </select>
+  <br><br>
+
+  <%= submit_tag "Create New Availability" %>
+<% end %>

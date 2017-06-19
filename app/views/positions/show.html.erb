@@ -1,6 +1,9 @@
 
 <h1><%= @position.position_name %> List:</h1>
-<h4><a href="/positions/<%= @position.id %>/edit">Edit Position Name</a></h4>
+<% if current_user.is_admin? %>
+  <h4><a href="/positions/<%= @position.id %>/edit">Edit Position Name</a> | <%= link_to "Delete Position", "/positions/#{@position.id}", method: :delete %></h4>
+
+<% end %>
 <hr>
 
 <% @employees.each do |employee| %>

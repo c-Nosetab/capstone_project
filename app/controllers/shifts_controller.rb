@@ -49,21 +49,39 @@ class ShiftsController < ApplicationController
   def show
     @shift = Shift.find(params[:id])
     @positions = @shift.position_shifts
+    @employees = []
+
+    Employee.where(company_id: current_user.company_id).each do |emp|
+      emp.availabilities.each do |avail|
+        if avail.day_of_week == @shift.day_of_week && avail.time_start < @shift.time_start && avail.time_end > @shift.time_end
+          @employees << emp
+        end
+      end
+    end
+
   end
 
   def edit
     @shift = Shift.find(params[:id])
+    @positions = Position.where(company_id: current_user.company_id)
+
   end
 
   def update
     shift = Shift.find(params[:id])
+
+
+    date = Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start])
+
+
     shift.update_attributes(
-                            day_of_week: 1,
-                            time_start: params[:time_start],
-                            time_end: params[:time_end],
+                            day_of_week: date.strftime('%A').downcase,
+                            time_start: date,
+                            time_end: Time.local(2000,1,1, params[:hour_end], params[:min_end]),
                             title: params[:title],
                             is_recurring?: params[:is_recurring?],
-                            date: Time.local(params[:year_start], params[:month_start], params[:day_start])
+                            date: date,
+                            company_id: current_user.company_id
                             )
     if shift.save
       flash[:success] = "Shift successfully updated."
@@ -72,8 +90,6 @@ class ShiftsController < ApplicationController
       flash[:warning] = "Something went wrong. Please try again."
       redirect_to "/shifts/#{shift.id}/edit"
     end
-
-    redirect_to "/shifts/#{shift.id}"
   end
 
   def destroy

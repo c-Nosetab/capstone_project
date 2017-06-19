@@ -1,1 +1,60 @@
-edit.html.erb
+<h1>Create a New Shift</h1>
+<hr>
+<%= form_tag "/shifts/#{@shift.id}", method: :patch do %>
+   Date of Shift:
+   <br>
+   Month:
+  <select name="month_start">
+    <% (1..12).each do |month| %>
+      <option <%= "selected" if month == Time.now.month %>> <%= month %></option>
+    <% end %>
+  </select>
+  Day:
+  <select name="day_start">
+    <% (1..31).each do |day| %>
+      <option <%= "selected" if day == Time.now.day %> > <%= day %> </option>
+    <% end %>
+  </select>
+  Year:
+  <select name="year_start">
+    <% ((Time.now.year)..(Time.now.year + 5)).each do |year| %>
+      <option><%= year %></option>
+    <% end %>
+  </select>
+  <br><br>
+
+  Time:
+  <div>
+    <select name="hour_start">
+        <%= (0..23).each do |hour| %>
+          <option <%= "selected" if hour == @shift.time_start.localtime.hour %>><%= hour %></option>
+        <% end %>
+      </select>
+      :
+      <select name="min_start">
+        <%= (00..59).each do |min| %>
+          <option <%= "selected" if min == @shift.time_start.localtime.min %>><%= min %></option>
+        <% end %>
+      </select>
+      ---
+    <select name="hour_end">
+      <%= (0..23).each do |hour| %>
+        <option <%= "selected" if hour == @shift.time_end.localtime.hour %>><%= hour %></option>
+      <% end %>
+    </select>
+    :
+    <select name="min_end">
+      <%= (00..59).each do |min| %>
+        <option <%= "selected" if min == @shift.time_end.localtime.min %>><%= min %></option>
+      <% end %>
+    </select>
+
+  </div>
+
+  <br>
+  <%= submit_tag "Submit" %>
+
+<% end %>
+
+
+

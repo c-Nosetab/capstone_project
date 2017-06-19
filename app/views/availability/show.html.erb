@@ -1,1 +1,12 @@
-show.html.erb
+<h1>Availability for <%= @availability.day_of_week.capitalize %></h1>
+
+  <div>
+    <h2>Time: <%= "#{@availability.time_start.localtime.strftime('%l:%M %P')} - #{@availability.time_end.localtime.strftime('%l:%M %P')}"  %></h2>
+    <h2>Effective from:
+    <br>  <%= @availability.start_date.strftime("%m/%m/%y") %> until <%= @availability.end_date.strftime("%m/%m/%y") %></h2>
+  </div>
+
+<div>
+  <%= link_to "Edit", "/availability/#{@availability.id}/edit" %>
+  <%= link_to "Delete", "/availability/#{@availability.id}", method: :delete %>
+</div>
