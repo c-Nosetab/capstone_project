@@ -1,25 +1,25 @@
-<h1>Shift information: </h1>
+
+
+<h1><%= @shift.day_of_week.capitalize %>, <%= @shift.date.strftime('%b %d') %> --
+
+<%= @shift.time_start.localtime.strftime('%I:%M %p') %> - <%= @shift.time_end.localtime.strftime('%I:%M %p') %>
+</h1>
 
 <% if current_user.is_admin? %>
-  <%= link_to "Edit Shift", "/shifts/#{@shift.id}/edit" %>
+  <h5><%= link_to "Edit Shift", "/shifts/#{@shift.id}/edit" %></h5>
 <% end %>
+<hr>
 
-<h1><%= @shift.day_of_week.capitalize %>, <%= @shift.date.strftime('%b %d') %> </h1>
-
-<h3><%= @shift.time_start.localtime.strftime('%I:%M %p') %> -- <%= @shift.time_end.localtime.strftime('%I:%M %p') %></h3>
-
-<h3>Positions Assigned to Shift:</h3>
+<h2>Positions Assigned to Shift:</h2>
 
   <% @shift_positions.each do |pos| %>
-    <h2><%= pos.quantity %> - <%= pos.position.position_name %>:</h2>
+    <h2><%= pos.position.position_name %> - <%= pos.quantity %> needed:</h2>
     <ol>
       <% pos.print_scheduled.each do |employee| %>
         <li><%= "#{employee.first_name.capitalize} #{employee.last_name.capitalize} - #{employee.position.position_name}" %> -- <%= link_to "Unassign", "/employee_shifts/#{employee.find_shift_assign(@shift.id)}", method: :delete %></li>
       <% end %>
 
     </ol>
-    <h5><%= link_to "Remove Position from Shift", "/position_shifts/#{pos.id}", method: :delete %></h5>
-    <hr>
 
     <% pos.find_quantity.times do %>
       <%= form_tag "/employee_shifts", method: :post do %>
@@ -35,6 +35,8 @@
       <% end %>
       <br>
     <% end %>
+    <h5><%= link_to "Remove Position from Shift", "/position_shifts/#{pos.id}", method: :delete %></h5>
+    <hr>
   <% end %>
 
 <br>

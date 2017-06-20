@@ -3,7 +3,7 @@ class ShiftsController < ApplicationController
 
 
   def index
-    @shifts = Shift.where(company_id: current_user.company_id)
+    @shifts = Shift.where(company_id: current_user.company_id).order('date')
   end
 
   def new
@@ -18,7 +18,7 @@ class ShiftsController < ApplicationController
     shift = Shift.new(
                       day_of_week: date.strftime('%A').downcase,
                       time_start: date,
-                      time_end: Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_end], params[:min_end]).ne,
+                      time_end: Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_end], params[:min_end]),
                       title: params[:title],
                       is_recurring?: params[:is_recurring?],
                       date: date,
@@ -26,19 +26,8 @@ class ShiftsController < ApplicationController
                       )
 
     if shift.save
-      shift_position = PositionShift.new(
-                                         position_id: params[:position],
-                                         shift_id: shift.id,
-                                         quantity: params[:quantity]
-                                         )
-
-      if shift_position.save
-        flash[:success] = "Shift Successfully Created"
-        redirect_to "/shifts/#{shift.id}"
-      else
-        flash[:warning] = "Something went wrong. Try again - position error"
-        render '/shifts/new'
-      end
+      flash[:success] = "Shift Successfully Created"
+      redirect_to "/shifts/#{shift.id}"
     else
       flash[:warning] = "Something went wrong. Try again - shift error"
       render '/shifts/new'

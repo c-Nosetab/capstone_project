@@ -54,17 +54,6 @@
 
   </div>
 
-  <h2>Shift is for which positions:</h2>
-
-  <div>
-    <select name="position">
-      <% @positions.each do |pos| %>
-        <option value="<%= pos.id %>"><%= pos.position_name %></option>
-      <% end %>
-    </select>
-    -- How Many: <input type="text" name="quantity"></p>
-  </div>
-
   <br>
   <%= submit_tag "Submit" %>
 

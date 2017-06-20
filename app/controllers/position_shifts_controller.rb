@@ -22,7 +22,12 @@ class PositionShiftsController < ApplicationController
   def destroy
     item = PositionShift.find(params[:id])
 
+    employees = item.shift.employees.where(position_id: item.position_id)
 
+    employees.each do |employee|
+      shift = EmployeeShift.find_by(shift_id: item.shift.id, employee_id: employee.id)
+      shift.delete
+    end
 
     shift_id = item.shift.id
 
