@@ -7,7 +7,7 @@ class Api::V1::ShiftsController < ApplicationController
 
   def show
       @shift = Shift.find(params[:id])
-
+      # .includes(:employee_shifts, :company, :availablities)
       # @shift_positions = @shift.position_shifts
       # @positions = Position.where(company_id: current_user.company_id)
       # employee_holder = Employee.where(company_id: current_user.company_id)

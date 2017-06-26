@@ -4,27 +4,67 @@ document.addEventListener('DOMContentLoaded', function(event) {
     el: '#shifts',
 
     data: {
-            message: "Hello World!",
+            form: {
+                    form_id: []
+            },
+
             shift: [],
-            positions: [],
-            scheduledPositions: [],
+            things: [1, 2, 3],
+            newPosition: {
+                                    quantity: 0,
+                                    position_id: 0,
+                                    shift_id: this.segment
+                                    },
 
             employees: [],
             scheduledEmployees: [],
-            segment: ''
+            assignNewEmployee: '',
+            assignEmployeeArray: [],
+
+            newPositionId: 0,
+            newPositionShiftId: 0,
+            newPositionQuantity: 0,
+
+
+            segment: '',
+            quantityCount: []
           },
 
     methods: {
       initialPositions: function(fullList) {
-        console.log(this.segment)
         $.get('/api/v1/shifts/' + this.segment + '.json', function(fullList) {
           // console.log(fullList.shifts);
           this.shift = fullList;
+          this.calculateQuantity();
         }.bind(this));
-      }
-      // initialEmployees: function() {
 
-      // }
+      },
+
+      assignEmployee: function(employee) {
+        console.log(employee)
+      },
+
+      scheduleNewPosition: function() {
+        console.log(this.newPosition)
+      },
+
+      sayHello: function() {
+        console.log("hello")
+      },
+
+      calculateQuantity: function() {
+        var count = 0
+
+        for (var i = 0; i < this.shift.positions.length - 1; i++) {
+          if (this.shift.positions[i].quantity) {
+            count += this.shift.positions[i].quantity;
+          };
+        };
+        for (var i = 0; i < count; i++) {
+          this.quantityCount.push(i);
+        }
+        console.log(this.quantityCount);
+      }
 
       // addPosition:,
       // deletePosition:,
@@ -40,9 +80,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
       this.segment = $(location).attr('href').split('/').splice(4,1).join()
 
       this.initialPositions();
-      // this.assignedEmployees;
-    },
 
-    compute: function() {}
+
+
+    },
   });
 });
