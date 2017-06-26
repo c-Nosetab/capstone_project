@@ -1,0 +1,1 @@
+json.partial! @shift, partial: "shift", as: :shift

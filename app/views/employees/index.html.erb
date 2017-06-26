@@ -1,5 +1,73 @@
 
-<h1>Employee Info for <%= Company.find(current_user.company_id).name %></h1>
+<h1>Employees:</h1>
+
+
+<div id="employees">
+{{message}}
+
+<div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <h4>First Name: <input type="text" v-model="newFirstName"> </h4>
+        <h4>Last Name: <input type="text" v-model="newLastName"></h4>
+        <h4>Email: <input type="text" v-model="newEmail"></h4>
+        <h4>Position: <input type="text" v-model="newPositionId"></h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" v-on:click="addEmployee()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <div v-for="employee in employees">
+    <h2><a href="/employees/{{employee.id}}">{{employee.full_name}}</a></h2>
+    <h2>{{employee.position}}</h2>
+    <h3>Email: {{employee.email}}</h3>
+    <h3>Phone: {{employee.phone}}</h3>
+    <h3>Address:</h3>
+    <ul>
+      <li>{{employee.street_address}}</li>
+      <li>{{employee.city}}, {{employee.state}} {{employee.zip}}</li>
+    </ul>
+    <hr>
+    {{employee.first_name}}
+    {{employee.last_name}}
+  </div>
+</div>
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<hr>
 
 <div>
   Sort by:
@@ -15,6 +83,7 @@
     <% if current_user.position_id %>
       <h2>Position: <%= employee.manager? %> <%= employee.position.position_name %></h2>
     <% end %>
+    <%= employee.company.name %>
     <h3>Email: <%= employee.email %></h3>
     <h3>Phone: <%= employee.phone %></h3>
     <h3>Address</h3>

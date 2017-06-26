@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  before_action :authenticate_admin!, except: [:show]
+  before_action :authenticate_admin!, except: [:show, :new, :create]
 
   def new
   end

@@ -1,0 +1,9 @@
+json.id         employee.id
+json.full_name  employee.full_name
+json.email      employee.email
+json.phone      employee.phone
+json.street_address    employee.full_address_1
+json.city       employee.city
+json.state      employee.state
+json.zip        employee.zip
+json.position   employee.position.position_name

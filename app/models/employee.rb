@@ -1,7 +1,7 @@
 class Employee < ApplicationRecord
   has_secure_password
   validates :email, presence: true
-  # validates :email, uniqueness: true
+  validates :email, uniqueness: true
 
   has_many :employee_shifts
   has_many :shifts, through: :employee_shifts
@@ -11,7 +11,17 @@ class Employee < ApplicationRecord
   belongs_to :company
 
 
+  def full_name
+    "#{first_name.capitalize} #{last_name.capitalize}"
+  end
 
+  def full_address_1
+    "#{address}, #{address2}"
+  end
+
+  def full_address_2
+    "#{city}, #{state} #{zip}"
+  end
 
   def manager?
     if is_manager?

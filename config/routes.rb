@@ -53,4 +53,22 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
 
+
+  namespace :api do
+    namespace :v1 do
+      get '/employees' => 'employees#index'
+      post '/employees' => 'employees#create'
+      get '/employees/:id' => 'employees#show'
+
+
+      get '/positions' => 'positions#index'
+      get '/positions/:id' => 'positions#show'
+
+      get '/shifts' => 'shifts#index'
+      get '/shifts/:id' => 'shifts#show'
+    end
+  end
+
+
+
 end

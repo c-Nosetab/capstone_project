@@ -1,0 +1,1 @@
+json.partial! @position, partial: "position", as: :position

@@ -2,6 +2,9 @@ class PositionShift < ApplicationRecord
   belongs_to :position
   belongs_to :shift
 
+  validates :quantity, presence: true
+
+
   def find_quantity
     puts shift.employees.where(position_id: position_id).count
     quantity - (shift.employees.where(position_id: position_id).count)

@@ -12,7 +12,7 @@ class PositionShiftsController < ApplicationController
       flash[:success] = "Position Added to Shift"
       redirect_to "/shifts/#{params[:shift_id]}"
     else
-      flash[:warning] = "Something went wrong. Please try again."
+      flash[:warning] = "Something went wrong. Quantity Cannot be empty."
       redirect_to "/shifts/#{params[:shift_id]}"
     end
 

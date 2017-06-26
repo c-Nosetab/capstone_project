@@ -1,5 +1,95 @@
+<div id="shifts">
+  <h1>{{shift.day_of_week}}, {{shift.date}} --  {{shift.time}}</h1>
+  <hr>
+  <h2>Positions Assigned to Shift:</h2>
+  <ul v-for="position in shift.positions">
+    <li>{{position.position_name}}</li>
+    <select>
+      <option v-for="employee in position.employees">{{employee.full_name}} - {{employee.position}}</option>
+    </select>
+  </ul>
+
+  this is segment {{segment}}
+</div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <h1><%= @shift.day_of_week.capitalize %>, <%= @shift.date.strftime('%b %d') %> --
 
 <%= @shift.time_start.localtime.strftime('%I:%M %p') %> - <%= @shift.time_end.localtime.strftime('%I:%M %p') %>
