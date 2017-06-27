@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
             employees: [],
             scheduledEmployees: [],
-            assignNewEmployee: '',
+            assignNewEmployee: {},
             assignEmployeeArray: [],
 
             newPositionId: 0,
@@ -41,15 +41,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
       },
 
       assignEmployee: function(employee) {
-        console.log(employee)
+        console.log(this.form.form_id)
       },
 
       scheduleNewPosition: function() {
         console.log(this.newPosition)
       },
 
-      sayHello: function() {
-        console.log("hello")
+      sayHello: function(employee) {
+        console.log(employee);
       },
 
       calculateQuantity: function() {

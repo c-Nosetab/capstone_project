@@ -10,16 +10,16 @@
           {{employee.full_name}} - {{employee.position}} -- <a v-on:click="unassignEmployee(employee)">Unassign</a>
         </li>
       </ol>
-
+<!-- Think about using position ID and index number to assign model -->
 
       <div v-for="n in (position.quantity - position.assigned_employees.length)">
         <ul>
-          <select @value="">
+          <select v-model="form.form_id[] >
             <option v-for="employee in position.unassigned_employees" v-bind:value="employee">
               {{employee.full_name}}
             </option>
           </select>
-          <button v-on:click="assignEmployee(employee)">Assign Employee</button>
+          <button v-on:click="assignEmployee()">Assign Employee</button>
         </ul>
       </div>
 
