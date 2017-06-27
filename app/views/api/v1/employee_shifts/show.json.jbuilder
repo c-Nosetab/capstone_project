@@ -1,0 +1,1 @@
+json.partial! @employee_shift, partial: "employeeShift", as: :employee_shift

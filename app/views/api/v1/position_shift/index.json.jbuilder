@@ -1,0 +1,1 @@
+json.array! @position_shifts, partial: "positionShift", as: :position_shift

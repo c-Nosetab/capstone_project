@@ -66,6 +66,14 @@ Rails.application.routes.draw do
 
       get '/shifts' => 'shifts#index'
       get '/shifts/:id' => 'shifts#show'
+
+      get '/employee_shifts' => 'employee_shifts#index'
+      post '/employee_shifts' => 'employee_shifts#create'
+      get '/employee_shifts/:id' => 'employee_shifts#show'
+      delete '/employee_shifts' => 'employee_shifts#destroy'
+
+      get '/position_shifts' => 'position_shift#index'
+      post '/position_shifts' => 'position_shift#create'
     end
   end
 

@@ -1,4 +1,5 @@
 json.id shift.id
+json.company_id shift.company_id
 json.date         shift.date.strftime('%B %d')
 json.day_of_week  shift.day_of_week.capitalize
 json.time         shift.time_of_shift

@@ -1,26 +1,28 @@
 <div id="shifts">
+  <ul>
+    <li v-for="error in errors"> {{error}}</li>
+  </ul>
   <h1>{{shift.day_of_week}}, {{shift.date}} --  {{shift.time}}</h1>
   <hr>
   <h2>Positions Assigned to Shift:</h2>
-  <div v-for="position in shift.positions">
+  <div v-for="(position, index) in shift.positions">
     <div v-if="position.quantity">
       <h3>{{position.position_name}} -- {{position.quantity}} needed:</h3>
       <ol>
         <li v-for="employee in position.assigned_employees">
           {{employee.full_name}} - {{employee.position}} -- <a v-on:click="unassignEmployee(employee)">Unassign</a>
         </li>
-      </ol>
-<!-- Think about using position ID and index number to assign model -->
 
-      <div v-for="n in (position.quantity - position.assigned_employees.length)">
-        <ul>
-          <select v-model="form.form_id[] >
-            <option v-for="employee in position.unassigned_employees" v-bind:value="employee">
-              {{employee.full_name}}
-            </option>
-          </select>
-          <button v-on:click="assignEmployee()">Assign Employee</button>
-        </ul>
+      <div v-if="position.quantity - position.assigned_employees.length > 0">
+        <select @change="changeSelected(index, $event)">
+          <option value="">Select Employee</option>
+          <option v-for="employee in position.unassigned_employees" v-bind:value="employee.id" :ref='position.position_name'>
+            {{employee.full_name}}
+          </option>
+        </select>
+
+        <button v-on:click="assignNewEmployee(position.position_name
+        )">Assign Employee</button>
       </div>
 
 
@@ -31,10 +33,11 @@
     </div>
   </div>
   <h2>Add Position to Shift</h2>
-  <select v-model="newPosition">
-    <option v-for="position in shift.positions" v-if="!position.quantity" v-bind:value="position.id">{{position.position_name}}</option>
+  <select v-model="assignPositionId">
+    <option value="">Select Position</option>
+    <option v-for="(position, index) in shift.positions" v-if="!position.quantity" :value="position.id">{{position.position_name}}</option>
   </select>
-  -- How Many: <input type="text"> <button v-on:click="scheduleNewPosition">Add Position</button>
+  -- How Many: <input type="text" v-model="positionQuantity"> <button v-on:click="scheduleNewPosition">Add Position</button>
 
 
 <br>

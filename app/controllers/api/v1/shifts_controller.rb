@@ -1,13 +1,12 @@
 class Api::V1::ShiftsController < ApplicationController
 
   def index
-    # @shifts = Shift.where(company_id: current_user.company_id)
-    @shifts = Shift.all
+    @shifts = Shift.where(company_id: current_user.company_id)
   end
 
   def show
       @shift = Shift.find(params[:id])
-      # .includes(:employee_shifts, :company, :availablities)
+      # .include(:employee_shifts, :company)
       # @shift_positions = @shift.position_shifts
       # @positions = Position.where(company_id: current_user.company_id)
       # employee_holder = Employee.where(company_id: current_user.company_id)
