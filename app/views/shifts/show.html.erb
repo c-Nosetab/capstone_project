@@ -2,12 +2,12 @@
   <ul>
     <li v-for="error in errors"> {{error}}</li>
   </ul>
-  <h1>{{shift.day_of_week}}, {{shift.date}} --  {{shift.time}}</h1>
   <hr>
+
   <h2>Positions Assigned to Shift:</h2>
   <div v-for="(position, index) in shift.positions">
     <div v-if="position.quantity">
-      <h3>{{position.position_name}} -- {{position.quantity}} needed:</h3>
+      <h3>{{position.position_name}} -- {{position.quantity}} needed: </h3>
       <ol>
         <li v-for="employee in position.assigned_employees">
           {{employee.full_name}} - {{employee.position}} -- <a v-on:click="unassignEmployee(employee)">Unassign</a>
@@ -20,9 +20,7 @@
             {{employee.full_name}}
           </option>
         </select>
-
-        <button v-on:click="assignNewEmployee(position.position_name
-        )">Assign Employee</button>
+        <button v-on:click="assignNewEmployee(position.position_name)">Assign Employee</button>
       </div>
 
 

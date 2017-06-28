@@ -125,9 +125,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
                         };
 
           $.post('/api/v1/position_shifts.json', params, function() {
-            var vueParams = {quantity: parseInt(this.positionQuantity)};
-            this.shift.positions[positionIndex].push(vueParams);
 
+            this.shift.positions[positionIndex].quantity = this.positionQuantity;
 
           }.bind(this)).fail( function(response) {
             this.errors = "Something Went Wrong";

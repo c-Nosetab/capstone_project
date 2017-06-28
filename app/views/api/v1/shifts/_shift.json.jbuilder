@@ -15,6 +15,9 @@ json.positions    shift.company.positions.each do |position|
         json.position   employee_shift.employee.position.position_name
       end
     end
+  else
+    json.quantity 0
+    json.assigned_employees []
         end
     json.unassigned_employees      position.employees.each do |employee|
       employee.availabilities.where(day_of_week: shift.day_of_week).each do |avail|
