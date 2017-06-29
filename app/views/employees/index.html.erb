@@ -43,32 +43,6 @@
 
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<hr>
-
 <div>
   Sort by:
   <% Position.where(company_id: current_user.company_id).each do |pos|%>
@@ -78,23 +52,13 @@
 
 <% @employees.each do |employee| %>
   <div class="employee" style="line-height: 12px">
-    <h2><a href="/employees/<%= employee.id %>">Name: <%= "#{employee.first_name} #{employee.last_name}" %></a></h2>
+    <h2><a href="/employees/<%= employee.id %>"><%= "#{employee.first_name} #{employee.last_name}" %> -
 
     <% if current_user.position_id %>
-      <h2>Position: <%= employee.manager? %> <%= employee.position.position_name %></h2>
+      <%= employee.manager? %> <%= employee.position.position_name %> <%= "| ADMIN" if employee.is_admin? %></h2>
     <% end %>
-    <%= employee.company.name %>
     <h3>Email: <%= employee.email %></h3>
     <h3>Phone: <%= employee.phone %></h3>
-    <h3>Address</h3>
-    <div class="address" style="line-height: 20px;">
-      <ul>
-        <li><%= "#{employee.address}, #{employee.address2}" %></li>
-        <li><%= "#{employee.city}, #{employee.state} #{employee.zip}" %></li>
-      </ul>
-    </div>
-    manager <%= employee.is_manager? %>
-    admin <%= employee.is_admin? %>
   </div>
   <hr>
 

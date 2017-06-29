@@ -9,7 +9,7 @@ gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'vuejs-rails'
 
-
+# Calendar stuff
 
 gem 'faker'
 

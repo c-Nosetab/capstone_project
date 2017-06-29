@@ -1,5 +1,8 @@
 {
   "name": "employee-scheduler-app",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "fullcalendar": "^3.4.0",
+    "vue-full-calendar": "^2.0.2"
+  }
 }

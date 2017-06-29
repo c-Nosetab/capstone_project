@@ -2,12 +2,32 @@
   <ul>
     <li v-for="error in errors"> {{error}}</li>
   </ul>
-  <hr>
+
 
   <h2>Positions Assigned to Shift:</h2>
+  <br>
+    <ul>
+      <li>
+        <strong>Add Position: <br></strong><select v-on:change="changeQuantity($event)">
+          <option value="" selected>Select Position</option>
+          <option v-for="(position, index) in shift.positions" v-if="!position.quantity" :value="position.id">{{position.position_name}}</option>
+        </select>
+
+        -- How Many:
+
+        <select v-model="positionQuantity" value="Select Position">
+          <option v-for="n in totalQuantity">{{n}}</option>
+        </select>
+        -
+        <button v-on:click="scheduleNewPosition">Add Position</button>
+      </li>
+    </ul>
+
+  <br>
   <div v-for="(position, pos_index) in shift.positions">
     <div v-if="position.quantity">
       <h3>{{position.position_name}} -- {{position.quantity}} needed: </h3>
+      <br>
       <ol>
         <li v-for="(employee, emp_index) in position.assigned_employees">
           {{employee.full_name}} - {{employee.position}} -- <a v-on:click="unassignEmployee(employee, pos_index, emp_index)">Unassign</a>
@@ -30,18 +50,6 @@
       <hr>
     </div>
   </div>
-  <h2>Add Position to Shift</h2>
-  <select v-on:change="changeQuantity($event)">
-    <option value="" selected>Select Position</option>
-    <option v-for="(position, index) in shift.positions" v-if="!position.quantity" :value="position.id">{{position.position_name}}</option>
-  </select>
-  -- How Many:
-    <select v-model="positionQuantity" value="Select Position">
-      <option v-for="n in totalQuantity">{{n}}</option>
-    </select>
-    -
-    <button v-on:click="scheduleNewPosition">Add Position</button>
-  <br>
 
 <br>
       <!-- <button v-on:click="checkRefs">check ref</button> -->
