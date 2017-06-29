@@ -97,8 +97,10 @@ Employee.create(
                 city: Faker::Address.city,
                 state: Faker::Address.state,
                 zip: Faker::Address.zip_code,
-                position_id: array.sample,
+                position_id: 1,
                 phone: Faker::PhoneNumber.phone_number,
                 company_id: 1,
-                password: "password"
+                password: "password",
+                is_admin?: true,
+                is_manager?: true
   )

@@ -8,12 +8,26 @@ class Api::V1::PositionShiftController < ApplicationController
     @position_shift = PositionShift.new(
                                         shift_id: params[:shiftId],
                                         position_id: params[:positionId],
-                                        quantity: params[:quantity]
+                                        quantity: params[:quantity],
+                                        company_id: params[:companyId]
                                         )
     if @position_shift.save
       render 'index.json.jbuilder'
     end
+  end
+
+  def show
+    @position_shift = PositionShift.find(params[:id])
+  end
+
+  def destroy
+    @position_shift = PositionShift.find_by(
+                                            position_id: params[:positionId],
+                                            shift_id: params[:shiftId]
+                                            )
+    @position_shift.delete
 
   end
+
 
 end

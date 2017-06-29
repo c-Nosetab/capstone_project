@@ -74,6 +74,8 @@ Rails.application.routes.draw do
 
       get '/position_shifts' => 'position_shift#index'
       post '/position_shifts' => 'position_shift#create'
+      get '/position_shifts/:id' => 'position_shift#show'
+      delete '/position_shifts' => 'position_shift#destroy'
     end
   end
 

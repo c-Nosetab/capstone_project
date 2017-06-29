@@ -12,7 +12,7 @@ class Api::V1::EmployeeShiftsController < ApplicationController
                       )
 
     if @employee_shift.save
-      render 'index.json.jbuilder'
+      render 'show.json.jbuilder'
     else
       # render :json {errors: @employee_shift.errors.full_message}, status: 422
     end

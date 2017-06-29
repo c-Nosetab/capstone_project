@@ -5,16 +5,16 @@
   <hr>
 
   <h2>Positions Assigned to Shift:</h2>
-  <div v-for="(position, index) in shift.positions">
+  <div v-for="(position, pos_index) in shift.positions">
     <div v-if="position.quantity">
       <h3>{{position.position_name}} -- {{position.quantity}} needed: </h3>
       <ol>
-        <li v-for="employee in position.assigned_employees">
-          {{employee.full_name}} - {{employee.position}} -- <a v-on:click="unassignEmployee(employee)">Unassign</a>
+        <li v-for="(employee, emp_index) in position.assigned_employees">
+          {{employee.full_name}} - {{employee.position}} -- <a v-on:click="unassignEmployee(employee, pos_index, emp_index)">Unassign</a>
         </li>
 
       <div v-if="position.quantity - position.assigned_employees.length > 0">
-        <select @change="changeSelected(index, $event)">
+        <select @change="changeSelected(pos_index, $event)" :ref="position.id">
           <option value="">Select Employee</option>
           <option v-for="employee in position.unassigned_employees" v-bind:value="employee.id" :ref='position.position_name'>
             {{employee.full_name}}
@@ -26,19 +26,25 @@
 
 
       <br>
-      <h5><a href="#">Remove Position From Shift</a></h5>
+      <h5><a v-on:click="deletePosition(pos_index)">Remove Position From Shift</a></h5>
       <hr>
     </div>
   </div>
   <h2>Add Position to Shift</h2>
-  <select v-model="assignPositionId">
-    <option value="">Select Position</option>
+  <select v-on:change="changeQuantity($event)">
+    <option value="" selected>Select Position</option>
     <option v-for="(position, index) in shift.positions" v-if="!position.quantity" :value="position.id">{{position.position_name}}</option>
   </select>
-  -- How Many: <input type="text" v-model="positionQuantity"> <button v-on:click="scheduleNewPosition">Add Position</button>
-
+  -- How Many:
+    <select v-model="positionQuantity" value="Select Position">
+      <option v-for="n in totalQuantity">{{n}}</option>
+    </select>
+    -
+    <button v-on:click="scheduleNewPosition">Add Position</button>
+  <br>
 
 <br>
+      <!-- <button v-on:click="checkRefs">check ref</button> -->
 </div>
 
 
