@@ -7,7 +7,7 @@
 <html class="no-js"> <!--<![endif]-->
   <head>
         <meta charset="utf-8">
-        <title>Stack - Multipurpose HTML Template</title>
+        <title>On the Dot.</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,16 +35,26 @@
 
           <div class="row nav-menu">
             <div class="col-sm-3 col-md-2 columns">
-              <a href="/employees">
-                <img class="logo logo-light" alt="Logo" src="/img/logo-light.png">
-                <img class="logo logo-dark" alt="Logo" src="/img/logo-dark.png">
-              </a>
+
+              <% if  current_user %>
+                <a href="/employees/<%= current_user.id %>">
+                  <img class="logo logo-light" alt="On the Dot." src="/img/on_the_dot3.png">
+                  <img class="logo logo-dark" alt="On the Dot." src="/img/on_the_dot3.png">
+                </a>
+              <% else %>
+                <a href="/login" %>">
+                  <img class="logo logo-light" alt="On the Dot." src="/img/on_the_dot3.png">
+                  <img class="logo logo-dark" alt="On the Dot." src="/img/on_the_dot3.png">
+                </a>
+              <% end %>
+
+
             </div>
 
             <div class="col-sm-9 col-md-10 columns">
               <% if current_user %>
                 <ul class="menu">
-                  <li><a href="/employees/<%= current_user.id %>"><%= current_user.company.name %></a>
+                  <li><a href="/employees"><%= current_user.company.name %></a>
                   </li>
 
 
@@ -60,31 +70,27 @@
                       <li><a href="500.html">500 Error</a></li>
                     </ul>
                   </li>
-                  <li class="has-dropdown"><a  href="#">Blog</a>
+
+                  <% if current_user.is_admin? %>
+                    <li class="has-dropdown"><a href="#">Admin Controls</a>
+                      <ul class="subnav">
+                        <li><a href="/shifts/new">Add Shift</a></li>
+                        <li><a href="/shifts">See Shifts</a></li>
+                        <li><a href="#">---</a></li>
+                        <li><a href="/positions/new">Add Position</a></li>
+                        <li><a href="/positions">See Positions</a></li>
+                        <li><a href="#">---</a></li>
+                        <li><a href="/employees/new">Add Employee</a></li>
+                      </ul>
+                    </li>
+                  <% end %>
 
 
-                        <ul class="subnav">
-                          <li><a href="blog-masonry.html">Masonry</a></li>
-                          <li><a href="blog-masonry-sidebar.html">Masonry Sidebar</a></li>
-
-                          <li><a href="blog-single.html">Article Basic</a></li>
-
-                        </ul>
-                  </li>
-                  <li class="has-dropdown"><a href="#">Projects</a>
-                    <ul class="subnav">
-                      <li><a href="projects.html">Projects Fullwidth</a></li>
-                      <li><a href="projects-2.html">Projects Contained</a></li>
-                      <li><a href="project-single-2.html">Project Single</a></li>
-
-                    </ul>
-                  </li>
-
-                  <li class="has-dropdown text-right" style="padding-left: 200px;"><a href="#">Signed in as: <%= current_user.full_name %></a>
+                  <li class="has-dropdown"><a href="#">Signed in as: <%= current_user.full_name %></a>
                     <ul class="subnav">
                       <li><a href="/employees/<%= current_user.id %>/edit">Edit Profile Info</a></li>
-                      <li><a href="#">Edit Availability</a></li>
-                      <li><a href="#">Logout</a></li>
+                      <li><a href="/availability">Edit Availability</a></li>
+                      <li><a href="/logout">Logout</a></li>
                     </ul>
 
                   </li>
@@ -97,7 +103,7 @@
                 </div>
                 <ul class="text-right menu">
                   <li >
-                    <a href="contact-2.html">Login</a> | <a href="#">Create Account</a>
+                    <a href="/login">Login</a> | <a href="/signup">Create Account</a>
                   </li>
                 </ul>
 
@@ -134,28 +140,27 @@
     </div>
 
     <div class="main-container">
-      <header class="fullscreen-element no-pad centered-text" style="height: 50% !important;">
-        <div class="background-image-holder parallax-background overlay">
-          <img class="background-image" alt="Background Image" src="/img/mobile.jpg">
-        </div>
+      <!-- <header class="fullscreen-element no-pad centered-text" style="height: 20% !important;"> -->
+        <!-- <div class="background-image-holder parallax-background overlay"> -->
+          <!-- <img class="background-image" alt="Background Image" src="/img/mobile.jpg"> -->
+        <!-- </div> -->
 
-        <div class="container align-vertical">
+    <!--     <div class="container align-vertical">
           <div class="row">
             <div class="col-md-12 text-center">
-              <span class="text-white alt-font">CHOOSE Stack NOW</span>
               <h1 class="text-white">Aenean vulputate eleifend tellus. Aenean leo ligula, <br />porttitor eu, consequatvitae.</h1>
               <p class="lead text-white">Eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis.</p>
               <a target="_blank" href="#" class="btn btn-primary btn-white">Read More</a>
               <a href="#" class="btn btn-primary btn-filled" >Contact Us</a>
             </div>
-          </div><!--end of row-->
-        </div><!--end of container-->
-      </header>
+          </div>
+        </div> -->
+      <!-- </header> -->
 
 
 <!-- ###################### -->
 
-      <section class="side-image clearfix">
+      <section class="side-image clearfix" style="padding-top: 50px">
         <% flash.each do |name, message| %>
           <div class="alert alert-<%= name %> alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -275,7 +280,7 @@
                                 <li><a href="#" class="in"><i class="icon social_linkedin"></i></a></li>
                                 <li><a href="#" class="pin"><i class="icon social_pinterest"></i></a></li>
                             </ul>
-                            <span>© 2017.All right reserved . Theme by designstream</span>
+                            <span>© 2017.All right reserved . Theme by designstream. </span>
                         </div>
                     </div>
                 </div>

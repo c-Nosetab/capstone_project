@@ -1,46 +1,59 @@
 
+<% if current_user.id == @employee.id  || current_user.is_manager? || current_user.is_admin? %>
 
 
-<h1>Employee Info</h1>
+  <h2 style="text-decoration: underline;">Upcoming Shifts:</h2>
+  <ul>
+    <% @employee.shifts.each do |shift| %>
+      <% if shift.date > Time.now %>
+       <li><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d') %> -- <%= shift.time_start.localtime.strftime('%I:%M %p') %> -- <%= shift.time_end.localtime.strftime('%I:%M %p') %></li>
+      <% end %>
+    <% end %>
+  </ul>
+  <hr>
+<% end %>
 
 <div class="employee" style="line-height: 12px">
-    <h2><a href="/employees/<%= @employee.id %>">Name: <%= "#{@employee.first_name} #{@employee.last_name}" %></a></h2>
-    <% if current_user && current_user.position_id %>
-      <h2>Position: <%= @employee.manager? %> <%= @employee.position.position_name %></h2>
+    <% if @employee.id == current_user.id %>
+      <h3 style="text-decoration: underline;">Your Current Info:</h3>
+      <br>
+    <% else %>
+      <h3 style="text-decoration: underline;">Employee Info:</h3>
+      <br>
     <% end %>
+    <h3><strong><%= "#{@employee.first_name.capitalize} #{@employee.last_name.capitalize} - #{@employee.manager?} #{@employee.position.position_name}" %></strong></h3>
     <h3>Email: <%= @employee.email %></h3>
     <h3>Phone: <%= @employee.phone %></h3>
-    <h3>Address</h3>
-    <div class="address" style="line-height: 20px;">
-      <ul>
-        <li><%= "#{@employee.address}, #{@employee.address2}" %></li>
-        <li><%= "#{@employee.city}, #{@employee.state} #{@employee.zip}" %></li>
-      </ul>
-    </div>
+
+    <% if current_user.is_admin? || current_user.id == @employee.id %>
+      <h3>Address</h3>
+      <div class="address" style="line-height: 20px;">
+        <ul>
+          <li><%= "#{@employee.address}, #{@employee.address2}" %></li>
+          <li><%= "#{@employee.city}, #{@employee.state} #{@employee.zip}" %></li>
+        </ul>
+      </div>
+    <% end %>
   </div>
 
-  A: <%= @employee.is_admin? %> |
-  M: <%= @employee.is_manager? %> |
+  <% if current_user.is_admin? %>
+    Admin?: <%= @employee.is_admin? %>
+  <% end %>
+
 
   <br>
   <br>
 
-  <% if current_user.id == @employee.id %>
+  <% if current_user.id == @employee.id%>
     <h2><a href="/availability/">See Current Availability</a></h2>
-  <% end %>
-
-  <div>
-    <%= link_to "Edit", "/employees/#{@employee.id}/edit" %>
+    <br>
+    <%= link_to "Edit Your Info", "/employees/#{@employee.id}/edit" %>
+  <% elsif current_user.is_admin?%>
+    <%= link_to "Edit Employee Position", "/employees/#{@employee.id}/edit" %>
     <%= link_to "Delete", "/employees/#{@employee.id}", method: :delete %>
-  </div>
-
-<h2>Upcoming Shifts:</h2>
-<hr>
-<ul>
-  <% @employee.shifts.each do |shift| %>
-   <li><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d') %> -- <%= shift.time_start.localtime.strftime('%I:%M %p') %> -- <%= shift.time_end.localtime.strftime('%I:%M %p') %></li>
   <% end %>
-</ul>
+
+
 
 
 

@@ -1,5 +1,4 @@
 <h1>Create a New Shift</h1>
-<hr>
 <%= form_tag '/shifts', method: :post do %>
    Date of Shift:
    <br>
@@ -55,7 +54,11 @@
   </div>
 
   <br>
-  <%= submit_tag "Submit" %>
+  <div class="col-sm-12">
+    <span class="col-sm-offset-9">
+      <%= submit_tag "Submit" %>
+    </span>
+  </div>
 
 <% end %>
 

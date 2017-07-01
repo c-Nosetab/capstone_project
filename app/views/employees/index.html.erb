@@ -1,9 +1,40 @@
 
-<h1>Employees:</h1>
-
 
 <div id="employees">
-{{message}}
+
+  <h1><strong>Employees:</strong></h1>
+  <% if current_user.is_admin? %>
+    <div>
+      Jump To: <span v-for="position in employees"><a v-bind:href="'#' + position.name"><button>{{position.name}}</button> </a></span>
+    </div>
+    <br>
+  <% end %>
+
+
+  <div v-for="position in employees" class="test">
+      <h2 class="test2" v-bind:id="position.name" style="text-decoration: underline;"><strong>{{position.name}}:</strong></h2>
+    <div class="row">
+      <br>
+      <div v-for="employee in position.managers" class="col-sm-12, col-md-6">
+        <h4><strong><a v-bind:href="'/employees/' + employee.id"><span v-if="employee.manager">MANAGER - </span>{{employee.full_name}}</a></strong></h4>
+        <h4>Email: <a v-bind:href="'mailto:' + employee.email">{{employee.email}}</a></h4>
+        <h4>Phone: {{employee.phone}}</h4>
+        <hr>
+      </div>
+      <div v-for="employee in position.employees" class="col-sm-12, col-md-6">
+        <h4><strong><a v-bind:href="'/employees/' + employee.id">{{employee.full_name}}</a></strong></h4>
+        <h4>Email: <a v-bind:href="'mailto:' + employee.email">{{employee.email}}</a></h4>
+        <h4>Phone: {{employee.phone}}</h4>
+        <hr>
+      </div>
+    </div>
+        <h5 class="col-sm-12" style="text-align: right;"><a href="#top">Back to Top</a></h5>
+        <br>
+        <br>
+  </div>
+</div>
+
+
 
 <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -25,41 +56,3 @@
     </div>
   </div>
 </div>
-  <div v-for="employee in employees">
-    <h2><a href="/employees/{{employee.id}}">{{employee.full_name}}</a></h2>
-    <h2>{{employee.position}}</h2>
-    <h3>Email: {{employee.email}}</h3>
-    <h3>Phone: {{employee.phone}}</h3>
-    <h3>Address:</h3>
-    <ul>
-      <li>{{employee.street_address}}</li>
-      <li>{{employee.city}}, {{employee.state}} {{employee.zip}}</li>
-    </ul>
-    <hr>
-    {{employee.first_name}}
-    {{employee.last_name}}
-  </div>
-</div>
-
-
-
-<div>
-  Sort by:
-  <% Position.where(company_id: current_user.company_id).each do |pos|%>
-    <a href="/employees?sort=<%= pos.id %>"><%= pos.position_name %></a>
-  <% end %>
-</div>
-
-<% @employees.each do |employee| %>
-  <div class="employee" style="line-height: 12px">
-    <h2><a href="/employees/<%= employee.id %>"><%= "#{employee.first_name} #{employee.last_name}" %> -
-
-    <% if current_user.position_id %>
-      <%= employee.manager? %> <%= employee.position.position_name %> <%= "| ADMIN" if employee.is_admin? %></h2>
-    <% end %>
-    <h3>Email: <%= employee.email %></h3>
-    <h3>Phone: <%= employee.phone %></h3>
-  </div>
-  <hr>
-
-<% end %>

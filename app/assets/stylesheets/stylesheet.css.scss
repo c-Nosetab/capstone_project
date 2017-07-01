@@ -2,3 +2,11 @@
   width: 80%;
   margin: 0 auto;
 }
+
+div.test h2:before {
+  display: block;
+  content: " ";
+  margin-top: -140px;
+  height: 140px;
+  visibility: hidden;
+}

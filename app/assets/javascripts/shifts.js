@@ -206,9 +206,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
     },
 
     mounted: function() {
-      this.segment = $(location).attr('href').split('/').splice(4,1).join()
+      var test = $(location).attr('href').split('/').splice(3,2)
 
-      this.initialPositions();
+      if(test[0] == "shifts" && test.length === 2) {
+        console.log("running")
+        this.segment = test[1]
+        this.initialPositions();
+      }
+
+
 
 
 

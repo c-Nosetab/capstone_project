@@ -61,7 +61,6 @@ class CompaniesController < ApplicationController
                                  city: params[:city],
                                  state: params[:state],
                                  zip: params[:zip],
-                                 unique_code: SecureRandom.hex(16)
                                 )
 
       if @company.save

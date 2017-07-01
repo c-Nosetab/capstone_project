@@ -2,7 +2,11 @@ class Api::V1::EmployeesController < ApplicationController
     before_action :authenticate_user!
 
     def index
-      @employees = Employee.where(company_id: current_user.company_id)
+      if current_user.is_admin?
+        @positions = Position.where(company_id: current_user.company_id)
+      else
+        @positions = Position.where(company_id: current_user.company_id, id: current_user.position_id)
+      end
     end
 
     def create

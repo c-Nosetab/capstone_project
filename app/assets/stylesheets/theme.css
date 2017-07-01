@@ -418,7 +418,7 @@ nav hr {
   display: none;
 }
 .top-bar {
-  position: absolute;
+  position: fixed;
   background: #fff;
   width: 100%;
   z-index: 10;
@@ -479,10 +479,10 @@ nav hr {
   padding: 0px 8px;
 }
 .overlay-bar {
-  background: none;
+  background: rgba(255, 255, 255, 0.9);
 }
 .overlay-bar .has-dropdown:after {
-  color: #fff;
+  color: #e55757;
 }
 .menu {
   padding: 0;
@@ -514,7 +514,7 @@ nav hr {
   line-height: 14px;
 }
 .menu li a:hover {
-  color: #333333;
+  color: #e55757;
 }
 @media all and (max-width: 1050px) {
   .menu li {
@@ -531,10 +531,10 @@ nav hr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .overlay-bar .menu li a {
-  color: #fff;
+  color: #777777;
 }
 .overlay-bar .menu li a:hover {
-  color: #fff;
+  color: #e55757;
 }
 .overlay-bar .social-icons li a {
   color: #fff;
@@ -651,11 +651,18 @@ nav hr {
 .overlay-bar.nav-sticky .menu li a {
   color: #777777;
 }
+
+.overlay-bar.nav-sticky .menu li a:hover {
+  color: #e55757;
+}
+
+
+
 .overlay-bar.nav-sticky .social-icons li a {
   color: #333333;
 }
 .overlay-bar.nav-sticky .has-dropdown:after {
-  color: #333333;
+  color: #e55757;
 }
 .offscreen-menu .logo {
   padding-bottom: 32px;
@@ -725,7 +732,7 @@ nav hr {
   color: #aaa !important;
 }
 .offscreen-container .menu li a:hover {
-  color: #fff !important;
+  color: #e55757 !important;
 }
 .offscreen-container .social-icons {
   position: absolute;
@@ -742,7 +749,7 @@ nav hr {
   max-width: 20px;
 }
 .overlay:before {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0px;
@@ -1044,16 +1051,16 @@ header.signup:before {
   padding-top: 121px;
   padding-bottom: 121px;
 }
-header.centered-text h1 {
+header.cent #e55757-text h1 {
   font-size: 40px;
   margin-bottom: 24px;
   line-height: 56px;
 }
-header.centered-text .btn {
+header.cent #e55757-text .btn {
   margin-right: 16px;
   margin-top: 24px;
 }
-header.centered-text .btn:last-child {
+header.cent #e55757-text .btn:last-child {
   margin-right: 0px;
 }
 header.fullscreen-element .overlay:before,
@@ -1535,7 +1542,7 @@ img.phone-portrait {
 .pure-text p:last-child {
   margin-bottom: 40px;
 }
-.pure-text-centered h1 {
+.pure-text-cent #e55757 h1 {
   margin-bottom: 24px;
 }
 .inline-image-right img {
@@ -2880,7 +2887,7 @@ footer.short-2 .contact-action:hover {
     padding-bottom: 0px;
   }
   .overlay-bar .menu li a:hover {
-    color: #333333;
+    color: #e55757;
   }
   .overlay-bar .has-dropdown:after {
     color: #333333;
@@ -2973,7 +2980,7 @@ footer.short-2 .contact-action:hover {
     font-size: 32px;
     line-height: 40px;
   }
-  header.centered-text h1 {
+  header.cent #e55757-text h1 {
     font-size: 24px;
     line-height: 32px;
   }
@@ -3238,7 +3245,7 @@ footer.short-2 .contact-action:hover {
     padding-bottom: 0px;
   }
   .overlay-bar .menu li a:hover {
-    color: #333333;
+    color: #e55757;
   }
   .overlay-bar .has-dropdown:after {
     color: #333333;
@@ -3907,43 +3914,43 @@ footer.short-2 .contact-action:hover {
   text-align: left;
   padding: 0px;
 }
-.centered-logo .social-icons {
+.cent #e55757-logo .social-icons {
   float: right;
   margin-bottom: 0px;
 }
-.centered-logo .utility-menu span {
+.cent #e55757-logo .utility-menu span {
   top: 2px;
 }
-.centered-logo .logo {
+.cent #e55757-logo .logo {
   max-width: 800px;
   max-height: 50px;
   bottom: 0px;
   margin-top: 32px;
 }
-.centered-logo .menu li a {
+.cent #e55757-logo .menu li a {
   padding-bottom: 24px;
 }
-.centered-logo .nav-menu {
+.cent #e55757-logo .nav-menu {
   padding-top: 32px;
 }
-.centered-logo .subnav {
+.cent #e55757-logo .subnav {
   text-align: left !important;
 }
-.centered-logo .bottom-border {
+.cent #e55757-logo .bottom-border {
   width: 100%;
   height: 4px;
   background: #e74c3c;
 }
 @media all and (max-width: 767px) {
-  .centered-logo .logo {
+  .cent #e55757-logo .logo {
     top: 20px;
     max-height: 40px;
     margin-top: 0px;
   }
-  .centered-logo .menu li a {
+  .cent #e55757-logo .menu li a {
     padding-bottom: 0px;
   }
-  .centered-logo .subnav {
+  .cent #e55757-logo .subnav {
     text-align: center !important;
   }
 }
@@ -3959,7 +3966,7 @@ footer.short-2 .contact-action:hover {
   right: 32px;
   font-size: 40px;
   line-height: 67px;
-  color: #333333;
+  color: #e55757;
   -webkit-transition: all .3s ease;
   -moz-transition: all .3s ease;
   transition: all .3s ease;
@@ -4116,6 +4123,7 @@ footer.short-2 .contact-action:hover {
   .contained-bar {
     background: rgba(255, 255, 255, 0.9);
   }
+
   .contained-wrapper {
     background: none;
     padding: 0;

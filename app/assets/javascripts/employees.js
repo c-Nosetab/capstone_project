@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
             newPositionId: 0,
     },
 
-    // mounted: function() {
-    //   $.get('/api/v1/employees.json', function(employees) {
-    //     this.employees = employees;
-    //   }.bind(this));
-    // },
+    mounted: function() {
+      $.get('/api/v1/employees.json', function(employees) {
+        this.employees = employees;
+      }.bind(this));
+    },
 
     methods: {
 
