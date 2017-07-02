@@ -24,13 +24,13 @@ Rails.application.routes.draw do
   patch '/employees/:id' => 'employees#update'
   delete 'employees/:id' => 'employees#destroy'
 
-  get '/availability' => 'availability#index'
+  get '/employees/:user_id/availability/' => 'availability#index'
   get '/availability/new' => 'availability#new'
   post '/availability' => 'availability#create'
-  get '/availability/:id' => 'availability#show'
-  get '/availability/:id/edit' => 'availability#edit'
-  patch '/availability/:id' => 'availability#update'
-  delete 'availability/:id' => 'availability#destroy'
+  get '/employees/:user_id/availability/:id' => 'availability#show'
+  get '/employees/:user_id/availability/:id/edit' => 'availability#edit'
+  patch '/employees/:user_id/availability/:id' => 'availability#update'
+  delete '/employees/:user_id/availability/:id' => 'availability#destroy'
 
   get '/shifts' => 'shifts#index'
   get '/shifts/new' => 'shifts#new'

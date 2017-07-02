@@ -39,33 +39,33 @@ class Shift < ApplicationRecord
   def time_of_shift
 
 
-    if time_start.localtime.hour > 12
+    if time_start.hour > 12
       am_pm = 'PM'
     else
       am_pm = 'AM'
     end
 
-    starting_hour = time_start.localtime.hour % 12
+    starting_hour = time_start.hour % 12
 
-    if time_start.localtime.min < 10
-      starting_min = "0#{time_start.localtime.min}"
+    if time_start.min < 10
+      starting_min = "0#{time_start.min}"
     else
-      starting_min = time_start.localtime.min
+      starting_min = time_start.min
     end
 
     start = "#{starting_hour}:#{starting_min}#{am_pm}"
 
-    if time_end.localtime.hour > 12
+    if time_end.hour > 12
       am_pm = 'PM'
     else
       am_pm = 'AM'
     end
-    ending_hour = time_end.localtime.hour % 12
+    ending_hour = time_end.hour % 12
 
-    if time_end.localtime.min < 10
-      end_min = "0#{time_end.localtime.min}"
+    if time_end.min < 10
+      end_min = "0#{time_end.min}"
     else
-      end_min = time_end.localtime.min
+      end_min = time_end.min
     end
 
     ending_time = "#{ending_hour}:#{end_min}#{am_pm}"

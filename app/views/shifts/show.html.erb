@@ -156,7 +156,7 @@
 <br>
 <h1><!%= @shift.day_of_week.capitalize %>, <!%= @shift.date.strftime('%b %d') %>
 
-<!%= @shift.time_start.localtime.strftime('%I:%M %p') %> - <!%= @shift.time_end.localtime.strftime('%I:%M %p') %>
+<!%= @shift.time_start.strftime('%I:%M %p') %> - <!%= @shift.time_end.strftime('%I:%M %p') %>
 </h1>
 
 <!% if current_user.is_admin? %>

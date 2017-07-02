@@ -1,9 +1,13 @@
 <h1>Shifts:</h1>
 
+<h3>
+  <%= link_to "Add New Shift", '/shifts/new' %>
+</h3>
+
 <% @shifts.each do |shift| %>
 
   <div>
-   <a href="/shifts/<%= shift.id %>"><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d, %Y') %></a> -- <%= shift.time_start.localtime.strftime('%I:%M %p') %> --- <%= shift.time_end.localtime.strftime('%I:%M %p') %>
+   <a href="/shifts/<%= shift.id %>"><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d, %Y') %></a> -- <%= shift.time_start.strftime('%I:%M %p') %> --- <%= shift.time_end.strftime('%I:%M %p') %>
   </div>
   <br>
 

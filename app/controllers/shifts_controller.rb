@@ -1,5 +1,5 @@
 class ShiftsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_admin!
 
 
   def index
@@ -13,12 +13,12 @@ class ShiftsController < ApplicationController
 
   def create
 
-    date = Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start])
+    date = Time.utc(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start])
 
     shift = Shift.new(
                       day_of_week: date.strftime('%A').downcase,
                       time_start: date,
-                      time_end: Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_end], params[:min_end]),
+                      time_end: Time.utc(params[:year_start], params[:month_start], params[:day_start], params[:hour_end], params[:min_end]),
                       title: params[:title],
                       is_recurring?: params[:is_recurring?],
                       date: date,
@@ -60,13 +60,13 @@ class ShiftsController < ApplicationController
     shift = Shift.find(params[:id])
 
 
-    date = Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start])
+    date = Time.utc(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start])
 
 
     shift.update_attributes(
                             day_of_week: date.strftime('%A').downcase,
                             time_start: date,
-                            time_end: Time.local(2000,1,1, params[:hour_end], params[:min_end]),
+                            time_end: Time.utc(2000,1,1, params[:hour_end], params[:min_end]),
                             title: params[:title],
                             is_recurring?: params[:is_recurring?],
                             date: date,

@@ -2,7 +2,7 @@
 
 <div id="employees">
 
-  <h1><strong>Employees:</strong></h1>
+  <h1><strong>Employees of <%= current_user.company.name %>:</strong></h1>
   <% if current_user.is_admin? %>
     <div>
       Jump To: <span v-for="position in employees"><a v-bind:href="'#' + position.name"><button>{{position.name}}</button> </a></span>

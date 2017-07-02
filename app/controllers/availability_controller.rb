@@ -2,7 +2,13 @@ class AvailabilityController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @availabilities = Availability.where(employee_id: current_user.id)
+    if current_user.id == params[:user_id].to_i || current_user.is_admin?
+      @availabilities = Availability.where(employee_id: params[:user_id])
+      @employee = Employee.find(params[:user_id])
+    else
+      redirect_to '/'
+    end
+
   end
 
   def new
@@ -10,8 +16,8 @@ class AvailabilityController < ApplicationController
 
   def create
 
-    date_start = Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start] )
-    date_end = Time.local(params[:year_end], params[:month_end], params[:day_end], params[:hour_end], params[:min_end] )
+    date_start = Time.utc(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start] )
+    date_end = Time.utc(params[:year_end], params[:month_end], params[:day_end], params[:hour_end], params[:min_end] )
 
     availability = Availability.new(
                                     day_of_week: params[:day_of_week].downcase,
@@ -31,18 +37,30 @@ class AvailabilityController < ApplicationController
   end
 
   def show
-    @availability = Availability.find(params[:id])
+    if current_user.id == params[:user_id].to_i || current_user.is_admin?
+      @availability = Availability.find(params[:id])
+    else
+      redirect_to '/'
+    end
   end
 
   def edit
-    @availability = Availability.find(params[:id])
+    if current_user.id == params[:user_id].to_i
+      @availability = Availability.find(params[:id])
+    else
+      redirect_to "employees/#{params[:user_id]}/availability"
+    end
   end
 
   def update
-    availability = Availability.find(params[:id])
+    if current_user.id == params[:user_id].to_i
+      availability = Availability.find(params[:id])
+    else
+      redirect_to "/employees/#{params[:user_id]}/availability"
+    end
 
-    date_start = Time.local(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start] )
-    date_end = Time.local(params[:year_end], params[:month_end], params[:day_end], params[:hour_end], params[:min_end] )
+    date_start = Time.utc(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start] )
+    date_end = Time.utc(params[:year_end], params[:month_end], params[:day_end], params[:hour_end], params[:min_end] )
 
     availability.assign_attributes(
                                    day_of_week: params[:day_of_week].downcase,

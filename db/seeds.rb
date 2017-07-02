@@ -70,37 +70,37 @@
 #     )
 # end
 
-# days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-# date_start = Time.local(2015, 1, 1, 7, 0)
-# date_end = Time.local(2025, 12, 25, 17, 59)
+days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+date_start = Time.utc(2015, 1, 1, 7, 0)
+date_end = Time.utc(2025, 12, 25, 17, 59)
 
 
-# Employee.all.each do |employee|
-#     days.each do |day|
-#         Availability.create!(day_of_week: day,
-#                              time_start: date_start,
-#                              time_end: date_end,
-#                              start_date: date_start,
-#                              end_date: date_end,
-#                              employee_id: employee.id,
-#                              company_id: company.id
-#                              )
-#     end
-# end
+Employee.all.each do |employee|
+    5.times do
+        Availability.create!(day_of_week: days.sample,
+                             time_start: date_start,
+                             time_end: date_end,
+                             start_date: date_start,
+                             end_date: date_end,
+                             employee_id: employee.id,
+                             company_id: 1
+                             )
+    end
+end
 
-Employee.create(
-                first_name: "Chris",
-                last_name: 'Bateson',
-                email: "cpbateson@gmail.com",
-                address: Faker::Address.street_address,
-                address2: Faker::Address.secondary_address,
-                city: Faker::Address.city,
-                state: Faker::Address.state,
-                zip: Faker::Address.zip_code,
-                position_id: 1,
-                phone: Faker::PhoneNumber.phone_number,
-                company_id: 1,
-                password: "password",
-                is_admin?: true,
-                is_manager?: true
-  )
+# Employee.create(
+#                 first_name: "Chris",
+#                 last_name: 'Bateson',
+#                 email: "cpbateson@gmail.com",
+#                 address: Faker::Address.street_address,
+#                 address2: Faker::Address.secondary_address,
+#                 city: Faker::Address.city,
+#                 state: Faker::Address.state,
+#                 zip: Faker::Address.zip_code,
+#                 position_id: 1,
+#                 phone: Faker::PhoneNumber.phone_number,
+#                 company_id: 1,
+#                 password: "password",
+#                 is_admin?: true,
+#                 is_manager?: true
+#   )

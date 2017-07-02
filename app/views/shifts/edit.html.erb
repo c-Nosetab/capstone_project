@@ -27,25 +27,25 @@
   <div>
     <select name="hour_start">
         <%= (0..23).each do |hour| %>
-          <option <%= "selected" if hour == @shift.time_start.localtime.hour %>><%= hour %></option>
+          <option <%= "selected" if hour == @shift.time_start.hour %>><%= hour %></option>
         <% end %>
       </select>
       :
       <select name="min_start">
         <%= (00..59).each do |min| %>
-          <option <%= "selected" if min == @shift.time_start.localtime.min %>><%= min %></option>
+          <option <%= "selected" if min == @shift.time_start.min %>><%= min %></option>
         <% end %>
       </select>
       ---
     <select name="hour_end">
       <%= (0..23).each do |hour| %>
-        <option <%= "selected" if hour == @shift.time_end.localtime.hour %>><%= hour %></option>
+        <option <%= "selected" if hour == @shift.time_end.hour %>><%= hour %></option>
       <% end %>
     </select>
     :
     <select name="min_end">
       <%= (00..59).each do |min| %>
-        <option <%= "selected" if min == @shift.time_end.localtime.min %>><%= min %></option>
+        <option <%= "selected" if min == @shift.time_end.min %>><%= min %></option>
       <% end %>
     </select>
 

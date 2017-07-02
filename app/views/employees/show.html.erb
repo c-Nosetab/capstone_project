@@ -6,7 +6,7 @@
   <ul>
     <% @employee.shifts.each do |shift| %>
       <% if shift.date > Time.now %>
-       <li><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d') %> -- <%= shift.time_start.localtime.strftime('%I:%M %p') %> -- <%= shift.time_end.localtime.strftime('%I:%M %p') %></li>
+       <li><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d') %> -- <%= shift.time_start.strftime('%I:%M %p') %> -- <%= shift.time_end.strftime('%I:%M %p') %></li>
       <% end %>
     <% end %>
   </ul>
@@ -45,11 +45,12 @@
   <br>
 
   <% if current_user.id == @employee.id%>
-    <h2><a href="/availability/">See Current Availability</a></h2>
+    <h2><a href="/employees/<%= @employee.id %>/availability">See Current Availability</a></h2>
     <br>
     <%= link_to "Edit Your Info", "/employees/#{@employee.id}/edit" %>
   <% elsif current_user.is_admin?%>
-    <%= link_to "Edit Employee Position", "/employees/#{@employee.id}/edit" %>
+    <h3><%= link_to "See Employee Availability", "/employees/#{@employee.id}/availability" %></h3>
+    <%= link_to "Change Employee Position", "/employees/#{@employee.id}/edit" %> |
     <%= link_to "Delete", "/employees/#{@employee.id}", method: :delete %>
   <% end %>
 
