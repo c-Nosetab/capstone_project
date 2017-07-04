@@ -75,5 +75,9 @@ class Shift < ApplicationRecord
 
   end
 
+  def find_duration
+    ((time_end - time_start)/ 3600).to_f
+  end
+
 
 end
