@@ -4,13 +4,13 @@ $(document).ready(function(){
 
   // Nav Sticky
 
-  $(window).scroll(function(){
-    if($(window).scrollTop() > 500 && !$('.mobile-toggle').is(":visible")){
-      $('.top-bar').addClass('nav-sticky');
-    }else{
-      $('.top-bar').removeClass('nav-sticky');
-    }
-  });
+  // $(window).scroll(function(){
+  //   if($(window).scrollTop() > 500 && !$('.mobile-toggle').is(":visible")){
+  //     $('.top-bar').addClass('nav-sticky');
+  //   }else{
+  //     $('.top-bar').removeClass('nav-sticky');
+  //   }
+  // });
 
   // Offscreen Nav
 
@@ -140,11 +140,11 @@ $(document).ready(function(){
 
   // Scroll Reveal
 
-  if (!(/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
-       window.scrollReveal = new scrollReveal();
-    }else{
-      $('body').addClass('pointer');
-    }
+  // if (!(/Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i).test(navigator.userAgent || navigator.vendor || window.opera)) {
+  //      window.scrollReveal = new scrollReveal();
+  //   }else{
+  //     $('body').addClass('pointer');
+  //   }
 
   // Slider Initializations
 

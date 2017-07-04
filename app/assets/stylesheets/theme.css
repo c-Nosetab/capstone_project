@@ -444,6 +444,8 @@ nav hr {
   bottom: 20px;
   margin-bottom: -20px;
 }
+
+
 .nav-sticky .logo-wide {
   bottom: 12px !important;
 }
@@ -709,6 +711,14 @@ nav hr {
   transform: translate3d(-300px, 0, 0);
 }
 @media all and (max-width: 768px) {
+
+  .logo.logo-square {
+    max-width: 100px;
+    max-height: 60px;
+    bottom: 20px;
+    margin-bottom: 20px;
+  }
+
   .offscreen-menu {
     overflow: visible !important;
     position: relative !important;
