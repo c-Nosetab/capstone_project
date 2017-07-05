@@ -14,5 +14,6 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require vue
+//= require d3
 //= require_tree .
 

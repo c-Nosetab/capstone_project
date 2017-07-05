@@ -53,6 +53,8 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
 
+  get '/company/:company_id/data' => 'data_visuals#index'
+
 
   namespace :api do
     namespace :v1 do

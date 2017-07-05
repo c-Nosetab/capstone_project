@@ -79,5 +79,10 @@ class Shift < ApplicationRecord
     ((time_end - time_start)/ 3600).to_f
   end
 
+  def get_month
+
+
+  end
+
 
 end

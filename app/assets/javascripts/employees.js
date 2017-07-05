@@ -15,12 +15,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
     },
 
     mounted: function() {
-      $.get('/api/v1/employees.json', function(employees) {
-        this.employees = employees;
-      }.bind(this));
+      var test = $(location).attr('href').split('/').splice(3,2)
+        if (test[0] === "employees") {
+          this.getInfo()
+        }
     },
 
     methods: {
+
+      getInfo: function() {
+        $.get('/api/v1/employees.json', function(employees) {
+          this.employees = employees;
+        }.bind(this));
+      },
 
       addEmployee: function() {
         var params = {

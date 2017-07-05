@@ -11,6 +11,8 @@ gem 'vuejs-rails'
 
 # Calendar stuff
 
+gem 'd3-rails'
+
 gem 'faker'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

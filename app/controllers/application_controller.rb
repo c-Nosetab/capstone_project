@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
     end
     helper_method :current_user
 
+    # def shift_today
+    #   @employee_shifts = Employee_shifts.where(employee_id: current_user.id) if current_user
+
+    # end
+    # helper_method :employee_shifts
+
   private
 
     def authenticate_user!
@@ -16,5 +22,7 @@ class ApplicationController < ActionController::Base
     def authenticate_admin!
       redirect_to '/' unless current_user && current_user.is_admin?
     end
+
+
 
 end

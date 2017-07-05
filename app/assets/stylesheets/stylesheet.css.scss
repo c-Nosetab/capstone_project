@@ -14,3 +14,22 @@ div.test h2:before {
 h2.modal-title {
   font-weight: bolder;
 }
+
+
+.shift-today {
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  margin: 10px 20px;
+  padding: 10px;
+  background: #E75858;
+  border-radius: 20px;
+}
+
+.shift-today a {
+  color: white;
+}
+
+.shift-today a:hover {
+  color: yellow;
+}

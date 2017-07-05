@@ -51,4 +51,12 @@ class Employee < ApplicationRecord
     EmployeeShift.find_by(employee_id: id, shift_id: shift_id).id
   end
 
+  def find_average_monthly_shifts
+       (employee_shifts.count /  ((Time.now.year * 12 + Time.now.month) - (created_at.year * 12 + created_at.month).to_f)).round(2)
+  end
+
+  def shift_today
+    EmployeeShift.where(employee_id: id && :date == Date.today.day)
+  end
+
 end

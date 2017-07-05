@@ -74,6 +74,7 @@
                   <% if current_user.is_admin? %>
                     <li class="has-dropdown"><a href="#">Admin Controls</a>
                       <ul class="subnav">
+                        <li><a href="/company/<%= current_user.company_id %>/data">Company Data</a></li>
                         <li><a href="/shifts/new">Add Shift</a></li>
                         <li><a href="/shifts">See Shifts</a></li>
                         <li><a href="#">---</a></li>
@@ -81,10 +82,6 @@
                         <li><a href="/positions">See Positions</a></li>
                         <li><a href="#">---</a></li>
                         <li><a href="/employees/new">Add Employee</a></li>
-                        <li><a href="#">------------</a></li>
-                        <li data-toggle="modal" data-target="#empModal"><a href="#">Add Employee Modal</a></li>
-                        <li data-toggle="modal" data-target="#posModal"><a href="#">Add Position Modal</a></li>
-                        <li data-toggle="modal" data-target="#shiftModal"><a href="#">Add Shift Modal</a></li>
 
 
                       </ul>
@@ -279,148 +276,6 @@
 
     <!-- Modal's listed below -->
 
-    <div class="modal fade" id="empModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 class="modal-title" id="myModalLabel" style="font-weight: bold;">Add Employee</h2>
-          </div>
-          <div class="modal-body">
-            <%= form_tag '/employees', method: :post do %>
-              <br>
-              <div>
-                <h5>First Name: <input type="text" name="first_name">
-                <h5>Last Name: <input type="text" name="last_name"></h5>
-              </div>
-              <br>
-              <div>
-                <h5>Email: <input type="text" name="email"></h5>
-              </div>
-              <br>
-              <div>
-                <h5>Manager: <input id="pet_dog" name="is_manager?" type="checkbox" value="true" /></h5>
-                <h5>Admin: <input id="pet_dog" name="is_admin?" type="checkbox" value="true" /></h5>
-              <br>
-              <% if current_user && current_user.is_admin? %>
-                <h5>Position:</h5>
-              </div>
-              <div>
-                  <% Position.where(company_id: current_user.company_id).each do |pos| %>
-                    <input id="position_id" name="position_id" type="radio" value="<%= pos.id %>" />
-                    <label for="position_id"><h6><%= pos.position_name %> </h6></label>
-                  <% end %>
-              <% end %>
-              </div>
-              <br>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <input type="submit" value="Add Employee">
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="posModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 class="modal-title" id="myModalLabel">Add Position</h2>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="shiftModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 class="modal-title" id="myModalLabel">Add Shift</h2>
-          </div>
-          <div class="modal-body">
-            <%= form_tag '/shifts', method: :post do %>
-               Date of Shift:
-               <br>
-               Month:
-              <select name="month_start">
-                <% (1..12).each do |month| %>
-                  <option <%= "selected" if month == Time.now.month %>> <%= month %></option>
-                <% end %>
-              </select>
-              Day:
-              <select name="day_start">
-                <% (1..31).each do |day| %>
-                  <option <%= "selected" if day == Time.now.day %> > <%= day %> </option>
-                <% end %>
-              </select>
-              Year:
-              <select name="year_start">
-                <% ((Time.now.year)..(Time.now.year + 5)).each do |year| %>
-                  <option><%= year %></option>
-                <% end %>
-              </select>
-              <br><br>
-
-              Time:
-              <div>
-                <select name="hour_start">
-                  <%= (0..23).each do |hour| %>
-                    <option <%= "selected" if hour == 8 %>><%= hour %></option>
-                  <% end %>
-                </select>
-                :
-                <select name="min_start">
-                  <%= (00..59).each do |min| %>
-                    <option><%= min %></option>
-                  <% end %>
-                </select>
-                  ---
-                <select name="hour_end">
-                  <%= (0..23).each do |hour| %>
-                    <option <%= "selected" if hour == 16 %>><%= hour %></option>
-                  <% end %>
-                </select>
-                :
-                <select name="min_end">
-                  <%= (00..59).each do |min| %>
-                    <option><%= min %></option>
-                  <% end %>
-                </select>
-
-              </div>
-              <div>
-
-              </div>
-
-              <br>
-              <div class="col-sm-12">
-                <span class="col-sm-offset-9">
-                </span>
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <!-- <button type="button" class="btn btn-default">Save changes</button> -->
-            <%= submit_tag "Submit" %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
 
 
 
@@ -441,6 +296,12 @@
         <script src="/js/lightbox.min.js"></script>
         <script src="/js/jquery.countdown.min.js"></script>
         <!-- <script src="/js/scripts.js"></script> -->
+
+        <script>
+        // d3.select('#viz').append('div').text('Hello World!');
+        </script>
+
+
   </body>
 
 
