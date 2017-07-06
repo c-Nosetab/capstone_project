@@ -5,7 +5,17 @@ $.ajaxSetup({
 });
 
 
+
 document.addEventListener('DOMContentLoaded', function(event) {
+
+  var test = $(location).attr('href').split('/').splice(3,2)
+
+  if(test[0] == "shifts" && test.length === 2) {
+    doTheVue();
+
+  }
+
+function doTheVue() {
 
   var app = new Vue({
     el: '#shifts',
@@ -100,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
       },
 
       unassignEmployee: function(employee, pos_index, emp_index) {
-        console.log("running")
         this.errors = []
         var params = {
                       employeeId: employee.id,
@@ -209,7 +218,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
       var test = $(location).attr('href').split('/').splice(3,2)
 
       if(test[0] == "shifts" && test.length === 2) {
-        console.log("running")
         this.segment = test[1]
         this.initialPositions();
       }
@@ -220,4 +228,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     },
   });
+
+}
 });
