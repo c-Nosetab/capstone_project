@@ -24,9 +24,9 @@ function findData(id) {
             url: "/api/v1/data/" + id,
             dataType: 'json',
             success: function(data) {
-              drawBarGraph(data);
-              // drawBubblePlot(data);
-              drawPieChart(data);
+              // drawBarGraph(data);
+              drawBubblePlot(data);
+              // drawPieChart(data);
             },
             error: function(result) {
               error();
@@ -178,30 +178,96 @@ function drawBarGraph(barData) {
 
 function drawBubblePlot(bubble_data) {
 
+  employee_data = []
 
+  for (var i = 0; i < bubble_data.employees.length; i++) {
+    var object = {
+                  name: bubble_data.employees[i].name,
+                  position: bubble_data.employees[i].position,
+                  average_month_shifts: bubble_data.employees[i].average_shifts_per_month
+                  };
 
-  var employees = []
-
-  for (var i = 0; i < data.employees.length; i++) {
-    var object = {name: data.employees[i].name, average: parseInt(data.employees[i].average_shifts_per_month)};
-    employees.push(object);
+    employee_data.push(object)
   }
 
+  var maxValue,
+      minValue;
 
-  console.log(employees[0].name)
+  findMax(employee_data)
 
 
-  var diameter = 600;
+  function findMax(d) {
+    currentMax = 0
+    currentMin = 10000000000
+    for (var i = 0; i < d.length; i++) {
+      if (d[i].average_month_shifts > currentMax) {
+        currentMax = d[i].average_month_shifts;
+      }
 
-  var svg = d3.select('#bubble_plot').append('svg')
-          .attr('width', diameter)
-          .attr('height', diameter)
-          .style('background', 'white');
+      if (d[i].average_month_shifts < currentMin) {
+        currentMin = d[i].average_month_shifts;
+      }
+    }
+    minValue = currentMin
+    maxValue = currentMax
+  };
 
-  var bubble = d3.layout.pack()
-        .size([diameter, diameter])
-        .value(function(d) {return d.size;})
-        .padding(3);
+
+  console.log(maxValue)
+  console.log(minValue)
+
+
+  var width = 500,
+      height = 500;
+
+  var svg = d3.select('#bubble_plot')
+    .append('svg')
+    .attr('height', height)
+    .attr('width', width)
+    .append('g')
+      .attr('transform', 'translate(0,0)')
+
+
+  var radiusScale = d3.scaleSqrt().domain([minValue, maxValue]).range(10,80)
+
+
+  //the simulation is a collection of forces
+  //about where we want our circles to go
+  // and how we want our circles to interact
+  //Step 1, get them to the middle
+  //Step 2, get them to not collide
+  var simulation = d3.forceSimulation()
+    .force('x', d3.forceX(width / 2).strength(0.05))
+    .force('y', d3.forceY(height / 2).strength(0.05))
+    .force('collide', d3.forceCollide(11))
+
+  var circles = svg.selectAll('.employees')
+    .data(employee_data)
+    .enter()
+    .append('circle')
+      .attr('class', 'employees')
+      .attr('r', function(d) {
+        return radiusScale(d.average_month_shifts)
+      })
+      .attr('fill', 'lightblue')
+
+  simulation.nodes(employee_data)
+    .on('tick', ticked)
+
+  function ticked() {
+    circles
+      .attr('cx', function(d) {
+        return d.x
+      })
+      .attr('cy', function(d) {
+        return d.y
+      })
+  }
+
+// https://www.youtube.com/watch?v=lPr60pexvEM
+
+
+
 }
 
 //---------------------------------------#########################################################
