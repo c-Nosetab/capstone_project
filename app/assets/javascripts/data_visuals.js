@@ -15,8 +15,6 @@ var test = $(location).attr('href').split('/').splice(4,2)
        findData(companyId);
     }
 
-
-
 function findData(id) {
     $.ajax({
             type: "GET",
@@ -24,9 +22,9 @@ function findData(id) {
             url: "/api/v1/data/" + id,
             dataType: 'json',
             success: function(data) {
-              // drawBarGraph(data);
+              drawBarGraph(data);
               drawBubblePlot(data);
-              // drawPieChart(data);
+              drawPieChart(data);
             },
             error: function(result) {
               error();
@@ -100,8 +98,8 @@ function drawBarGraph(barData) {
         .ticks(2)
 
       colors = d3.scaleLinear()
-          .domain([0, 7, d3.max(monthData)])
-          .range(['#B58929', '#C61C6F', '#85992C'])
+          .domain([0, (d3.max(monthData) / 2), d3.max(monthData)])
+          .range(['lightblue', '#9ECAE1',  '#3182BD'])
 
       tooltip = d3.select('body')
                       .append('div')
@@ -173,104 +171,6 @@ function drawBarGraph(barData) {
         .duration(1000)
         .ease(d3.easeBounceOut)
 }
-
-//---------------------------------------#########################################################
-
-function drawBubblePlot(bubble_data) {
-
-  employee_data = []
-
-  for (var i = 0; i < bubble_data.employees.length; i++) {
-    var object = {
-                  name: bubble_data.employees[i].name,
-                  position: bubble_data.employees[i].position,
-                  average_month_shifts: bubble_data.employees[i].average_shifts_per_month
-                  };
-
-    employee_data.push(object)
-  }
-
-  var maxValue,
-      minValue;
-
-  findMax(employee_data)
-
-
-  function findMax(d) {
-    currentMax = 0
-    currentMin = 10000000000
-    for (var i = 0; i < d.length; i++) {
-      if (d[i].average_month_shifts > currentMax) {
-        currentMax = d[i].average_month_shifts;
-      }
-
-      if (d[i].average_month_shifts < currentMin) {
-        currentMin = d[i].average_month_shifts;
-      }
-    }
-    minValue = currentMin
-    maxValue = currentMax
-  };
-
-
-  console.log(maxValue)
-  console.log(minValue)
-
-
-  var width = 500,
-      height = 500;
-
-  var svg = d3.select('#bubble_plot')
-    .append('svg')
-    .attr('height', height)
-    .attr('width', width)
-    .append('g')
-      .attr('transform', 'translate(0,0)')
-
-
-  var radiusScale = d3.scaleSqrt().domain([minValue, maxValue]).range(10,80)
-
-
-  //the simulation is a collection of forces
-  //about where we want our circles to go
-  // and how we want our circles to interact
-  //Step 1, get them to the middle
-  //Step 2, get them to not collide
-  var simulation = d3.forceSimulation()
-    .force('x', d3.forceX(width / 2).strength(0.05))
-    .force('y', d3.forceY(height / 2).strength(0.05))
-    .force('collide', d3.forceCollide(11))
-
-  var circles = svg.selectAll('.employees')
-    .data(employee_data)
-    .enter()
-    .append('circle')
-      .attr('class', 'employees')
-      .attr('r', function(d) {
-        return radiusScale(d.average_month_shifts)
-      })
-      .attr('fill', 'lightblue')
-
-  simulation.nodes(employee_data)
-    .on('tick', ticked)
-
-  function ticked() {
-    circles
-      .attr('cx', function(d) {
-        return d.x
-      })
-      .attr('cy', function(d) {
-        return d.y
-      })
-  }
-
-// https://www.youtube.com/watch?v=lPr60pexvEM
-
-
-
-}
-
-//---------------------------------------#########################################################
 
 function drawPieChart(pie_data) {
   'use strict';
@@ -358,7 +258,6 @@ function drawPieChart(pie_data) {
     .style('stroke', colors)
     .style('cursor', 'pointer')
     .style('stroke-width', "2")
-
     .on('click', function(name) {
       var rect = d3.select(this),
           enabled = true;
@@ -452,73 +351,135 @@ function drawPieChart(pie_data) {
 
   tooltip.append('div')
     .attr('class', 'percent');
-
-
-
-  path.transition()
-        .duration(750)
-        .attrTween('d', function(d) {
-          var interpolate = d3.interpolate(this._current, d);
-          this._current = interpolate(0)
-          return function(t) {
-            return arc(interpolate(t));
-          };
-        });
 }
 
-//---------------------------------------#########################################################
+function drawBubblePlot(bubble_data) {
+
+  var employee_data = []
+
+  var maxValue = bubble_data.employees[0].average_shifts_per_month
+  var minValue = bubble_data.employees[0].average_shifts_per_month
+
+  for (var i = 0; i < bubble_data.employees.length; i++) {
+
+    var initials = bubble_data.employees[i].name.split(' ')
+
+
+    var object = {
+                  name: bubble_data.employees[i].name,
+                  position: bubble_data.employees[i].position,
+                  average_per_month: bubble_data.employees[i].average_shifts_per_month,
+                  initials: initials[0][0] + "." + initials[1][0] + '.'
+
+
+      }
+      if (object.average_per_month > maxValue) {
+        maxValue = object.average_per_month
+      }
+
+      if (object.average_per_month < minValue) {
+        minValue = object.average_per_month
+      }
+      if (object.average_per_month > 0) {
+        employee_data.push(object);
+
+      }
+  }
+
+
+  // ---------###############--------------
+  // Start making the circles
+  var width = 900,
+      height = 500;
+
+  var svg = d3.select('#bubble_chart')
+    .append('svg')
+      .attr('height', height)
+      .attr('width', width)
+      .append('g')
+        .attr('transform', 'translate(0,0)')
+
+  var colors = d3.scaleOrdinal(d3.schemeCategory20c)
+
+
+  var radiusScale = d3.scaleSqrt()
+    .domain([minValue, maxValue])
+    .range([15, 80])
+
+  // the simulation is a collection of forces about where
+  // we want our circles to go and how we want them to interact
+  // with each other.
+  // STEP 1: move items to the middle
+  // STEP 2: get them off each other.
+  var simulation = d3.forceSimulation()
+    .force('x', d3.forceX(width / 2).strength(0.05))
+    .force('y', d3.forceY(height / 2).strength(0.15))
+    .force('collide', d3.forceCollide(function(d) {
+      return radiusScale(d.average_per_month) + 0.5
+    }))
+
+
+
+  var circles = svg.selectAll('.employees')
+    .data(employee_data)
+    .enter()
+    .append('circle')
+      .attr('class', 'employees')
+      .attr('r', function(d) {
+        return radiusScale(d.average_per_month)
+      })
+      .attr('fill', function(d) {
+        return colors(d.position)
+      })
+      .on('click', function(d) {
+        console.log(d);
+      })
+
+  //add names to the circles
+  var labels = svg.selectAll('circles')
+    .data(employee_data)
+    .enter()
+    .append('text')
+      .attr('class', 'employee-label')
+      .attr('text-anchor', 'middle')
+      .attr('fill', 'black')
+      .attr('font-size', '12px')
+      .style('font-weight', 'bold')
+      .text(function(d) {
+        return d.initials;
+      })
+
+
+
+
+
+  simulation.nodes(employee_data)
+    .on('tick', ticked)
+
+  function ticked() {
+    circles
+      .attr('cx', function(d) {
+        return d.x
+      })
+      .attr('cy', function(d){
+        return d.y
+      })
+    labels
+      .attr('x', function(d) {
+        return d.x;
+      })
+      .attr('y', function(d){
+        return d.y + 5;
+      })
+  }
+}
+
 
 
 
 
 
 });
-
-
-
-// (function() {
-
-//   // Fake JSON data
-//   var json = {"countries_msg_vol": {
-//     "CA": 170, "US": 393, "BB": 12, "CU": 9, "BR": 89, "MX": 192, "PY": 32, "UY": 9, "VE": 25, "BG": 42, "CZ": 12, "HU": 7, "RU": 184, "FI": 42, "GB": 162, "IT": 87, "ES": 65, "FR": 42, "DE": 102, "NL": 12, "CN": 92, "JP": 65, "KR": 87, "TW": 9, "IN": 98, "SG": 32, "ID": 4, "MY": 7, "VN": 8, "AU": 129, "NZ": 65, "GU": 11, "EG": 18, "LY": 4, "ZA": 76, "A1": 2, "Other": 254
-//   }};
-
-//   // D3 Bubble Chart
-
-
-
-//   // generate data with calculated layout values
-//   // var nodes = bubble.nodes(processData(json))
-//   //           .filter(function(d) { return !d.children; }); // filter out the outer bubble
-
-//   // var vis = svg.selectAll('circle')
-//   //         .data(nodes);
-
-//   // vis.enter().append('circle')
-//   //     .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
-//   //     .attr('r', function(d) { return d.r; })
-//   //     .attr('class', function(d) { return d.className; });
-
-//   // function processData(data) {
-//     var obj = json.countries_msg_vol;
-
-//     var newDataSet = [];
-
-//     for(var prop in obj) {
-//       newDataSet.push({name: prop, className: prop.toLowerCase(), size: obj[prop]});
-//     }
-//     console.log(newDataSet)
-//   // },
-
-
-
-
-
-
-
-
-
-
 
 
 // })();
