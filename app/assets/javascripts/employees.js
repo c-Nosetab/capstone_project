@@ -1,12 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
 
-  var test = $(location).attr('href').split('/').splice(3,2)
-
-    if (test[0][0] === "e") {
       doTheVue();
-    }
-
 function doTheVue() {
   var app = new Vue({
     el: "#employees",
@@ -24,10 +19,8 @@ function doTheVue() {
     },
 
     mounted: function() {
-      var test = $(location).attr('href').split('/').splice(3,2)
-        if (test[0] === "employees") {
           this.getInfo()
-        }
+
     },
 
     methods: {

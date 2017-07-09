@@ -65,7 +65,6 @@ function drawBarGraph(barData) {
    months.push(barData.shifts[0].months[i].month);
   }
 
-  console.log(monthData)
 
 
 
@@ -389,7 +388,7 @@ function drawBubblePlot(bubble_data) {
 
   // ---------###############--------------
   // Start making the circles
-  var width = 900,
+  var width = 1000,
       height = 500;
 
   var svg = d3.select('#bubble_chart')
@@ -399,7 +398,15 @@ function drawBubblePlot(bubble_data) {
       .append('g')
         .attr('transform', 'translate(0,0)')
 
-  var colors = d3.scaleOrdinal(d3.schemeCategory20c)
+  var colors = d3.scaleOrdinal(d3.schemeCategory20)
+
+  tooltip = d3.select('body')
+    .append('div')
+      .style('position', 'absolute')
+      .style('box-shadow', '0 0 5px #999')
+      .style('padding', '0 10px')
+      .style('background', 'white')
+      .style('opacity', 0);
 
 
   var radiusScale = d3.scaleSqrt()
@@ -415,7 +422,7 @@ function drawBubblePlot(bubble_data) {
     .force('x', d3.forceX(width / 2).strength(0.05))
     .force('y', d3.forceY(height / 2).strength(0.15))
     .force('collide', d3.forceCollide(function(d) {
-      return radiusScale(d.average_per_month) + 0.5
+      return radiusScale(d.average_per_month) + 1
     }))
 
 
@@ -431,8 +438,24 @@ function drawBubblePlot(bubble_data) {
       .attr('fill', function(d) {
         return colors(d.position)
       })
-      .on('click', function(d) {
-        console.log(d);
+      .on('mouseover', function(d) {
+
+        tooltip.transition().duration(200)
+          .style('opacity', .9)
+
+        tooltip.html(
+          '<div style="font-weight: bold; font-size: 1.5rem;">' + d.name + ': ' + d.position + '</div><div style="font-size: 1.5rem;">' + d.average_per_month + ' shifts per month</div>'
+          )
+          .style('left', (d3.event.pageX -35) + 'px')
+          .style('top', (d3.event.pageY - 50) + 'px')
+          .style('border')
+
+      })
+      .on('mouseout', function(d) {
+        tooltip.transition().duration(200)
+          .style('opacity', 0);
+
+        tooltip.html('')
       })
 
   //add names to the circles
@@ -472,6 +495,40 @@ function drawBubblePlot(bubble_data) {
         return d.y + 5;
       })
   }
+
+
+  var  legendRectSize = 18,
+       legendSpacing = 4;
+
+  var legend = svg.selectAll('.legend')
+    .data(colors.domain())
+    .enter()
+    .append('g')
+      .attr('class', 'legend')
+      .attr('transform', function(d, i) {
+        var height = i * 25 + legendSpacing
+        var width = legendRectSize + 5
+        return 'translate(' + width + ',' + height + ')'
+      });
+
+
+  legend.append('rect')
+    .attr('width', legendRectSize)
+    .attr('height', legendRectSize)
+    .style('fill', colors)
+    .style('stroke', colors)
+    .style('cursor', 'pointer')
+    .style('stroke-width', "2")
+
+
+  legend.append('text')
+    .attr('x', legendRectSize + legendSpacing)
+    .attr('y', legendRectSize - legendSpacing)
+    .style('font-size', '12px')
+    .text(function(d) { return d; });
+
+
+
 }
 
 
@@ -480,6 +537,3 @@ function drawBubblePlot(bubble_data) {
 
 
 });
-
-
-// })();
