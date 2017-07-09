@@ -315,7 +315,7 @@ function drawPieChart(pie_data) {
     .style('color', 'black')
     .style('display', 'none')
     .style('font-size', '12px')
-    .style('left', '230px')
+    .style('left', '370px')
     .style('padding', '10px')
     .style('position', 'absolute')
     .style('text-align', 'center')
@@ -325,22 +325,6 @@ function drawPieChart(pie_data) {
 
 
 
-
-    // .pieTip {
-    //    background: #eee;
-    //    border-radius: 5px solid #999;
-    //    color: #333;
-    //    display: none;
-    //    font-size: 12px;
-    //    left: 130px;
-    //    padding: 10px;
-    //    position: absolute;
-    //    text-align: center;
-    //    top: 95px;
-    //    width: 80px;
-    //    z-index: 10;
-
-    //  }
 
   tooltip.append('div')
     .attr('class', 'pieLabel');
@@ -422,7 +406,7 @@ function drawBubblePlot(bubble_data) {
     .force('x', d3.forceX(width / 2).strength(0.05))
     .force('y', d3.forceY(height / 2).strength(0.15))
     .force('collide', d3.forceCollide(function(d) {
-      return radiusScale(d.average_per_month) + 1
+      return radiusScale(d.average_per_month) + 0.5
     }))
 
 
