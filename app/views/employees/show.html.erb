@@ -49,6 +49,10 @@
   <br>
 
   <% if current_user.id == @employee.id%>
+    <%= form_tag "/employees/#{@employee.id}/image", multipart: true do %>
+      <%= label_tag "Update Profile Picture:" %> <%= file_field_tag "image" %>
+      <%= submit_tag "Update Image" %>
+    <% end %>
     <h2><a href="/employees/<%= @employee.id %>/availability">See Current Availability</a></h2>
     <br>
     <%= link_to "Edit Your Info", "/employees/#{@employee.id}/edit" %>
@@ -56,10 +60,6 @@
     <h3><%= link_to "See Employee Availability", "/employees/#{@employee.id}/availability" %></h3>
     <%= link_to "Change Employee Position", "/employees/#{@employee.id}/edit" %> |
     <%= link_to "Delete", "/employees/#{@employee.id}", method: :delete %>
+
+
   <% end %>
-
-
-
-
-
-<div id="calendar"></div>

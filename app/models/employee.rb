@@ -11,6 +11,17 @@ class Employee < ApplicationRecord
   belongs_to :company
 
 
+  # This method associates the attribute ":image" with a file attachment
+  has_attached_file :image, :styles => { :medium => "300x300#", :thumb => "200x200#" }
+
+  validates_attachment :image, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
+
+
+
+
+
+
+
   def full_name
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
