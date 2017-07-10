@@ -323,9 +323,6 @@ function drawPieChart(pie_data) {
     .style('width', '100px')
     .style('z-index', '10');
 
-
-
-
   tooltip.append('div')
     .attr('class', 'pieLabel');
 
@@ -352,7 +349,8 @@ function drawBubblePlot(bubble_data) {
                   name: bubble_data.employees[i].name,
                   position: bubble_data.employees[i].position,
                   average_per_month: bubble_data.employees[i].average_shifts_per_month,
-                  initials: initials[0][0] + "." + initials[1][0] + '.'
+                  initials: initials[0][0] + "." + initials[1][0] + '.',
+                  selected: true
 
 
       }
@@ -395,21 +393,31 @@ function drawBubblePlot(bubble_data) {
 
   var radiusScale = d3.scaleSqrt()
     .domain([minValue, maxValue])
-    .range([15, 80])
+    .range([15, 70])
 
   // the simulation is a collection of forces about where
   // we want our circles to go and how we want them to interact
   // with each other.
   // STEP 1: move items to the middle
   // STEP 2: get them off each other.
+
+
+
+  var goAway = d3.forceX(function(d) {
+    if (d.selected === true) {
+      return width / 2
+    } else {
+      return 2000
+    }
+  })
+
+
   var simulation = d3.forceSimulation()
     .force('x', d3.forceX(width / 2).strength(0.05))
     .force('y', d3.forceY(height / 2).strength(0.15))
     .force('collide', d3.forceCollide(function(d) {
-      return radiusScale(d.average_per_month) + 0.5
+      return radiusScale(d.average_per_month) + 1
     }))
-
-
 
   var circles = svg.selectAll('.employees')
     .data(employee_data)
@@ -428,7 +436,7 @@ function drawBubblePlot(bubble_data) {
           .style('opacity', .9)
 
         tooltip.html(
-          '<div style="font-weight: bold; font-size: 1.5rem;">' + d.name + ': ' + d.position + '</div><div style="font-size: 1.5rem;">' + d.average_per_month + ' shifts per month</div>'
+          '<div style="font-weight: bold; font-size: 1.5rem;">' + d.name + ': ' + d.position + '</div><div style="font-size: 1.5rem;">' + d.average_per_month + ' shifts per month </div>'
           )
           .style('left', (d3.event.pageX -35) + 'px')
           .style('top', (d3.event.pageY - 50) + 'px')
@@ -457,9 +465,6 @@ function drawBubblePlot(bubble_data) {
       })
 
 
-
-
-
   simulation.nodes(employee_data)
     .on('tick', ticked)
 
@@ -480,7 +485,6 @@ function drawBubblePlot(bubble_data) {
       })
   }
 
-
   var  legendRectSize = 18,
        legendSpacing = 4;
 
@@ -488,6 +492,7 @@ function drawBubblePlot(bubble_data) {
     .data(colors.domain())
     .enter()
     .append('g')
+      .style('cursor', 'pointer')
       .attr('class', 'legend')
       .attr('transform', function(d, i) {
         var height = i * 25 + legendSpacing
@@ -496,23 +501,63 @@ function drawBubblePlot(bubble_data) {
       });
 
 
+
   legend.append('rect')
     .attr('width', legendRectSize)
     .attr('height', legendRectSize)
     .style('fill', colors)
     .style('stroke', colors)
-    .style('cursor', 'pointer')
     .style('stroke-width', "2")
+    .on('click', function(d) {
+      var item = d3.select(this)
+          selected = true;
 
+      function flyAway() {
+        simulation
+          .force('x', goAway.strength(0.03))
+          .force('collide', d3.forceCollide(function(d) {
+                return (radiusScale(d.average_per_month) + 1 )
+              }).iterations(20))
+          .alphaTarget(0.5)
+          .restart()
+      }
+
+
+      if (item.attr('class') === 'disabled'){
+        item.attr('class', '')
+        item.style('fill', colors)
+
+        for(var i = 0; i < employee_data.length; i++) {
+          if(employee_data[i].position === d) {
+            employee_data[i].selected = true;
+          }
+        }
+
+        flyAway();
+      } else {
+
+        for(var i = 0; i < employee_data.length; i++) {
+          if(employee_data[i].position === d) {
+            employee_data[i].selected = false;
+          }
+        }
+
+        item.attr('class', 'disabled')
+        item.style('fill', 'transparent')
+
+
+
+        flyAway();
+      }
+
+
+    });
 
   legend.append('text')
     .attr('x', legendRectSize + legendSpacing)
     .attr('y', legendRectSize - legendSpacing)
     .style('font-size', '12px')
     .text(function(d) { return d; });
-
-
-
 }
 
 
