@@ -89,7 +89,7 @@
                   <% end %>
 
 
-                  <li class="has-dropdown"><a href="/employees/<%= current_user.id %>">Signed in as: <%= current_user.full_name %></a>
+                  <li class="has-dropdown"><a href="/employees/<%= current_user.id %>"> <%= current_user.full_name %></a>
                     <ul class="subnav">
                       <li><a href="/employees/<%= current_user.id %>/edit">Edit Profile Info</a></li>
                       <li><a href="/availability">Edit Availability</a></li>

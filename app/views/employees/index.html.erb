@@ -17,23 +17,22 @@
       <div class='row employee-index'>
         <% @employees.select{|emp| emp.position_id == position.id && emp.is_manager?}.each do |employee| %>
             <div class="employee-index-photo col-sm-1 col-md-1">
-              <a href="/employees/<%= employee.id %>">
                 <% if employee.image_file_name %>
                   <div class="true">
-                    <%= image_tag employee.image.url(:thumb) %></span>r
+                    <a href="/employees/<%= employee.id %>">
+                      <%= image_tag employee.image.url(:thumb) %></span>
+                    </a>
                   </div>
                 <% else %>
-                  <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+                  <a href="/employees/<%= employee.id %>">
+                    <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+                  </a>
                 <% end %>
               </a>
             </div>
             <div class="employee-index-text col-sm-11 col-md-5">
               <h4><a href="/employees/<%= employee.id %>"><strong>
-                <% if employee.is_manager? %>
                   MANAGER - <%=  employee.full_name %>
-                <% else %>
-                  <%= employee.full_name %>
-                <% end %>
               </strong></a></h4>
               <h4>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h4>
               <h4>Phone: <%= employee.phone %></h4>
@@ -45,9 +44,15 @@
         <% @employees.select{|emp| emp.position_id == position.id && !emp.is_manager?}.each do |employee| %>
             <div class="employee-index-photo col-sm-1 col-md-1">
               <% if employee.image_file_name %>
-                <%= image_tag employee.image.url(:thumb) %>
+                <div class="true">
+                  <a href="/employees/<%= employee.id %>">
+                    <%= image_tag employee.image.url(:thumb) %></span>
+                  </a>
+                </div>
               <% else %>
-                <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+                <a href="/employees/<%= employee.id %>">
+                  <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+                </a>
               <% end %>
             </div>
             <div class="employee-index-text col-sm-11 col-md-5">
