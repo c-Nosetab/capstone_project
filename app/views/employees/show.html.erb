@@ -1,4 +1,4 @@
-<% if current_user.id == @employee.id%>
+<% if current_user.id == @employee.id || current_user.is_admin? || current_user.is_manager? %>
   <h2 style="text-decoration: underline;">Upcoming Shifts:</h2>
   <br>
   <div class='row'>
@@ -19,12 +19,10 @@
               <% else %>
                 <td>
               <% end %>
-
-
                 <% @shifts.order(:time_start).select{|shift| shift.date == (Time.utc(@time.year, @time.month, @time.day)+ index.days)}.each do |shift| %>
                   <div class="calendar-text">
                     <ul>
-                      <li style="text-align: left"><%= shift.time_start.strftime('%l:%M %p') %> - <%= shift.time_end.strftime('%l:%M %p') %></li>
+                      <li><%= shift.time_start.strftime('%l:%M %p') %> - <%= shift.time_end.strftime('%l:%M %p') %></li>
                     </ul>
                   </div>
                 <% end %>
@@ -32,7 +30,7 @@
             <% end %>
           </tr>
         </table>
-          <h4 style="text-align: right; padding-top: 5px;"><a href="/employees/<%= @employee.id %>/availability">See Current Availability</a></h4>
+          <h4 style="text-align: right; padding-top: 5px;"><a href="/employees/<%= @employee.id %>/availability">Set Current Availability</a></h4>
         </div>
       </div>
   </table>
@@ -48,7 +46,7 @@
         <% end %>
       <% end %>
     </ul>
-    <h4 style=" padding-top: 5px;"><a href="/employees/<%= @employee.id %>/availability">See Current Availability</a></h4>
+    <h4 style=" padding-top: 5px;"><a href="/employees/<%= @employee.id %>/availability">Set Current Availability</a></h4>
   </div>
 
   <hr>
@@ -64,7 +62,6 @@
 
 <h1 style="text-decoration: underline; margin-bottom: 5px;">Employee Info:</h1>
 
-<% if current_user.id == @employee.id  || current_user.is_manager? || current_user.is_admin? %>
   <div class="employee-show row" style="line-height: 12px">
     <div class="col-lg-3 col-md-6 col-xs-12 employee-photo-show">
       <% if @employee.image_file_name %>
@@ -92,7 +89,7 @@
       <% end %>
     </div>
   </div>
-<% end %>
+
 
   <br>
   <% if current_user.id == @employee.id%>
