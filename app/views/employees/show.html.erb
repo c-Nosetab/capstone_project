@@ -1,70 +1,108 @@
-<h1 style="text-decoration: underline;">Employee Info:</h1>
-
-
-<% if current_user.id == @employee.id  || current_user.is_manager? || current_user.is_admin? %>
-
-
-
-<div class="employee-show row" style="line-height: 12px">
-  <div class="col-lg-3 col-md-6 col-sm-12 employee-photo-show">
-    <% if @employee.image_file_name %>
-      <%= image_tag @employee.image.url(:thumb) %>
-    <% else %>
-      <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
-    <% end %>
-  </div>
-  <div class="col-lg-8 col-md-6 col-sm-12 employee-text-show">
-    <h3><strong><%= "#{@employee.first_name.capitalize} #{@employee.last_name.capitalize} - #{@employee.manager?} #{@employee.position.position_name}" %></strong></h3>
-    <h3>Email: <a href="mailto:<%= @employee.email %>"><%= @employee.email %></a></h3>
-    <h3>Phone: <%= @employee.phone %></h3>
-  <br>
-    <% if current_user.is_admin? || current_user.id == @employee.id %>
-      <div class="address">
-        <h6>Address:</h6>
-        <h6><%= "#{@employee.address}, #{@employee.address2}" %></h6>
-        <h6><%= "#{@employee.city}, #{@employee.state} #{@employee.zip}" %></h6>
-      </div>
-    <% end %>
-  </div>
-
-  </div>
-  <br>
+<% if current_user.id == @employee.id%>
   <h2 style="text-decoration: underline;">Upcoming Shifts:</h2>
-  <ul>
-    <% @employee.shifts.where(:date => (Date.today - 1.week)..Time.now + 1.month).order(:date).each do |shift| %>
-      <% if shift.date >= (Time.now - 1.day) %>
-        <% if shift.date.month == Date.today.month && shift.date.day == Date.today.day %>
-          <li class="shift-today"><strong>SHIFT IS TODAY</strong> - <%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d') %> -- <%= shift.time_start.strftime('%l:%M %p') %> -- <%= shift.time_end.strftime('%l:%M %p') %></li>
-        <% else %>
-         <li><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d') %> -- <%= shift.time_start.strftime('%l:%M %p') %> -- <%= shift.time_end.strftime('%l:%M %p') %></li>
+  <br>
+  <div class='row'>
+    <div class="col-sm-12">
+      <div class="larger-size">
+        <table>
+          <tr>
+          <% 7.times do |index| %>
+            <th><%= (Time.utc(@time.year, @time.month, @time.day) + index.days).strftime('%A') %> - <%= (Time.utc(@time.year, @time.month, @time.day) + index.days).day %></th>
+          <% end %>
+          </tr>
+          <tr>
+            <% 7.times do |index| %>
+              <% if (@time + index.days).day == Time.now.day %>
+                <td class="today">
+              <% elsif (@time + index.days).day < Time.now.day && Time.now.month == (Time.utc(@time.year, @time.month, @time.day) + index.days).month %>
+                <td class="past">
+              <% else %>
+                <td>
+              <% end %>
+
+
+                <% @shifts.order(:time_start).select{|shift| shift.date == (Time.utc(@time.year, @time.month, @time.day)+ index.days)}.each do |shift| %>
+                  <div class="calendar-text">
+                    <ul>
+                      <li style="text-align: left"><%= shift.time_start.strftime('%l:%M %p') %> - <%= shift.time_end.strftime('%l:%M %p') %></li>
+                    </ul>
+                  </div>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        </table>
+          <h4 style="text-align: right; padding-top: 5px;"><a href="/employees/<%= @employee.id %>/availability">See Current Availability</a></h4>
+        </div>
+      </div>
+  </table>
+</div>
+
+  <div class="smaller-size">
+    <ul>
+      <% @shifts.select{|shift| shift.date > @time - 1.day && shift.date < @time + 2.weeks}.each do |shift| %>
+          <% if shift.date.month == Date.today.month && shift.date.day == Date.today.day %>
+            <li class="shift-today"><strong>SHIFT IS TODAY</strong> - <%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d') %> -- <%= shift.time_start.strftime('%l:%M %p') %> -- <%= shift.time_end.strftime('%l:%M %p') %></li>
+          <% else %>
+           <li><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d') %> -- <%= shift.time_start.strftime('%l:%M %p') %> -- <%= shift.time_end.strftime('%l:%M %p') %></li>
         <% end %>
       <% end %>
-    <% end %>
-  </ul>
+    </ul>
+    <h4 style=" padding-top: 5px;"><a href="/employees/<%= @employee.id %>/availability">See Current Availability</a></h4>
+  </div>
+
   <hr>
 <% end %>
 
 
+
+
+
+
+
+
+
+<h1 style="text-decoration: underline; margin-bottom: 5px;">Employee Info:</h1>
+
+<% if current_user.id == @employee.id  || current_user.is_manager? || current_user.is_admin? %>
+  <div class="employee-show row" style="line-height: 12px">
+    <div class="col-lg-3 col-md-6 col-xs-12 employee-photo-show">
+      <% if @employee.image_file_name %>
+        <div class='true'>
+          <%= image_tag @employee.image.url(:thumb) %>
+        </div>
+      <% else %>
+        <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+      <% end %>
+    </div>
+    <div class="col-lg-8 col-md-6 col-xs-12 employee-text-show">
+      <h3><strong><%= "#{@employee.first_name.capitalize} #{@employee.last_name.capitalize} - #{@employee.manager?} #{@employee.position.position_name}" %></strong></h3>
+      <h3>Email: <a href="mailto:<%= @employee.email %>"><%= @employee.email %></a></h3>
+      <h3>Phone: <%= @employee.phone %></h3>
+      <br>
+      <% if current_user.is_admin? || current_user.id == @employee.id %>
+        <div class="address">
+          <h6>Address:</h6>
+          <h6><%= "#{@employee.address}, #{@employee.address2}" %></h6>
+          <h6><%= "#{@employee.city}, #{@employee.state} #{@employee.zip}" %></h6>
+          <% if current_user.id == @employee.id %>
+            <%= link_to "Edit Info", "/employees/#{@employee.id}/edit" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+  <br>
   <% if current_user.id == @employee.id%>
-
-
-
     <%= form_for @employee, url: update_image_path, html: {multipart: true} do |f| %>
-      <%= label_tag "Update Profile Picture:" %> <%= f.file_field :image %>
+      <%= label_tag "Change Image:" %> <%= f.file_field :image %>
       <%= submit_tag "Update Image" %>
     <% end %>
-
-
-
-
-
-    <h2><a href="/employees/<%= @employee.id %>/availability">See Current Availability</a></h2>
-    <br>
-    <%= link_to "Edit Your Info", "/employees/#{@employee.id}/edit" %>
   <% elsif current_user.is_admin?%>
     <h3><%= link_to "See Employee Availability", "/employees/#{@employee.id}/availability" %></h3>
     <%= link_to "Change Employee Position", "/employees/#{@employee.id}/edit" %> |
     <%= link_to "Delete", "/employees/#{@employee.id}", method: :delete %>
-
 
   <% end %>

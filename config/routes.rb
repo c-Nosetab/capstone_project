@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   delete 'employees/:id' => 'employees#destroy'
 
   get '/employees/:user_id/availability/' => 'availability#index'
-  get '/availability/new' => 'availability#new'
+  get '/employees/:user_id/availability/new' => 'availability#new'
   post '/availability' => 'availability#create'
   get '/employees/:user_id/availability/:id' => 'availability#show'
   get '/employees/:user_id/availability/:id/edit' => 'availability#edit'

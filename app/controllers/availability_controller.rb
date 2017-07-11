@@ -29,10 +29,10 @@ class AvailabilityController < ApplicationController
                                     )
     if availability.save
       flash[:success] = "Availability added"
-      redirect_to "/availability/#{availability.id}"
+      redirect_to "/employees/#{current_user.id}/availability/#{availability.id}"
     else
       flash[:warning] = "Something went wrong, please try again."
-      redirect_to "/availability/new"
+      redirect_to "/employees/#{current_user.id}/availability/new"
     end
   end
 
@@ -71,10 +71,10 @@ class AvailabilityController < ApplicationController
                                   )
     if availability.save
       flash[:success] = "Availability updated!"
-      redirect_to "/availability/#{availability.id}"
+      redirect_to "/employees/#{current_user.id}/availability/#{availability.id}"
     else
       flash[:warning] = "Something went wrong, please try again."
-      redirect_to "/availability/#{availability.id}"
+      redirect_to "/employees/#{current_user.id}availability/#{availability.id}"
     end
 
   end
@@ -84,10 +84,10 @@ class AvailabilityController < ApplicationController
 
     if availability.delete
       flash[:success] = "Availability successfully deleted!"
-      redirect_to "/availability"
+      redirect_to "/employees/#{current_user.id}/availability"
     else
       flash[:warning] = "Something went wrong, please try again."
-      redirect_to "/availability/#{availability.id}"
+      redirect_to "/employees/#{current_user.id}/availability/#{availability.id}"
     end
   end
 
