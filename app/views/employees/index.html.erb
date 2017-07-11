@@ -4,18 +4,77 @@
 
   <h1><strong>Employees of <%= current_user.company.name %>:</strong></h1>
   <% if current_user.is_admin? %>
-    <div>
+    <div style="padding-left: 3px">
       Jump To: <span v-for="position in employees"><a v-bind:href="'#' + position.name"><button>{{position.name}}</button> </a></span>
     </div>
     <br>
   <% end %>
 
+  <div class='test'>
+    <% @positions.each do |position| %>
+      <h2 class="test2" style="text-decoration: underline;" id="<%= position.position_name %>"><strong><%= position.position_name %>:</strong></h2>
 
-  <div v-for="position in employees" class="test">
+      <div class='row employee-index'>
+        <% @employees.select{|emp| emp.position_id == position.id && emp.is_manager?}.each do |employee| %>
+            <div class="employee-index-photo col-sm-1 col-md-1">
+              <a href="/employees/<%= employee.id %>">
+                <% if employee.image_file_name %>
+                  <%= image_tag employee.image.url(:thumb) %></span>
+                <% else %>
+                  <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+                <% end %>
+              </a>
+            </div>
+            <div class="employee-index-text col-sm-11 col-md-5">
+              <h4><a href="/employees/<%= employee.id %>"><strong>
+                <% if employee.is_manager? %>
+                  MANAGER - <%=  employee.full_name %>
+                <% else %>
+                  <%= employee.full_name %>
+                <% end %>
+              </strong></a></h4>
+              <h4>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h4>
+              <h4>Phone: <%= employee.phone %></h4>
+              <hr>
+            </div>
+        <% end %>
+
+
+        <% @employees.select{|emp| emp.position_id == position.id && !emp.is_manager?}.each do |employee| %>
+            <div class="employee-index-photo col-sm-1 col-md-1">
+              <% if employee.image_file_name %>
+                <%= image_tag employee.image.url(:thumb) %>
+              <% else %>
+                <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+              <% end %>
+            </div>
+            <div class="employee-index-text col-sm-11 col-md-5">
+              <h4><a href="/employees/<%= employee.id %>"><strong>
+                <% if employee.is_manager? %>
+                  MANAGER - <%=  employee.full_name %>
+                <% else %>
+                  <%= employee.full_name %>
+                <% end %>
+              </strong></a></h4>
+              <h4>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h4>
+              <h4>Phone: <%= employee.phone %></h4>
+              <hr>
+            </div>
+        <% end %>
+        <hr>
+        <h5 class="col-sm-12" style="text-align: right;"><a href="#top">Back to Top</a></h5>
+        <br>
+        <br>
+      </div>
+    <% end %>
+
+
+  <!-- <div v-for="position in employees" class="test">
       <h2 class="test2" v-bind:id="position.name" style="text-decoration: underline;"><strong>{{position.name}}:</strong></h2>
     <div class="row">
       <br>
       <div v-for="employee in position.managers" class="col-sm-12, col-md-6">
+
         <h4><strong><a v-bind:href="'/employees/' + employee.id"><span v-if="employee.manager">MANAGER - </span>{{employee.full_name}}</a></strong></h4>
         <h4>Email: <a v-bind:href="'mailto:' + employee.email">{{employee.email}}</a></h4>
         <h4>Phone: {{employee.phone}}</h4>
@@ -33,26 +92,4 @@
         <br>
   </div>
 </div>
-
-
-
-<div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <h4>First Name: <input type="text" v-model="newFirstName"> </h4>
-        <h4>Last Name: <input type="text" v-model="newLastName"></h4>
-        <h4>Email: <input type="text" v-model="newEmail"></h4>
-        <h4>Position: <input type="text" v-model="newPositionId"></h4>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" v-on:click="addEmployee()">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+ -->

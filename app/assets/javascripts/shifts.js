@@ -9,7 +9,6 @@ $.ajaxSetup({
 document.addEventListener('DOMContentLoaded', function(event) {
 
 
-
     var app = new Vue({
       el: '#shifts',
 
@@ -208,13 +207,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
       mounted: function() {
         var test = $(location).attr('href').split('/').splice(3,2)
 
-        if(test[0] == "shifts" && test.length === 2) {
-          this.segment = test[1]
-          this.initialPositions();
-        }
-
-
-
+          if(test[0] == "shifts" && test.length === 2) {
+            this.segment = test[1]
+            this.initialPositions();
+          }
 
 
       },

@@ -1,7 +1,34 @@
+<h1 style="text-decoration: underline;">Employee Info:</h1>
+
 
 <% if current_user.id == @employee.id  || current_user.is_manager? || current_user.is_admin? %>
 
 
+
+<div class="employee-show row" style="line-height: 12px">
+  <div class="col-lg-3 col-md-6 col-sm-12 employee-photo-show">
+    <% if @employee.image_file_name %>
+      <%= image_tag @employee.image.url(:thumb) %>
+    <% else %>
+      <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+    <% end %>
+  </div>
+  <div class="col-lg-8 col-md-6 col-sm-12 employee-text-show">
+    <h3><strong><%= "#{@employee.first_name.capitalize} #{@employee.last_name.capitalize} - #{@employee.manager?} #{@employee.position.position_name}" %></strong></h3>
+    <h3>Email: <a href="mailto:<%= @employee.email %>"><%= @employee.email %></a></h3>
+    <h3>Phone: <%= @employee.phone %></h3>
+  <br>
+    <% if current_user.is_admin? || current_user.id == @employee.id %>
+      <div class="address">
+        <h6>Address:</h6>
+        <h6><%= "#{@employee.address}, #{@employee.address2}" %></h6>
+        <h6><%= "#{@employee.city}, #{@employee.state} #{@employee.zip}" %></h6>
+      </div>
+    <% end %>
+  </div>
+
+  </div>
+  <br>
   <h2 style="text-decoration: underline;">Upcoming Shifts:</h2>
   <ul>
     <% @employee.shifts.where(:date => (Date.today - 1.week)..Time.now + 1.month).order(:date).each do |shift| %>
@@ -17,42 +44,6 @@
   <hr>
 <% end %>
 
-<div class="employee" style="line-height: 12px">
-    <% if @employee.id == current_user.id %>
-      <h3 style="text-decoration: underline;">Your Current Info:</h3>
-      <br>
-    <% else %>
-      <h3 style="text-decoration: underline;">Employee Info:</h3>
-      <br>
-    <% end %>
-    <h3><strong><%= "#{@employee.first_name.capitalize} #{@employee.last_name.capitalize} - #{@employee.manager?} #{@employee.position.position_name}" %></strong></h3>
-    <h3>Email: <%= @employee.email %></h3>
-    <h3>Phone: <%= @employee.phone %></h3>
-
-    <% if current_user.is_admin? || current_user.id == @employee.id %>
-      <h3>Address</h3>
-      <div class="address" style="line-height: 20px;">
-        <ul>
-          <li><%= "#{@employee.address}, #{@employee.address2}" %></li>
-          <li><%= "#{@employee.city}, #{@employee.state} #{@employee.zip}" %></li>
-        </ul>
-      </div>
-    <% end %>
-  </div>
-
-  <% if current_user.is_admin? %>
-    Admin?: <%= @employee.is_admin? %>
-  <% end %>
-  <br>
-  <%= image_tag @employee.image.url(:thumb) %>
-  <br>
-  <%= @employee.image.url(:original) %>
-  <br>
-
-  <p>https://s3.us-east-2.amazonaws.com/on-the-dot-photos/employees/images/000/000/034/original/Chris_Bateson_Headshots-1360.jpg</p>
-
-  <br>
-  <br>
 
   <% if current_user.id == @employee.id%>
 

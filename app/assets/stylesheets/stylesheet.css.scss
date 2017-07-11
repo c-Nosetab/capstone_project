@@ -15,6 +15,10 @@ h2.modal-title {
   font-weight: bolder;
 }
 
+.test h2 {
+  padding-bottom: 20px;
+}
+
 
 .shift-today {
   color: white;
@@ -32,4 +36,46 @@ h2.modal-title {
 
 .shift-today a:hover {
   color: yellow;
+}
+
+.employee-show{
+  height: 220px;
+  padding: 10px 0px;
+}
+
+.employee-photo-show {
+}
+
+.employee-text-show {
+  display: inline-block;
+  padding-top: 15px;
+}
+
+.index-container {
+  height: 100px;
+}
+
+.employee-index-photo {
+
+}
+
+
+
+.address h6 {
+  line-height: 5px
+}
+
+.employee-index {
+  margin-right: 15px;
+}
+
+.employee-index img {
+  border-radius: 30px;
+  margin-top: 5px;
+  margin-left: 15px;
+
+}
+
+.true {
+  box-shadow: 0 0 3px #999;
 }
