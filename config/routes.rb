@@ -56,6 +56,10 @@ Rails.application.routes.draw do
   get '/company/:company_id/data' => 'data_visuals#index'
 
 
+  patch '/employees/:id/image', to: 'images#update', as: :update_image
+  delete 'employees/:id/image' => 'images#destroy'
+
+
   namespace :api do
     namespace :v1 do
       get '/employees' => 'employees#index'

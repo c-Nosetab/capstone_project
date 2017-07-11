@@ -43,12 +43,30 @@
   <% if current_user.is_admin? %>
     Admin?: <%= @employee.is_admin? %>
   <% end %>
+  <br>
+  <%= image_tag @employee.image.url(:thumb) %>
+  <br>
+  <%= @employee.image.url(:original) %>
+  <br>
 
+  <p>https://s3.us-east-2.amazonaws.com/on-the-dot-photos/employees/images/000/000/034/original/Chris_Bateson_Headshots-1360.jpg</p>
 
   <br>
   <br>
 
   <% if current_user.id == @employee.id%>
+
+
+
+    <%= form_for @employee, url: update_image_path, html: {multipart: true} do |f| %>
+      <%= label_tag "Update Profile Picture:" %> <%= f.file_field :image %>
+      <%= submit_tag "Update Image" %>
+    <% end %>
+
+
+
+
+
     <h2><a href="/employees/<%= @employee.id %>/availability">See Current Availability</a></h2>
     <br>
     <%= link_to "Edit Your Info", "/employees/#{@employee.id}/edit" %>
@@ -56,10 +74,6 @@
     <h3><%= link_to "See Employee Availability", "/employees/#{@employee.id}/availability" %></h3>
     <%= link_to "Change Employee Position", "/employees/#{@employee.id}/edit" %> |
     <%= link_to "Delete", "/employees/#{@employee.id}", method: :delete %>
+
+
   <% end %>
-
-
-
-
-
-<div id="calendar"></div>

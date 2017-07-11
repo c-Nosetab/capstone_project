@@ -8,7 +8,7 @@ $.ajaxSetup({
 
 document.addEventListener('DOMContentLoaded', function(event) {
 
-if ($(location).attr('href').split('/').splice(3,2)[0] === 'shifts') {
+
 
     var app = new Vue({
       el: '#shifts',
@@ -75,11 +75,9 @@ if ($(location).attr('href').split('/').splice(3,2)[0] === 'shifts') {
               this. indexOfEmployee = i
             };
           };
-          console.log(this.shift.positions[position_index].unassigned_employees);
         },
 
         assignNewEmployee: function(position) {
-          console.log(position);
           this.errors = [];
 
           if (this.assignEmployee.id != null && this.assignEmployee.position === position) {
@@ -223,6 +221,5 @@ if ($(location).attr('href').split('/').splice(3,2)[0] === 'shifts') {
     });
 
 
-}
 
 });

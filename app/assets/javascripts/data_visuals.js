@@ -430,7 +430,7 @@ function drawBubblePlot(bubble_data) {
       .attr('fill', function(d) {
         return colors(d.position)
       })
-      .on('mouseover', function(d) {
+      .on('mouseenter', function(d) {
 
         tooltip.transition().duration(200)
           .style('opacity', .9)
