@@ -55,8 +55,8 @@ Rails.application.routes.draw do
 
   get '/company/:company_id/data' => 'data_visuals#index'
 
-  post '/employees/:id/image' => 'images#create'
-  patch '/employees/:id/image' => 'images#update'
+
+  patch '/employees/:id/image', to: 'images#update', as: :update_image
   delete 'employees/:id/image' => 'images#destroy'
 
 

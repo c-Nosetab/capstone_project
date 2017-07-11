@@ -1,21 +1,16 @@
 class ImagesController < ApplicationController
 
-
-  def create
-    @image = Image.new(
-
-      )
-  end
-
-
   def update
-
+    @employee = Employee.find(params[:id])
+    @employee.update( employee_params )
   end
 
 
-  def destroy
 
+  private
+
+  def employee_params
+    params.require(:employee).permit(:image)
   end
-
 
 end
