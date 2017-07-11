@@ -44,7 +44,9 @@
     Admin?: <%= @employee.is_admin? %>
   <% end %>
   <br>
-  <%= image_tag @employee.image.url(:original) %>
+  <%= image_tag @employee.image.url(:thumb) %>
+  <br>
+  <%= @employee.image.url(:original) %>
   <br>
 
   <p>https://s3.us-east-2.amazonaws.com/on-the-dot-photos/employees/images/000/000/034/original/Chris_Bateson_Headshots-1360.jpg</p>
