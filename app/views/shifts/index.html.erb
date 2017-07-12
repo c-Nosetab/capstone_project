@@ -1,6 +1,64 @@
 <h1>Shifts:</h1>
+
+  <div id="add-shift">
+    <button href="/shifts/new">Add New Shift</button>
+  </div>
+  <table>
+    <tr>
+      <th colspan="7" class="main-head-thing"><%= Time.now.strftime('%B') %></th>
+    </tr>
+    <tr>
+      <% 7.times do |index| %>
+        <th><%= (@time.sunday + index.days).strftime('%A') %></th>
+      <% end %>
+    </tr>
+
+
+    <tr>
+      <% if @skip_cells > 0 %>
+        <td colspan="<%= @skip_cells %>" class="non-date"></td>
+      <% end %>
+
+      <% (7 - @skip_cells ).times do |index| %>
+        <td>
+          <div class="container">
+            <p><%= index + 1%></p>
+          </div>
+        </td>
+      <% end %>
+    </tr>
+
+    <% 4.times do |index| %>
+      <tr>
+        <% 7.times do |index2| %>
+          <% if ((index2+1) + (index * 7) + 7) < (Time.now.at_end_of_month.day + 1) %>
+            <td>
+              <div class="container">
+                <p><%=  (index2+1) + (index * 7 ) + 7  %></p>
+                <h5>hi</5>
+              </div>
+
+            </td>
+
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+
+
+
+
+
+
+  </table>
+
+
+
+
+
+<br>
 <h3>
-  <%= link_to "Add New Shift", '/shifts/new' %>
+
 </h3>
 <br>
 

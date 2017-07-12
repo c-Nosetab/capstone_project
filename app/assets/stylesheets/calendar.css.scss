@@ -4,6 +4,17 @@ table {
     width: 100%;
     margin: 0 auto;
     box-shadow: 0 0 5px #999;
+    empty-cells: hide;
+}
+
+.non-date {
+  background: #F4F4F4;
+}
+
+th.main-header {
+  height: 25px;
+  font-size: 20px;
+  background: rgba(230, 200, 160, 0.6);
 }
 
 td, th {
@@ -22,6 +33,19 @@ td {
 .calendar-text {
   font-size: 12px;
 }
+
+div.container {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+div.container p{
+  text-align: left;
+  vertical-align: top;
+  padding: -5;
+}
+
 
 td.today {
   background: rgba(266, 90, 90, 0.2);
