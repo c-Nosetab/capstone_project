@@ -7,108 +7,17 @@
 <% end %>
 
 
-
-
-<% if @availabilities.where(day_of_week: 'monday').count > 0 %>
-  <h2>Monday Availability:</h2>
-  <ul>
-    <% @availabilities.where(day_of_week: 'monday').each do |avail| %>
-      <h3>
-      <%= avail.time_start.strftime('%l:%M %P') %> - <%= avail.time_end.strftime('%l:%M %P')  %> - Until <%= avail.end_date.strftime("%m/%m/%y") %>
-      <% if  current_user.id == params[:user_id].to_i %>
-        - <a href="/employees/<%= params[:user_id] %>/availability/<%= avail.id %>/edit">Edit Availability</a>
+  <% @days.each do |day| %>
+    <% if @availabilities.select{|avail| avail.day_of_week == day}.count > 0%>
+      <h2 style='text-decoration: underline;'><%= day.capitalize %></h2>
+      <% @availabilities.select{|avail| avail.day_of_week == day}.each do |avail|%>
+        <h3>
+          <%= avail.time_start.strftime('%l:%M %P') %> - <%= avail.time_end.strftime('%l:%M %P')  %> - Until <%= avail.end_date.strftime("%m/%m/%y") %>
+          <% if  current_user.id == params[:user_id].to_i %>
+            - <a href="/employees/<%= params[:user_id] %>/availability/<%= avail.id %>/edit">Edit</a>
+          <% end %>
+        </h3>
       <% end %>
-      </h3>
+      <hr>
     <% end %>
-  </ul>
-  <hr>
-<% end %>
-
-<% if @availabilities.where(day_of_week: 'tuesday').count > 0 %>
-  <h2>Tuesday Availability:</h2>
-  <ul>
-    <% @availabilities.where(day_of_week: 'tuesday').each do |avail| %>
-      <h3>
-      <%= avail.time_start.strftime('%l:%M %P') %> - <%= avail.time_end.strftime('%l:%M %P')  %> - Until <%= avail.end_date.strftime("%m/%m/%y") %>
-      <% if  current_user.id == params[:user_id].to_i %>
-        - <a href="/employees/<%= params[:user_id] %>/availability/<%= avail.id %>/edit">Edit Availability</a>
-      <% end %>
-      </h3>
-    <% end %>
-  </ul>
-  <hr>
-<% end %>
-
-<% if @availabilities.where(day_of_week: 'wednesday').count > 0 %>
-  <h2>Wednesday Availability:</h2>
-  <ul>
-    <% @availabilities.where(day_of_week: 'wednesday').each do |avail| %>
-      <h3>
-      <%= avail.time_start.strftime('%l:%M %P') %> - <%= avail.time_end.strftime('%l:%M %P')  %> - Until <%= avail.end_date.strftime("%m/%m/%y") %>
-      <% if  current_user.id == params[:user_id].to_i %>
-        - <a href="/employees/<%= params[:user_id] %>/availability/<%= avail.id %>/edit">Edit Availability</a>
-      <% end %>
-      </h3>
-    <% end %>
-  </ul>
-  <hr>
-<% end %>
-
-<% if @availabilities.where(day_of_week: 'thursday').count > 0 %>
-  <h2>Thursday Availability:</h2>
-  <ul>
-    <% @availabilities.where(day_of_week: 'thursday').each do |avail| %>
-      <h3>
-      <%= avail.time_start.strftime('%l:%M %P') %> - <%= avail.time_end.strftime('%l:%M %P')  %> - Until <%= avail.end_date.strftime("%m/%m/%y") %>
-      <% if  current_user.id == params[:user_id].to_i %>
-        - <a href="/employees/<%= params[:user_id] %>/availability/<%= avail.id %>/edit">Edit Availability</a>
-      <% end %>
-      </h3>
-    <% end %>
-  </ul>
-  <hr>
-<% end %>
-
-<% if @availabilities.where(day_of_week: 'friday').count > 0 %>
-  <h2>Friday Availability:</h2>
-  <ul>
-    <% @availabilities.where(day_of_week: 'friday').each do |avail| %>
-      <h3>
-      <%= avail.time_start.strftime('%l:%M %P') %> - <%= avail.time_end.strftime('%l:%M %P')  %> - Until <%= avail.end_date.strftime("%m/%m/%y") %>
-      <% if  current_user.id == params[:user_id].to_i %>
-        - <a href="/employees/<%= params[:user_id] %>/availability/<%= avail.id %>/edit">Edit Availability</a>
-      <% end %>
-      </h3>
-    <% end %>
-  </ul>
-  <hr>
-<% end %>
-
-<% if @availabilities.where(day_of_week: 'saturday').count > 0 %>
-  <h2>Saturday Availability:</h2>
-  <ul>
-    <% @availabilities.where(day_of_week: 'saturday').each do |avail| %>
-      <h3>
-      <%= avail.time_start.strftime('%l:%M %P') %> - <%= avail.time_end.strftime('%l:%M %P')  %> - Until <%= avail.end_date.strftime("%m/%m/%y") %>
-      <% if  current_user.id == params[:user_id].to_i %>
-        - <a href="/employees/<%= params[:user_id] %>/availability/<%= avail.id %>/edit">Edit Availability</a>
-      <% end %>
-      </h3>
-    <% end %>
-  </ul>
-  <hr>
-<% end %>
-
-<% if @availabilities.where(day_of_week: 'sunday').count > 0 %>
-  <h2>Sunday Availability:</h2>
-  <ul>
-    <% @availabilities.where(day_of_week: 'sunday').each do |avail| %>
-      <h3>
-      <%= avail.time_start.strftime('%l:%M %P') %> - <%= avail.time_end.strftime('%l:%M %P')  %> - Until <%= avail.end_date.strftime("%m/%m/%y") %>
-      <% if  current_user.id == params[:user_id].to_i %>
-        - <a href="/employees/<%= params[:user_id] %>/availability/<%= avail.id %>/edit">Edit Availability</a>
-      <% end %>
-      </h3>
-    <% end %>
-  </ul>
-<% end %>
+  <% end %>

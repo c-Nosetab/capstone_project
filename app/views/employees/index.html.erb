@@ -29,11 +29,7 @@
             </div>
             <div class="employee-index-text col-sm-11 col-md-5">
               <h4><a href="/employees/<%= employee.id %>"><strong>
-                <% if employee.is_manager? %>
                   MANAGER - <%=  employee.full_name %>
-                <% else %>
-                  <%= employee.full_name %>
-                <% end %>
               </strong></a></h4>
               <h4>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h4>
               <h4>Phone: <%= employee.phone %></h4>
@@ -44,20 +40,19 @@
 
         <% @employees.select{|emp| emp.position_id == position.id && !emp.is_manager?}.each do |employee| %>
             <div class="employee-index-photo col-sm-1 col-md-1">
-              <% if employee.image_file_name %>
-                <%= image_tag employee.image.url(:thumb) %>
-              <% else %>
-                <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
-              <% end %>
+              <a href="/employees/<%= employee.id %>">
+
+                <% if employee.image_file_name %>
+                  <%= image_tag employee.image.url(:thumb) %>
+                <% else %>
+                  <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+                <% end %>
+              </a>
             </div>
             <div class="employee-index-text col-sm-11 col-md-5">
-              <h4><a href="/employees/<%= employee.id %>"><strong>
-                <% if employee.is_manager? %>
-                  MANAGER - <%=  employee.full_name %>
-                <% else %>
-                  <%= employee.full_name %>
-                <% end %>
-              </strong></a></h4>
+
+              <h4><strong><a href="/employees/<%= employee.id %>"><%=  employee.full_name %></a></strong></h4>
+
               <h4>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h4>
               <h4>Phone: <%= employee.phone %></h4>
               <hr>

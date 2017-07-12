@@ -1,4 +1,4 @@
-<% if current_user.id == @employee.id%>
+<% if current_user.id == @employee.id || current_user.is_admin? || current_user.is_manager? %>
   <h2 style="text-decoration: underline;">Upcoming Shifts:</h2>
   <br>
   <div class='row'>

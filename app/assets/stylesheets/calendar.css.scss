@@ -7,11 +7,16 @@ table {
     empty-cells: hide;
 }
 
+#add-shift {
+  width: 100%;
+  text-align: right;
+}
+
 .non-date {
   background: #F4F4F4;
 }
 
-th.main-header {
+th.main-head-thing {
   height: 25px;
   font-size: 20px;
   background: rgba(230, 200, 160, 0.6);
@@ -34,16 +39,24 @@ td {
   font-size: 12px;
 }
 
-div.container {
+div.cal-container {
   height: 100%;
   width: 100%;
   padding: 0;
 }
 
-div.container p{
+div.cal-container p{
   text-align: left;
+  text-decoration: underline;
+
   vertical-align: top;
-  padding: -5;
+  margin: -15px 0 0px 0;
+
+}
+
+div.cal-container li {
+  font-size: 11px;
+  line-height: 18px;
 }
 
 
@@ -51,14 +64,20 @@ td.today {
   background: rgba(266, 90, 90, 0.2);
   font-weight: bold;
   box-shadow: 0 0 2px #999;
-  text-align: left;
+  text-align: center;
 
 }
 
 td.past {
   background: rgba(30,30,30, 0.05);
   color: rgba(80,80,80, 0.3);
+}
+
+
+td.past a {
+  color: rgba(35, 82, 124, 0.3);
   text-decoration: line-through;
+
 }
 
 .smaller-size {
