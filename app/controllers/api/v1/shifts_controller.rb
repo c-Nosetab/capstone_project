@@ -1,7 +1,8 @@
 class Api::V1::ShiftsController < ApplicationController
 
   def index
-    @shifts = Shift.where(company_id: current_user.company_id)
+    @shifts = Shift.where(company_id: current_user.company_id).order(:date)
+    # @shifts = shifts.select{|shift| shift.date > (Time.now - 2.months) && shift.date < (Time.now + 2.months)}
   end
 
   def show

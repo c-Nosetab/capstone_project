@@ -75,7 +75,7 @@
         <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
       <% end %>
     </div>
-    <div class="col-lg-8 col-md-6 col-xs-12 employee-text-show">
+    <div class="col-lg-7 col-md-6 col-xs-12 employee-text-show">
       <h3><strong><%= "#{@employee.first_name.capitalize} #{@employee.last_name.capitalize} - #{@employee.manager?} #{@employee.position.position_name}" %></strong></h3>
       <h3>Email: <a href="mailto:<%= @employee.email %>"><%= @employee.email %></a></h3>
       <h3>Phone: <%= @employee.phone %></h3>

@@ -1,7 +1,82 @@
 <h1>Shifts:</h1>
 
+
+
+
+
+  <div id="calendar">
+    <div id="add-shift">
+      <a href="/shifts/new">Add New Shift</a>
+    </div>
+    <table>
+  <!-- Month -->
+      <tr>
+        <th class="main-calendar-head"><button v-on:click="changeMonth(-1)"><</button></th>
+        <th colspan='5' class='main-calendar-head'>{{months[currentMonth]}} - {{currentYear}}</th>
+        <th class="main-calendar-head"><button v-on:click="changeMonth(1)">></button></th>
+
+      </tr>
+  <!-- Day Names -->
+      <tr>
+        <th v-for="n in 7">{{days[n - 1]}}</th>
+      </tr>
+
+  <!-- First Row of Days -->
+
+      <tr>
+        <span>
+          <td :colspan="firstOfMonth" class="non-date" v-if="firstOfMonth > 0"></td>
+        </span>
+
+        <div class="cal-container">
+          <td :class="findClass(new Date(currentYear, currentMonth, n))" v-for="n in (7-firstOfMonth)">
+            <div class="cal-container">
+              <p>{{n}}</p>
+                <ul>
+                  <li v-for="shift in filteredShifts" v-if="shift.day === n"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
+                </ul>
+            </div>
+          </td>
+        </div>
+      </tr>
+  <!-- Remaining Rows -->
+
+    <tr v-for="n1 in monthWeeks">
+      <td :class="findClass(new Date(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1)))))" v-for='n2 in 7' v-if="(count + (n2-1) + (7 * (n1 - 1))) <= lastOfMonth">
+        <div class="cal-container">
+          <p>{{count + (n2-1) + (7 * (n1 - 1))}}</p>
+          <ul>
+            <li v-for="shift in filteredShifts" v-if="shift.day === (count + (n2-1) + (7 * (n1 - 1)))"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+
+
+
+    </table>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- end of VUE -->
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
   <div id="add-shift">
-    <button href="/shifts/new">Add New Shift</button>
+    <a href="/shifts/new">Add New Shift</a>
   </div>
   <table>
     <tr>
@@ -66,13 +141,15 @@
         <% end %>
       </tr>
     <% end %>
-
-
-
-
-
-
   </table>
+
+
+
+
+
+
+
+
 
 
 
