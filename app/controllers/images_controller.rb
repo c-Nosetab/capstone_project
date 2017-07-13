@@ -2,7 +2,13 @@ class ImagesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
-    @employee.update( employee_params )
+    if @employee.update( employee_params )
+      flash[:success] = "Image Uploaded"
+      redirect_to "/employees/#{current_user.id}"
+    else
+      flash[:warning] = "Something went wrong, please try again"
+      redirect_to "/employees/#{current_user.id}"
+    end
   end
 
 

@@ -96,10 +96,13 @@
 
   <br>
   <% if current_user.id == @employee.id%>
+
     <%= form_for @employee, url: update_image_path, html: {multipart: true} do |f| %>
       <%= label_tag "Change Image:" %> <%= f.file_field :image %>
       <%= submit_tag "Update Image" %>
     <% end %>
+
+
   <% elsif current_user.is_admin?%>
     <h3><%= link_to "See Employee Availability", "/employees/#{@employee.id}/availability" %></h3>
     <%= link_to "Change Employee Position", "/employees/#{@employee.id}/edit" %> |

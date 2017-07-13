@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
         this.shifts = fullList;
         this.filterTheShifts()
       }.bind(this));
-
     },
 
     methods: {
@@ -104,6 +103,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
         }
 
         this.setValues()
+      },
+
+      addShift: function() {
+        console.log('hi');
       }
 
 

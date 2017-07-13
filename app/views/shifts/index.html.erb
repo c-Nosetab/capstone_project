@@ -28,9 +28,9 @@
           <td :colspan="firstOfMonth" class="non-date" v-if="firstOfMonth > 0"></td>
         </span>
 
-        <div class="cal-container">
+        <div>
           <td :class="findClass(new Date(currentYear, currentMonth, n))" v-for="n in (7-firstOfMonth)">
-            <div class="cal-container">
+            <div class="cal-container" v-on:dblclick="addShift()">
               <p>{{n}}</p>
                 <ul>
                   <li v-for="shift in filteredShifts" v-if="shift.day === n"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
@@ -43,7 +43,7 @@
 
     <tr v-for="n1 in monthWeeks">
       <td :class="findClass(new Date(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1)))))" v-for='n2 in 7' v-if="(count + (n2-1) + (7 * (n1 - 1))) <= lastOfMonth">
-        <div class="cal-container">
+        <div class="cal-container" v-on:dblclick="addShift()">
           <p>{{count + (n2-1) + (7 * (n1 - 1))}}</p>
           <ul>
             <li v-for="shift in filteredShifts" v-if="shift.day === (count + (n2-1) + (7 * (n1 - 1)))"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
@@ -56,99 +56,6 @@
 
     </table>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-  <!-- end of VUE -->
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-  <div id="add-shift">
-    <a href="/shifts/new">Add New Shift</a>
-  </div>
-  <table>
-    <tr>
-      <th colspan="7" class="main-head-thing"><%= Time.now.strftime('%B') %></th>
-    </tr>
-    <tr>
-      <% 7.times do |index| %>
-        <th><%= (@time.sunday + index.days).strftime('%A') %></th>
-      <% end %>
-    </tr>
-
-
-    <tr>
-      <% if @skip_cells > 0 %>
-        <td colspan="<%= @skip_cells %>" class="non-date"></td>
-      <% end %>
-
-      <% (7 - @skip_cells ).times do |index| %>
-          <div class="cal-container">
-            <% if Time.utc(@time.year, @time.month, 1) == Date.today %>
-              <td class="today">
-            <% elsif Time.utc(@time.year, @time.month, 1) < Date.today %>
-              <td class="past">
-            <% else %>
-              <td>
-            <% end %>
-              <div class="cal-container">
-                <p>1</p>
-                  <ul>
-                    <% @shifts.select{|shift| shift.date == Time.utc(@time.year, @time.month, 1)}.each do |shift| %>
-                      <li><a href="/shifts/<%= shift.id %>"><%= shift.time_start.strftime('%l:%M %p') %> - <%= shift.time_end.strftime('%l:%M %p') %></a></li>
-                    <% end %>
-                  </ul>
-              </div>
-            </td>
-          </div>
-      <% end %>
-    </tr>
-
-    <% while @count < (Time.now.at_end_of_month.day + 1 ) do %>
-      <tr>
-        <% 7.times do |index2| %>
-          <% if @count < (Time.now.at_end_of_month.day + 1) %>
-            <% if Time.utc(@time.year, @time.month, @count) == Date.today %>
-              <td class="today">
-            <% elsif Time.utc(@time.year, @time.month, @count) < Date.today %>
-              <td class="past">
-            <% else %>
-              <td>
-            <% end %>
-              <div class="cal-container">
-                <p><%= @count %></p>
-                  <ul>
-                    <% @shifts.select{|shift| shift.date == Time.utc(@time.year, @time.month, @count)}.each do |shift| %>
-                      <li><a href="/shifts/<%= shift.id %>"><%= shift.time_start.strftime('%l:%M %p') %> - <%= shift.time_end.strftime('%l:%M %p') %></a></li>
-                    <% end %>
-                  </ul>
-              </div>
-            </td>
-          <% end %>
-          <% @count += 1 %>
-        <% end %>
-      </tr>
-    <% end %>
-  </table>
-
-
-
-
-
-
-
 
 
 
