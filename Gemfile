@@ -9,6 +9,7 @@ gem 'figaro'
 gem 'aws-sdk', '~> 2.3'
 gem 'paperclip'
 
+
 gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'vuejs-rails'

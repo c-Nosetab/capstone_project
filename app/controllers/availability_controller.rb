@@ -5,6 +5,7 @@ class AvailabilityController < ApplicationController
     if current_user.id == params[:user_id].to_i || current_user.is_admin?
       @availabilities = Availability.where(employee_id: params[:user_id])
       @employee = Employee.find(params[:user_id])
+
       @days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     else
       redirect_to '/'

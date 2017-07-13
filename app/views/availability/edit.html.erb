@@ -82,8 +82,13 @@
   </select>
   <br><br>
 
+
+
   <%= submit_tag "Update" %>
-  <div style="text-align: right">
-    <button><%= link_to "Delete Availability", "/employees/#{current_user.id}/availability/#{@availability.id}", method: :delete %></button>
-  </div>
+  <br>
+  <br>
+  <p style="text-align: right">
+    <button><%= link_to 'Delete Availability', "/employees/#{current_user.id}/availability/#{@availability.id}", method: :delete %></button>
+  </p>
+
 <% end %>
