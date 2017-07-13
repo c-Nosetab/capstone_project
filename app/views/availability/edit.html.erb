@@ -1,6 +1,6 @@
 <h1>Edit Availability:</h1>
 
-<%= form_tag "/availability/#{@availability.id}", method: :patch do %>
+<%= form_tag "/employees/#{current_user.id}/availability/#{@availability.id}", method: :patch do %>
 
   <h3>Day of Week:</h3>
   <select name="day_of_week">
@@ -20,7 +20,7 @@
       <option <%= "selected" if hour == @availability.time_start.hour %>><%= hour %></option>
     <% end %>
   </select>
-  :
+:
   <select name="min_start">
     <%= (00..59).each do |min| %>
       <option <%= "selected" if min == @availability.time_start.min %>><%= min %></option>

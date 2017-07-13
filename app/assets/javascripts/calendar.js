@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
       },
 
       changeMonth: function(value) {
-        console.log("you made it: " + value)
         if (this.currentMonth + value > 11) {
           this.currentYear += 1;
           this.currentMonth = 0;

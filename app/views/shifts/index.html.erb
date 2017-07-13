@@ -68,13 +68,13 @@
 </h3>
 <br>
 
-<% @shifts.each do |shift| %>
-  <% if shift.date > Time.now - 24.hours && shift.date < Time.utc(Time.now.year, Time.now.month + 2,) %>
-    <div>
-     <a href="/shifts/<%= shift.id %>"><%= shift.day_of_week.capitalize %>, <%= shift.date.strftime('%b %d, %Y') %></a> -- <%= shift.time_start.strftime('%I:%M %p') %> --- <%= shift.time_end.strftime('%I:%M %p') %>
-    </div>
-    <br>
+<!-- <!% @shifts.each do |shift| %>
+#   <!% if shift.date > Time.now - 24.hours && shift.date < Time.utc(Time.now.year, Time.now.month + 2,) %>
+#     <div>
+#      <a href="/shifts/<!%= shift.id %>"><!%= shift.day_of_week.capitalize %>, <!%= shift.date.strftime('%b %d, %Y') %></a> -- <!%= shift.time_start.strftime('%I:%M %p') %> --- <!%= shift.time_end.strftime('%I:%M %p') %>
+#     </div>
+#     <br>
 
-  <% end %>
+#   <!% end %>
 
-<% end %>
+# <!% end %> -->

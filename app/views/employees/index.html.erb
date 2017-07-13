@@ -43,7 +43,6 @@
 
         <% @employees.select{|emp| emp.position_id == position.id && !emp.is_manager?}.each do |employee| %>
             <div class="employee-index-photo col-sm-1 col-md-1">
-
               <% if employee.image_file_name %>
                 <div class="true">
                   <a href="/employees/<%= employee.id %>">
@@ -55,15 +54,6 @@
                   <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
                 </a>
               <% end %>
-            </div>
-            <div class="employee-index-text col-sm-11 col-md-5">
-              <h4><a href="/employees/<%= employee.id %>"><strong>
-                <% if employee.is_manager? %>
-                  MANAGER - <%=  employee.full_name %>
-                <% else %>
-                  <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
-                <% end %>
-              </a>
             </div>
             <div class="employee-index-text col-sm-11 col-md-5">
 
