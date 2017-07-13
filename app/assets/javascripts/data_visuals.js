@@ -484,7 +484,7 @@ function drawBubblePlot(bubble_data) {
 
   var radiusScale = d3.scaleSqrt()
     .domain([minValue, maxValue])
-    .range([15, 70])
+    .range([10, 60])
 
   // the simulation is a collection of forces about where
   // we want our circles to go and how we want them to interact

@@ -115,7 +115,7 @@ Employee.all.each do |employee|
                              time_end: date_end,
                              start_date: date_start,
                              end_date: date_end,
-                             employee_id: employee.id,
+                             employee_id: Employee.last.id,
                              company_id: 1
                              )
     end
