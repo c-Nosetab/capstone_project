@@ -6,7 +6,6 @@
     <li v-for="error in errors"> {{error}}</li>
   </ul>
   <h2>Positions Assigned to Shift:</h2>
-
     <ul>
       <li>
         <strong>Add Position: <br></strong><select v-on:change="changeQuantity($event)">
@@ -30,6 +29,17 @@
       <h3>{{position.position_name}} -- {{position.quantity}} needed: </h3>
       <br>
       <ol>
+      <div v-if="position.quantity - position.assigned_employees.length > 0">
+        <select :ref="position.position_name">
+          <option value="">Select Employee</option>
+          <option v-for="employee in position.unassigned_employees" v-bind:value="employee.id">
+            {{employee.full_name}}
+          </option>
+        </select>
+        <button v-on:click="assignNewEmployee(position.position_name, pos_index)">Assign Employee</button>
+        <br>
+        <br>
+      </div>
         <li v-for="(employee, emp_index) in position.assigned_employees">
           <a v-bind:href="'/employees/' + employee.id">{{employee.full_name}} - {{employee.position}} </a> --
 
@@ -38,15 +48,6 @@
           </button>
         </li>
 
-      <div v-if="position.quantity - position.assigned_employees.length > 0">
-        <select @change="changeSelected(pos_index, $event)" :ref="position.id">
-          <option value="">Select Employee</option>
-          <option v-for="employee in position.unassigned_employees" v-bind:value="employee.id" :ref='position.position_name'>
-            {{employee.full_name}}
-          </option>
-        </select>
-        <button v-on:click="assignNewEmployee(position.position_name)">Assign Employee</button>
-      </div>
 
 
 
@@ -57,7 +58,9 @@
   </div>
 
 <br>
-      <!-- <button v-on:click="checkRefs">check ref</button> -->
+  <div class="danger-zone">
+    <button class="btn-danger"><%= link_to 'Delete Shift', "/shifts/#{params[:id]}", method: :delete%></button>
+  </div>
 </div>
 
 

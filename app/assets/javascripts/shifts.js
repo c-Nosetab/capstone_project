@@ -51,35 +51,29 @@ document.addEventListener('DOMContentLoaded', function(event) {
             },
 
       methods: {
-        checkRefs: function() {
-          console.log(this.$refs)
-        },
 
 
         initialPositions: function(fullList) {
           $.get('/api/v1/shifts/' + this.segment + '.json', function(fullList) {
-            // console.log(fullList.shifts);
             this.shift = fullList;
           }.bind(this));
         },
 
-        changeSelected: function(position_index, event) {
-          this.newAssignEmployeeId = event.target.value;
+
+        assignNewEmployee: function(position_name, position_index) {
+
+          this.newAssignEmployeeId = this.$refs[position_name][0].value;
           this.assignPosition = this.shift.positions[position_index];
-          this.newPositionIndex = position_index
+          this.newPositionIndex = position_index;
 
           for(var i = 0; i < this.shift.positions[position_index].unassigned_employees.length; i++) {
             if (this.shift.positions[position_index].unassigned_employees[i].id === parseInt(this.newAssignEmployeeId)) {
               this.assignEmployee = this.shift.positions[position_index].unassigned_employees[i];
-              this. indexOfEmployee = i
             };
           };
-        },
 
-        assignNewEmployee: function(position) {
-          this.errors = [];
 
-          if (this.assignEmployee.id != null && this.assignEmployee.position === position) {
+          if (this.assignEmployee.full_name) {
             var databaseParams = {
                                   employeeId: this.assignEmployee.id,
                                   shiftId: this.shift.id,
@@ -87,11 +81,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
                                   }
 
             $.post('/api/v1/employee_shifts.json', databaseParams, function() {
-              console.log(databaseParams)
               this.shift.positions[this.newPositionIndex].assigned_employees.push(this.assignEmployee);
               this.shift.positions[this.newPositionIndex].unassigned_employees.splice(this.indexOfEmployee, 1);
               this.assignEmployee = {}
-              console.log("Success!")
+
             }.bind(this)).fail( function(response) {
               this.errors = ["Something Went Wrong"]
             }.bind(this));
@@ -107,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
                       };
 
           this.shift.positions[pos_index].assigned_employees.splice(emp_index, 1)
+          this.shift.positions[pos_index].unassigned_employees.push(employee)
 
           $.ajax({
                   type: 'DELETE',
@@ -147,8 +141,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
                   $.post('/api/v1/position_shifts.json', params, function() {
 
                     this.shift.positions[positionIndex].quantity = this.positionQuantity;
-                    this.positionQuantity = ''
-                    this.totalQuantity = 0
+                    this.positionQuantity = '';
+                    this.totalQuantity = 0;
+
+
+
                   }.bind(this)).fail( function(response) {
                     this.errors = "Something Went Wrong";
                   }.bind(this));
@@ -157,13 +154,18 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
         deletePosition: function(pos_index) {
           this.shift.positions[pos_index].quantity = 0;
-          this.shift.positions[pos_index].assigned_employees.splice(0);
 
           for(var i = this.shift.positions[pos_index].assigned_employees.length - 1; i > -1; i--) {
+            var employee = this.shift.positions[pos_index].assigned_employees[i]
+
             var emp_params = {
                           employeeId: this.shift.positions[pos_index].assigned_employees[i].id,
                           shiftId: this.shift.id
                         }
+
+                this.shift.positions[pos_index].assigned_employees.splice(i, 1)
+                this.shift.positions[pos_index].unassigned_employees.push(employee)
+
             $.ajax({
                     type: 'DELETE',
                     url: '/api/v1/employee_shifts.json',
@@ -193,14 +195,16 @@ document.addEventListener('DOMContentLoaded', function(event) {
                   Accept: 'application/json',
                   success: function(result) {
                     this.errors = ["Successfully Removed"];
-
                   },
 
                   error: function(error) {
                     console.log(error)
                   }
           });
-        }
+
+        },
+
+
 
       },
 
@@ -209,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
           if(test[0] == "shifts" && test.length === 2) {
             this.segment = test[1]
             this.initialPositions();
+
           }
 
 

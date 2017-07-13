@@ -80,7 +80,11 @@ class ShiftsController < ApplicationController
 
   def destroy
     shift = Shift.find(params[:id])
+    positions = shift.position_shifts
+    employees = shift.employee_shifts
     if shift.delete
+      positions.each {|pos| pos.delete}
+      employees.each {|emp| emp.delete}
       flash[:success] = "Shift successfully deleted."
       redirect_to '/shifts'
     else

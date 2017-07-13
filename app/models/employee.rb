@@ -63,7 +63,11 @@ class Employee < ApplicationRecord
   end
 
   def find_average_monthly_shifts
-       (employee_shifts.count /  ((Time.now.year * 12 + Time.now.month) - (created_at.year * 12 + created_at.month).to_f)).round(2)
+    if ((created_at) > Time.now + 1.month )
+      (employee_shifts.count /  ((Time.now.year * 12 + Time.now.month) - (created_at.year * 12 + created_at.month).to_f)).round(2)
+    else
+      employee_shifts.count
+    end
   end
 
   def shift_today
