@@ -154,13 +154,18 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
         deletePosition: function(pos_index) {
           this.shift.positions[pos_index].quantity = 0;
-          this.shift.positions[pos_index].assigned_employees.splice(0);
 
           for(var i = this.shift.positions[pos_index].assigned_employees.length - 1; i > -1; i--) {
+            var employee = this.shift.positions[pos_index].assigned_employees[i]
+
             var emp_params = {
                           employeeId: this.shift.positions[pos_index].assigned_employees[i].id,
                           shiftId: this.shift.id
                         }
+
+                this.shift.positions[pos_index].assigned_employees.splice(i, 1)
+                this.shift.positions[pos_index].unassigned_employees.push(employee)
+
             $.ajax({
                     type: 'DELETE',
                     url: '/api/v1/employee_shifts.json',
