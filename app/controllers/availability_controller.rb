@@ -5,7 +5,8 @@ class AvailabilityController < ApplicationController
     if current_user.id == params[:user_id].to_i || current_user.is_admin?
       @availabilities = Availability.where(employee_id: params[:user_id])
       @employee = Employee.find(params[:user_id])
-      @days_of_week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+
+      @days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     else
       redirect_to '/'
     end
@@ -30,7 +31,7 @@ class AvailabilityController < ApplicationController
                                     )
     if availability.save
       flash[:success] = "Availability added"
-      redirect_to "/employees/#{current_user.id}/availability/#{availability.id}"
+      redirect_to "/employees/#{current_user.id}/availability/"
     else
       flash[:warning] = "Something went wrong, please try again."
       redirect_to "/employees/#{current_user.id}/availability/new"

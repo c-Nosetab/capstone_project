@@ -46,7 +46,7 @@ class EmployeesController < ApplicationController
   def show
     @employee = Employee.find(params[:id])
     @shifts = @employee.shifts.order(:date)
-    @time = Time.now.monday
+    @time = Date.today - 2.days
   end
 
   def edit

@@ -72,7 +72,7 @@
         <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
       <% end %>
     </div>
-    <div class="col-lg-8 col-md-6 col-xs-12 employee-text-show">
+    <div class="col-lg-7 col-md-6 col-xs-12 employee-text-show">
       <h3><strong><%= "#{@employee.first_name.capitalize} #{@employee.last_name.capitalize} - #{@employee.manager?} #{@employee.position.position_name}" %></strong></h3>
       <h3>Email: <a href="mailto:<%= @employee.email %>"><%= @employee.email %></a></h3>
       <h3>Phone: <%= @employee.phone %></h3>
@@ -93,10 +93,13 @@
 
   <br>
   <% if current_user.id == @employee.id%>
+
     <%= form_for @employee, url: update_image_path, html: {multipart: true} do |f| %>
       <%= label_tag "Change Image:" %> <%= f.file_field :image %>
       <%= submit_tag "Update Image" %>
     <% end %>
+
+
   <% elsif current_user.is_admin?%>
     <h3><%= link_to "See Employee Availability", "/employees/#{@employee.id}/availability" %></h3>
     <%= link_to "Change Employee Position", "/employees/#{@employee.id}/edit" %> |

@@ -4,6 +4,13 @@ class ShiftsController < ApplicationController
 
   def index
     @shifts = Shift.where(company_id: current_user.company_id).order('date')
+    @time = Time.now
+    @skip_cells = Date.today.at_beginning_of_month.strftime('%w').to_i
+    @start_count = Date.today.at_beginning_of_month.strftime('%w').to_i
+    @count = 7 - @skip_cells + 1
+
+
+
   end
 
   def new
@@ -37,16 +44,6 @@ class ShiftsController < ApplicationController
 
   def show
     @shift = Shift.find(params[:id])
-    @shift_positions = @shift.position_shifts
-    @positions = Position.where(company_id: current_user.company_id)
-    employee_holder = Employee.where(company_id: current_user.company_id)
-    @employees = []
-
-    Availability.where(company_id: current_user.company_id, day_of_week: @shift.day_of_week).each do |avail|
-      if avail.time_start <= @shift.time_start && avail.time_end >= @shift.time_end
-        @employees << avail.employee
-      end
-    end
 
   end
 

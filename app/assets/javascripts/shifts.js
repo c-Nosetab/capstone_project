@@ -206,6 +206,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
       mounted: function() {
         var test = $(location).attr('href').split('/').splice(3,2)
+        console.log(test)
 
           if(test[0] == "shifts" && test.length === 2) {
             this.segment = test[1]

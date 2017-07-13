@@ -9,8 +9,6 @@ class ImagesController < ApplicationController
       flash[:warning] = "Something went wrong, please try again"
       redirect_to "/employees/#{@employee.id}"
     end
-
-
   end
 
 
