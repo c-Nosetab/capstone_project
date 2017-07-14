@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
               assignEmployeeArray: [],
               totalQuantity: '',
               test: 0,
+              shiftPosition: '',
 
 
               // Info for adding employee to Shift:!!!!
@@ -41,6 +42,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
               assignPositionId: 0,
               assignPosition: {},
+
+              numbe: 0,
 
 
 
@@ -58,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
             this.shift = fullList;
           }.bind(this));
         },
-
 
         assignNewEmployee: function(position_name, position_index) {
 
