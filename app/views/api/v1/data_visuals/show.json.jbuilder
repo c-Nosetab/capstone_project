@@ -38,9 +38,10 @@ json.positions @positions.each do |position|
       json.months (1..12).each do |month|
         if Time.now > Time.utc(year, month)
           time = Time.utc(year, month)
+          json.month_date time
           json.month time.strftime('%B')
           if month < 12
-            month_shifts = year_shifts.select{|shift| shift.date.between?(Time.utc(year, month) , (Time.utc(year, month + 1) - 1.second) ) }
+            month_shifts = year_shifts.select{|shift| shift.date.between?(Time.utc(year, month) , (Time.utc(year, month + 1) - 1.second) ) && shift.date < Time.now }
             json.total_month_shifts month_shifts.count
           end
         end

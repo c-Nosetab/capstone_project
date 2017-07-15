@@ -13,7 +13,8 @@ function findData(id) {
             url: "/api/v1/data/" + id,
             dataType: 'json',
             success: function(data) {
-              drawBarGraph(data);
+              drawBarGraph2(data);
+              // drawBarGraph(data);
               drawBubblePlot(data);
               drawPieChart(data);
             },
@@ -23,10 +24,156 @@ function findData(id) {
     });
 }
 
+// ###########################################################################################
+// ############################## ORIGINAL BAR GRAPH #########################################
+// ###########################################################################################
+
+function drawBarGraph2(barData) {
+
+  var monthData = [];
+  var months = [];
+  var range = [0]
+  var margin = {top: 0, right: 0, bottom: 30, left: 21}
+  var height = 400 - margin.top - margin.bottom,
+      width = 600 - margin.left - margin.right;
+
+  for (var i = 0; i < barData.shifts[0].months.length; i++) {
+
+   monthData.push(barData.shifts[0].months[i].total_month_shifts);
+   months.push(barData.shifts[0].months[i].month);
+
+  }
+
+
+ var height = 400,
+       width = 600,
+       monthColor;
+
+   var yScale = d3.scaleLinear()
+       .domain([0, d3.max(monthData)])
+       .range([0, height]);
+
+   var yAxisValues = d3.scaleLinear()
+     .domain([0, d3.max(monthData)])
+     .range([height, 0]);
+
+   var yAxisTicks = d3.axisLeft(yAxisValues)
+     .ticks(8)
+
+   // var xScale = d3.scaleBand()
+   //     .domain(monthData)
+   //     .paddingInner(.1)
+   //     .paddingOuter(.1)
+   //     .range([0, width])
+
+
+
+   var xAxisValues = d3.scaleBand()
+     .domain(months)
+     .paddingInner(.1)
+     .paddingOuter(.1)
+     .range([0, width])
+
+
+   var xAxisTicks = d3.axisBottom(xAxisValues)
+     .ticks(months.length)
+
+
+
+
+
+  var colors = d3.scaleLinear()
+      .domain([0, d3.max(monthData) ])
+      .range(['#2D8BCF', '#2CA02C'])
+
+  var tooltip = d3.select('body')
+                  .append('div')
+                  .style('position', 'absolute')
+                  .style('box-shadow', '0 0 5px #999')
+                  .style('padding', '0 10px')
+                  .style('background', 'white')
+                  .style('text-align', 'center')
+                  .style('margin-top', -10)
+                  .style('opacity', 0)
+                  .style('pointer-events', 'none');
+
+
+  var myChart =
+  d3.select('#viz').append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')')
+      .selectAll('rect').data(monthData)
+        .enter().append('rect')
+          .attr('fill', colors)
+          .attr('width', (width / monthData.length) - 2)
+          .attr('height', 0)
+          .attr('x', function(d, i) {
+            return ((width/ monthData.length) * i);
+          })
+          .attr('y', height)
+
+      .on('mouseover', function(d) {
+        tooltip.transition().duration(100)
+          .style('opacity', .9)
+
+          monthColor = this.style.fill;
+          d3.select(this)
+            .style('fill', 'yellow')
+      })
+
+      .on('mousemove', function(d) {
+          tooltip.html(
+              '<div style="font-size: 2rem; font-weight: bold">' + d + " shifts</div>"
+            )
+            .style('left', (d3.event.pageX -35) + 'px')
+            .style('top', (d3.event.pageY -30) + 'px')
+
+
+      })
+
+      .on('mouseout', function(d) {
+
+        tooltip.transition().duration(200)
+          .style('opacity', 0)
+
+        d3.select(this)
+          .style('fill', monthColor)
+      });
+
+
+
+  var yGuide = d3.select('#viz svg').append('g')
+                  .attr('transform', 'translate(20,0)')
+                  .call(yAxisTicks)
+
+  var xGuide = d3.select('#viz svg').append('g')
+                  .attr('transform', 'translate(20,' + height + ')')
+                  .call(xAxisTicks)
+
+
+
+
+  myChart.transition()
+    .attr('height', function(d) {
+      return yScale(d);
+    })
+    .attr('y', function(d) {
+      return height - yScale(d);
+    })
+    .delay(function(d, i) {
+      return i * 20;
+    })
+    .duration(1000)
+    .ease(d3.easeBounceOut)
+  }
+
+
 function drawBarGraph(barData) {
 
   var monthData = [];
-  var months = [''];
+  var months = [];
   var range = [0]
   var margin = {top: 0, right: 0, bottom: 30, left: 20}
   var height = 400 - margin.top - margin.bottom,
@@ -40,36 +187,38 @@ function drawBarGraph(barData) {
   }
 
 
-  var height = 400,
-      width = 600,
-      monthColor;
+ var height = 400,
+       width = 600,
+       monthColor;
 
-  var yScale = d3.scaleLinear()
-      .domain([0, d3.max(monthData)])
-      .range([0,height]);
+   var yScale = d3.scaleLinear()
+       .domain([0, d3.max(monthData)])
+       .range([0, height]);
 
-  var yAxisValues = d3.scaleLinear()
-    .domain([0, d3.max(monthData)])
-    .range([height, 0]);
+   var yAxisValues = d3.scaleLinear()
+     .domain([0, d3.max(monthData)])
+     .range([height, 0]);
 
-  var yAxisTicks = d3.axisLeft(yAxisValues)
-    .ticks(8)
+   var yAxisTicks = d3.axisLeft(yAxisValues)
+     .ticks(8)
 
-  var xScale = d3.scaleBand()
-      .domain(monthData)
-      .paddingInner(.1)
-      .paddingOuter(.1)
-      .range([0, width])
-
-  var initialDistance = ((width/(months.length + 1)) - (margin.left + margin.right))
+   var xScale = d3.scaleBand()
+       .domain(monthData)
+       .paddingInner(.1)
+       .paddingOuter(.1)
+       .range([0, width])
 
 
-  var xAxisValues = d3.scaleOrdinal()
-    .domain(months)
-    .range([0, 45, (45 + 85), (45 + 85*2), (45 + 85*3), (45 + 85*4), (45 + 85*5), (45 + 85*6), width])
 
-  var xAxisTicks = d3.axisBottom(xAxisValues)
-    .ticks(months.length)
+   var xAxisValues = d3.scaleBand()
+     .domain(months)
+     .paddingInner(.1)
+     .paddingOuter(.1)
+     .range([0, width])
+
+
+   var xAxisTicks = d3.axisBottom(xAxisValues)
+     .ticks(months.length)
 
 
 
@@ -81,6 +230,7 @@ function drawBarGraph(barData) {
   var tooltip = d3.select('body')
                   .append('div')
                   .style('position', 'absolute')
+                  .style('box-shadow', '0 0 5px #999')
                   .style('padding', '0 10px')
                   .style('background', 'white')
                   .style('text-align', 'center')
@@ -443,7 +593,7 @@ function drawBubblePlot(bubble_data) {
         tooltip.html(
           '<div style="font-weight: bold; font-size: 1.5rem;">' + d.name + ': ' + d.position + '</div><div style="font-size: 1.5rem;">' + d.average_per_month + ' shifts per month </div>'
           )
-          .style('left', (d3.event.pageX - 75) + 'px')
+          .style('left', (d3.event.pageX - 100) + 'px')
           .style('top', (d3.event.pageY - 52) + 'px')
           .style('border')
       })
