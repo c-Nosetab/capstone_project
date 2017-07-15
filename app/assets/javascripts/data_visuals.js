@@ -33,7 +33,7 @@ function drawBarGraph2(barData) {
   var monthData = [];
   var months = [];
   var range = [0]
-  var margin = {top: 0, right: 0, bottom: 30, left: 21}
+  var margin = {top: 0, right: 0, bottom: 30, left: 27}
   var height = 400 - margin.top - margin.bottom,
       width = 600 - margin.left - margin.right;
 
@@ -107,10 +107,10 @@ function drawBarGraph2(barData) {
       .selectAll('rect').data(monthData)
         .enter().append('rect')
           .attr('fill', colors)
-          .attr('width', (width / monthData.length) - 2)
+          .attr('width', ((width - margin.left - margin.right) / monthData.length))
           .attr('height', 0)
           .attr('x', function(d, i) {
-            return ((width/ monthData.length) * i);
+            return (((((width - margin.left - margin.right)/ monthData.length) + 4) * i) - (i * 2) - (monthData.length / 4));
           })
           .attr('y', height)
 
