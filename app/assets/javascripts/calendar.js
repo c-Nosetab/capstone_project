@@ -1,5 +1,11 @@
-
 document.addEventListener('DOMContentLoaded', function(event) {
+
+
+  Vue.component('modal', {
+    template: '#modal-template'
+  })
+
+
 
 // MAIN CODE
   var cal = new Vue({
@@ -14,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 
             link: '',
+            test: 'wow!',
 
 
             nowYear: 0,
@@ -29,6 +36,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
             lastOfMonth: 0,
 
             count: 0,
+
+            popoverYear: 0,
+            popoverMonth: 0,
+            popoverDay: 0,
 
 
 
@@ -58,15 +69,66 @@ document.addEventListener('DOMContentLoaded', function(event) {
       $.get('/api/v1/shifts.json', function(fullList) {
         // console.log(fullList.shifts);
         this.shifts = fullList;
-        this.filterTheShifts()
+        this.filterTheShifts();
+        this.createPopover();
       }.bind(this));
     },
 
     methods: {
 
-      goAway: function() {
-        this.showModal = false
+      createPopover: function() {
+        // var year1 = this.popoverYear
+        // var month1 = this.popoverMonth
+        // var day1 = this.popoverDay
+
+        $('[data-toggle="popover"]').popover({
+            html: true,
+
+            content: function(){
+              var hours = ''
+              var minutes = ''
+              for(var i = 1; i < 13; i++) {
+                hours += '<option value="' + i +'">'+ i +'</option>'
+              }
+
+              for(var i = 0; i < 60; i+= 5) {
+                if (i < 10) {
+                  minutes += '<option value="'+i+'">0' + i + '</option>'
+                } else {
+                  minutes += '<option>'+ i +'</option>'
+                }
+              }
+
+              return '<div class="popover-body"><div class="start-time"><select>'+ hours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select> <br></div><p style="color: black;">to</p> <div class="end-time"><select>'+ hours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select></div><hr><div class="form-button"><button>Submit</button></div></div>'
+            }
+
+        })
       },
+
+      // redrawPopover: function() {
+      //   console.log('hi')
+      //   $('popover').attr('data-content', 'hello');
+      //   var popover = $('popover').data('popover');
+      //   console.log(popover)
+      //   popover.setContent();
+      //   popover.$tip.addClass(popover.options.placement);
+      // },
+
+      // popoverContent: function(year, month, day) {
+      //   this.popoverYear = year;
+      //   this.popoverMonth = month;
+      //   this.popoverDay = day;
+      //   this.createPopover();
+
+      //   $('.popover').popover({
+      //     html: true,
+      //     content: function() {
+      //       return 'hi'
+      //     }
+
+      //   })
+
+      // },
 
       test: function(year, month, day) {
         this.link = '/shifts/new?y=' + year + '&m=' + (month + 1) + '&d=' + day

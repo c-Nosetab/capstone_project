@@ -1,4 +1,16 @@
+<script>
+$('.popover-dismiss').popover({
+  trigger: 'focus'
+})
+</script>
+
+<div class="container">
+  <a data-toggle="popover" data-placement="top" title="Hooray!">Click me</a>
+</div>
+
+
 <div id="calendar">
+  <button v-on:click="redrawPopover()">change popover</button>
   <div id="add-shift">
     <a href="/shifts/new">Add New Shift</a>
   </div>
@@ -25,7 +37,11 @@
       <div>
         <td :class="findClass(new Date(currentYear, currentMonth, n))" v-for="n in (7-firstOfMonth)">
           <div class="cal-container">
-            <p v-on:click="test(currentYear, currentMonth, n)">{{n}}</p>
+            <p v-on:click="" data-toggle="popover" data-placement="top" data-container="body" title="Hooray!" html="
+            <div>hello</div>
+
+            ">{{n}}</p>
+
               <ul>
                 <li v-for="shift in filteredShifts" v-if="shift.day === n"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
               </ul>
@@ -37,8 +53,15 @@
 
   <tr v-for="n1 in monthWeeks">
     <td :class="findClass(new Date(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1)))))" v-for='n2 in 7' v-if="(count + (n2-1) + (7 * (n1 - 1))) <= lastOfMonth">
-        <div class="cal-container" >
-          <p v-on:click="test(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))">{{(count + (n2-1) + (7 * (n1 - 1)))}}</p>
+        <div
+          class="cal-container"
+          v-on:click="popoverContent(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))"
+          data-toggle="popover"
+          data-placement="top"
+          :title="'Add Shift for ' + currentMonth + '-' + (count + (n2-1) + (7 * (n1 - 1))) + '-' + currentYear "
+        >
+          <!-- <p v-on:click="test(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))"> -->
+          <p> {{(count + (n2-1) + (7 * (n1 - 1)))}}</p>
           <ul>
             <li v-for="shift in filteredShifts" v-if="shift.day === (count + (n2-1) + (7 * (n1 - 1)))"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
           </ul>
@@ -50,6 +73,5 @@
   <!-- MODAL STUFF -->
 
 
-</div>
 
-
+ </div>

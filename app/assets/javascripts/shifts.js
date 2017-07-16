@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
               assignPositionId: 0,
               assignPosition: {},
 
-              numbe: 0,
+              number: 0,
 
 
 
@@ -55,6 +55,13 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
       methods: {
 
+        sayHello: function() {
+          console.log('hello')
+        },
+
+        sayBye: function() {
+          console.log('goodbye')
+        },
 
         initialPositions: function(fullList) {
           $.get('/api/v1/shifts/' + this.segment + '.json', function(fullList) {
