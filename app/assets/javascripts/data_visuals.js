@@ -83,8 +83,8 @@ function drawBarGraph2(barData) {
 
 
   var colors = d3.scaleLinear()
-      .domain([0, d3.max(monthData) ])
-      .range(['#2D8BCF', '#2CA02C'])
+      .domain([0, d3.max(monthData) / 3, d3.max(monthData) ])
+      .range([ '#2D8BCF','#2D8BCF', '#12ed4d'])
 
   var tooltip = d3.select('body')
                   .append('div')
@@ -107,10 +107,10 @@ function drawBarGraph2(barData) {
       .selectAll('rect').data(monthData)
         .enter().append('rect')
           .attr('fill', colors)
-          .attr('width', ((width - margin.left - margin.right) / monthData.length))
+          .attr('width', ((width - margin.left - margin.right) / monthData.length) - 2)
           .attr('height', 0)
           .attr('x', function(d, i) {
-            return (((((width - margin.left - margin.right)/ monthData.length) + 4) * i) - (i * 2) - (monthData.length / 4));
+            return (((((width - margin.left - margin.right)/ monthData.length) + 4) * i) - (i * 1) - (monthData.length / 4)+1);
           })
           .attr('y', height)
 
