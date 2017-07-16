@@ -1,29 +1,40 @@
 <h1>Create a New Shift</h1>
 <%= form_tag '/shifts', method: :post do %>
-   Date of Shift:
-   <br>
-   Month:
-  <select name="month_start">
-    <% (1..12).each do |month| %>
-      <option <%= "selected" if month == Time.now.month %>> <%= month %></option>
-    <% end %>
-  </select>
-  Day:
-  <select name="day_start">
-    <% (1..31).each do |day| %>
-      <option <%= "selected" if day == Time.now.day %> > <%= day %> </option>
-    <% end %>
-  </select>
-  Year:
-  <select name="year_start">
-    <% ((Time.now.year)..(Time.now.year + 5)).each do |year| %>
-      <option><%= year %></option>
-    <% end %>
-  </select>
-  <br><br>
+  <% if params[:m] && params[:d] && params[:y] %>
+    <input type="hidden" name="month_start" value="<%= params[:m] %>">
+    <input type="hidden" name="day_start" value="<%= params[:d] %>">
+    <input type="hidden" name="year_start" value="<%= params[:y] %>">
 
-  Time:
+    <h5>Shift for <%= Time.utc(params[:y], params[:m], params[:d]).strftime('%A - %B %e, %Y') %></h5>
+
+  <% else %>
+   <h5>Date of Shift:</h5>
+     Month:
+      <select name="month_start">
+        <% (1..12).each do |month| %>
+          <option <%= "selected" if month == Time.now.month %>> <%= month %></option>
+        <% end %>
+      </select>
+
+
+      <strong>Day:</strong>
+      <select name="day_start">
+        <% (1..31).each do |day| %>
+          <option <%= "selected" if day == Time.now.day %> > <%= day %> </option>
+        <% end %>
+      </select>
+
+      <strong>Year:</strong>
+      <select name="year_start">
+        <% ((Time.now.year)..(Time.now.year + 5)).each do |year| %>
+          <option><%= year %></option>
+        <% end %>
+      </select>
+  <br><br>
+  <% end %>
+
   <div>
+  Time:
     <select name="hour_start">
       <%= (0..23).each do |hour| %>
         <option <%= "selected" if hour == 8 %>><%= hour %></option>

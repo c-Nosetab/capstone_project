@@ -1,14 +1,23 @@
 document.addEventListener('DOMContentLoaded', function(event) {
 
+  Vue.component('modal', {
+    template: '#modal-template',
+    props: ['show'],
+    });
+
+// MAIN CODE
   var cal = new Vue({
     el: '#calendar',
 
     data: {
             shifts: [],
             filteredShifts: [],
+            showModal: false,
 
             days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+
+            link: '',
 
 
             nowYear: 0,
@@ -59,8 +68,13 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     methods: {
 
+      goAway: function() {
+        this.showModal = false
+      },
+
       test: function(year, month, day) {
-        console.log(day)
+        this.link = '/shifts/new?y=' + year + '&m=' + (month + 1) + '&d=' + day
+        window.location = this.link;
       },
 
       filterTheShifts: function() {
@@ -109,9 +123,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
         this.setValues()
       },
 
-      addShift: function() {
-        console.log('hi');
-      }
 
 
     }

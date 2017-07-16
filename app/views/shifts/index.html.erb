@@ -1,72 +1,57 @@
-  <div id="calendar">
-    <div id="add-shift">
-      <a href="/shifts/new">Add New Shift</a>
-    </div>
-    <table>
-  <!-- Month -->
-      <tr>
-        <th class="main-calendar-head"><button v-on:click="changeMonth(-1)"><</button></th>
-        <th colspan='5' class='main-calendar-head'>{{months[currentMonth]}} - {{currentYear}}</th>
-        <th class="main-calendar-head"><button v-on:click="changeMonth(1)">></button></th>
 
-      </tr>
+
+<div id="calendar">
+  <div id="add-shift">
+    <a href="/shifts/new">Add New Shift</a>
+  </div>
+  <table>
+  <!-- Month -->
+    <tr>
+      <th class="main-calendar-head"><button v-on:click="changeMonth(-1)"><</button></th>
+      <th colspan='5' class='main-calendar-head'>{{months[currentMonth]}} - {{currentYear}}</th>
+      <th class="main-calendar-head"><button v-on:click="changeMonth(1)">></button></th>
+
+    </tr>
   <!-- Day Names -->
-      <tr>
-        <th v-for="n in 7">{{days[n - 1]}}</th>
-      </tr>
+    <tr>
+      <th v-for="n in 7">{{days[n - 1]}}</th>
+    </tr>
 
   <!-- First Row of Days -->
 
-      <tr>
-        <span>
-          <td :colspan="firstOfMonth" class="non-date" v-if="firstOfMonth > 0"></td>
-        </span>
+    <tr>
+      <span>
+        <td :colspan="firstOfMonth" class="non-date" v-if="firstOfMonth > 0"></td>
+      </span>
 
-        <div>
-          <td :class="findClass(new Date(currentYear, currentMonth, n))" v-for="n in (7-firstOfMonth)">
-            <div class="cal-container" v-on:dblclick="addShift()">
-              <p>{{n}}</p>
-                <ul>
-                  <li v-for="shift in filteredShifts" v-if="shift.day === n"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
-                </ul>
-            </div>
-          </td>
-        </div>
-      </tr>
+      <div>
+        <td :class="findClass(new Date(currentYear, currentMonth, n))" v-for="n in (7-firstOfMonth)">
+          <div class="cal-container">
+            <p v-on:click="test(currentYear, currentMonth, n)">{{n}}</p>
+              <ul>
+                <li v-for="shift in filteredShifts" v-if="shift.day === n"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
+              </ul>
+          </div>
+        </td>
+      </div>
+    </tr>
   <!-- Remaining Rows -->
 
-    <tr v-for="n1 in monthWeeks">
-      <td :class="findClass(new Date(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1)))))" v-for='n2 in 7' v-if="(count + (n2-1) + (7 * (n1 - 1))) <= lastOfMonth">
-          <div class="cal-container" v-on:dblclick="addShift()" v-on:click="test(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))" >
-            <p>{{(count + (n2-1) + (7 * (n1 - 1)))}}</p>
-            <ul>
-              <li v-for="shift in filteredShifts" v-if="shift.day === (count + (n2-1) + (7 * (n1 - 1)))"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
-            </ul>
-
-
-
-          </div>
+  <tr v-for="n1 in monthWeeks">
+    <td :class="findClass(new Date(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1)))))" v-for='n2 in 7' v-if="(count + (n2-1) + (7 * (n1 - 1))) <= lastOfMonth">
+        <div class="cal-container" >
+          <p v-on:click="test(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))">{{(count + (n2-1) + (7 * (n1 - 1)))}}</p>
+          <ul>
+            <li v-for="shift in filteredShifts" v-if="shift.day === (count + (n2-1) + (7 * (n1 - 1)))"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
+          </ul>
+        </div>
       </td>
     </tr>
+  </table>
+
+  <!-- MODAL STUFF -->
 
 
-
-    </table>
-  </div>
-
-<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-  Tooltip on top
-</button>
-
-
-<popper trigger="hover" :options="{placement: 'top'}">
-    <div class="popper">
-      Popper Content
-    </div>
-
-    <a href="#" slot="reference" class="top">
-      Top
-    </a>
-  </popper>
+</div>
 
 
