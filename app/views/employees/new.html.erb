@@ -4,13 +4,13 @@
 
 <%= form_tag '/employees', method: :post do %>
   <div>
-    <h2>First Name: <input type="text" name="first_name"></h2>
+    <h5>First Name: <input type="text" name="first_name"></h5>
   </div>
   <div>
-    <h2>Last Name: <input type="text" name="last_name"></h2>
+    <h5>Last Name: <input type="text" name="last_name"></h5>
   </div>
   <div>
-    <h2>Email: <input type="text" name="email"></h2>
+    <h5>Email: <input type="text" name="email"></h5>
   </div>
   <div>
     <h4>Admin rights: <input id="pet_dog" name="is_admin?" type="checkbox" value="true" />
@@ -18,7 +18,8 @@
     Manager: <input id="pet_dog" name="is_manager?" type="checkbox" value="true" /></h4>
 
   <% if current_user && current_user.is_admin? %>
-    <h2>Position:</h2>
+  <br>
+    <h5>Position:</h5>
   </div>
   <div>
 

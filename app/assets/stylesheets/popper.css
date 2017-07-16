@@ -1,0 +1,23 @@
+.top {
+  margin: 0 auto;
+  display: table;
+}
+
+.bottom {
+  position: absolute;
+  top: 40%;
+  left: 45%;
+}
+
+.right {
+  position: absolute;
+  right: 20px;
+}
+
+.left {
+  position: absolute;
+}
+
+.right, .left {
+  top: 25%;
+}

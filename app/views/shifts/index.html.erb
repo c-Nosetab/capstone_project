@@ -1,9 +1,3 @@
-<h1>Shifts:</h1>
-
-
-
-
-
   <div id="calendar">
     <div id="add-shift">
       <a href="/shifts/new">Add New Shift</a>
@@ -43,12 +37,15 @@
 
     <tr v-for="n1 in monthWeeks">
       <td :class="findClass(new Date(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1)))))" v-for='n2 in 7' v-if="(count + (n2-1) + (7 * (n1 - 1))) <= lastOfMonth">
-        <div class="cal-container" v-on:dblclick="addShift()">
-          <p>{{count + (n2-1) + (7 * (n1 - 1))}}</p>
-          <ul>
-            <li v-for="shift in filteredShifts" v-if="shift.day === (count + (n2-1) + (7 * (n1 - 1)))"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
-          </ul>
-        </div>
+          <div class="cal-container" v-on:dblclick="addShift()" v-on:click="test(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))" >
+            <p>{{(count + (n2-1) + (7 * (n1 - 1)))}}</p>
+            <ul>
+              <li v-for="shift in filteredShifts" v-if="shift.day === (count + (n2-1) + (7 * (n1 - 1)))"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
+            </ul>
+
+
+
+          </div>
       </td>
     </tr>
 
@@ -57,24 +54,19 @@
     </table>
   </div>
 
+<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+  Tooltip on top
+</button>
 
 
+<popper trigger="hover" :options="{placement: 'top'}">
+    <div class="popper">
+      Popper Content
+    </div>
+
+    <a href="#" slot="reference" class="top">
+      Top
+    </a>
+  </popper>
 
 
-
-<br>
-<h3>
-
-</h3>
-<br>
-
-<!-- <!% @shifts.each do |shift| %>
-#   <!% if shift.date > Time.now - 24.hours && shift.date < Time.utc(Time.now.year, Time.now.month + 2,) %>
-#     <div>
-#      <a href="/shifts/<!%= shift.id %>"><!%= shift.day_of_week.capitalize %>, <!%= shift.date.strftime('%b %d, %Y') %></a> -- <!%= shift.time_start.strftime('%I:%M %p') %> --- <!%= shift.time_end.strftime('%I:%M %p') %>
-#     </div>
-#     <br>
-
-#   <!% end %>
-
-# <!% end %> -->

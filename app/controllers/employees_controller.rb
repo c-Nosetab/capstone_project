@@ -15,6 +15,9 @@ class EmployeesController < ApplicationController
   end
 
   def new
+    unless current_user.is_admin?
+      redirect_to '/'
+    end
   end
 
   def create
@@ -65,8 +68,6 @@ class EmployeesController < ApplicationController
                                city: params[:city],
                                state: params[:state],
                                zip: params[:zip],
-                               is_admin?: params[:is_admin?],
-                               is_manager?: params[:is_manager?],
                                position_id: params[:position_id],
                                phone: params[:phone],
                                email: params[:email]

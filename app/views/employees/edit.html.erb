@@ -1,49 +1,63 @@
 
-<h1>Add New Employee</h1>
-
-<%= form_tag "/employees/#{@employee.id}", method: :patch do %>
-  <% if @employee.id == current_user.id %>
-    <div>
-      <h2>First Name: <input type="text" name="first_name" value="<%= @employee.first_name %>"></h2>
-    </div>
-    <div>
-      <h2>Last Name: <input type="text" name="last_name" value="<%= @employee.last_name %>"></h2>
-    </div>
-    <div>
-        <h2>Phone: <input type="text" name="phone" value="<%= @employee.phone %>"></h2>
-    </div>
-    <div>
-      <h2>Email: <input type="text" name="email" value="<%= @employee.email %>"></h2>
-    </div>
-    <div>
-      <h2>Address: <input type="text" name="address" value="<%= @employee.address %>"></h2>
-    </div>
-    <div>
-      <h2>Address (apt/po): <input type="text" name="address2" value="<%= @employee.address2 %>"></h2>
-    </div>
-    <div>
-      <h2>City: <input type="text" name="city" value="<%= @employee.city %>"></h2>
-    </div>
-    <div>
-      <h2>State: <input type="text" name="state" value="<%= @employee.state %>"></h2>
-    </div>
-    <div>
-      <h2>Zipcode: <input type="text" name="zip" value="<%= @employee.zip %>"></h2>
-    </div>
-    <div>
-  <% else %>
-    <input type="hidden" name="email" value="<%= @employee.email %>">
-  <% end %>
-
-    <h4>Admin rights: <input name="is_admin?" type="checkbox" value="true" <%= @employee.check_admin %>/> Manager: <input id="pet_dog" name="is_manager?" type="checkbox" value="true" <%= @employee.check_manager %>/></h4>
-    <h2>Position:</h2>
-
-    <% @positions.each do |pos| %>
-      <input id="position_id" name="position_id" type="radio" value="<%= pos.id %>" <%= @employee.select_position(pos.id ) %>/>
-      <label for="position_id"><%= pos.position_name %></label>
-
-  <% end %>
-  </div>
-  <br><br>
-  <input type="submit" value="Update Employee">
+<% if @current_user.id == @employee.id %>
+  <h1>Update Your Info</h1>
+<% else %>
+  <h1>Assign New Position</h1>
 <% end %>
+<div style="margin: 0 auto;">
+  <%= form_tag "/employees/#{@employee.id}", method: :patch do %>
+    <% if @employee.id == current_user.id %>
+      <div class='row'>
+        <h5 class="col-md-5 col-sm-12" >First Name: <input type="text" name="first_name" value="<%= @employee.first_name %>"></h5>
+
+        <h5 class="col-md-5 col-sm-12">Last Name: <input type="text" name="last_name" value="<%= @employee.last_name %>"></h5>
+      </div>
+      <div class="row">
+        <h5 class="col-md-5 col-sm-12">
+          Email: <input type="text" name="email" value="<%= @employee.email %>">
+        </h5>
+        <h5 class="col-md-5 col-sm-12">
+          Phone: <input type="text" name="phone" value="<%= @employee.phone %>">
+        </h5>
+      </div>
+      <hr>
+      <div class="row">
+        <h5 class="col-md-5 col-sm-12">Address: <input type="text" name="address" value="<%= @employee.address %>"></h5>
+
+        <h5 class="col-md-6 col-sm-12">Address (apt/po): <input type="text" name="address2" value="<%= @employee.address2 %>"></h5>
+      </div>
+      <div class="row">
+        <h5 class="col-md-5 col-sm-12">City: <input type="text" name="city" value="<%= @employee.city %>"></h5>
+
+        <h5 class="col-md-5 col-sm-12">State: <input type="text" name="state" value="<%= @employee.state %>"></h5>
+      </div>
+      <div class="row">
+        <h5 class="col-md-5 col-sm-12">Zipcode: <input type="text" name="zip" value="<%= @employee.zip %>"></h5>
+      </div>
+      <div>
+    <% else %>
+      <input type="hidden" name="email" value="<%= @employee.email %>">
+    <% end %>
+    <br>
+    <% if @current_user.is_admin? && @current_user.id = !@employee.id %>
+        <h4>Admin rights: <input name="is_admin?" type="checkbox" value="true" <%= @employee.check_admin %>/> Manager: <input id="pet_dog" name="is_manager?" type="checkbox" value="true" <%= @employee.check_manager %>/></h4>
+        <br>
+        <h5>Position:</h5>
+        <% @positions.each do |pos| %>
+          <input id="position_id" name="position_id" type="radio" value="<%= pos.id %>" <%= @employee.select_position(pos.id ) %>/>
+          <label for="position_id"><%= pos.position_name %></label>
+
+      <% end %>
+      </div>
+      <br><br>
+    <% else %>
+
+      <input type="hidden" name="is_admin?" value="<%= @employee.is_admin? %>">
+      <input type="hidden" name="is_manager?" value="<%= @employee.is_manager? %>">
+      <input type="hidden" name="position_id" value="<%= @employee.position_id %>">
+
+
+    <% end %>
+    <input type="submit" value="Update Info">
+  <% end %>
+</div>

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 
+
             nowYear: 0,
             nowMonth: 0,
             nowDay: 0,
@@ -57,6 +58,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
     },
 
     methods: {
+
+      test: function(year, month, day) {
+        console.log(day)
+      },
 
       filterTheShifts: function() {
         for(var i = 0; i < this.shifts.length; i++) {
