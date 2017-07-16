@@ -1,9 +1,5 @@
-document.addEventListener('DOMContentLoaded', function(event) {
 
-  Vue.component('modal', {
-    template: '#modal-template',
-    props: ['show'],
-    });
+document.addEventListener('DOMContentLoaded', function(event) {
 
 // MAIN CODE
   var cal = new Vue({
