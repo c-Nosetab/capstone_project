@@ -90,7 +90,7 @@ function drawBarGraph2(barData) {
                   .append('div')
                   .style('position', 'absolute')
                   .style('box-shadow', '0 0 5px #999')
-                  .style('padding', '0 10px')
+                  .style('padding', '10px 10px')
                   .style('background', 'white')
                   .style('text-align', 'center')
                   .style('margin-top', -10)
@@ -123,12 +123,12 @@ function drawBarGraph2(barData) {
             .style('fill', 'yellow')
       })
 
-      .on('mousemove', function(d) {
+      .on('mousemove', function(d, i) {
           tooltip.html(
-              '<div style="font-size: 2rem; font-weight: bold">' + d + " shifts</div>"
+              '<div style="font-size: 2rem; font-weight: bold">'+ months[i] + ': ' + d + " shifts</div>"
             )
             .style('left', (d3.event.pageX -35) + 'px')
-            .style('top', (d3.event.pageY -30) + 'px')
+            .style('top', (d3.event.pageY -50) + 'px')
 
 
       })
@@ -478,7 +478,8 @@ function drawPieChart(pie_data) {
 function drawBubblePlot(bubble_data) {
 
   var employee_data = []
-  var employeeColor;
+  var employeeColor,
+      link;
 
   var maxValue = bubble_data.employees[0].average_shifts_per_month
   var minValue = bubble_data.employees[0].average_shifts_per_month
@@ -493,6 +494,7 @@ function drawBubblePlot(bubble_data) {
                   position: bubble_data.employees[i].position,
                   average_per_month: bubble_data.employees[i].average_shifts_per_month,
                   initials: initials[0][0] + "." + initials[1][0] + '.',
+                  id: bubble_data.employees[i].id,
                   selected: true
 
 
@@ -583,11 +585,15 @@ function drawBubblePlot(bubble_data) {
 
           employeeColor = this.style.fill
 
+          link = '/employees/' + d.id
+
           d3.select(this)
             .style('fill', 'blue')
 
-
-
+      })
+      .on('click', function(d){
+        window.open(link);
+        return false;
       })
       .on('mousemove', function(d){
         tooltip.html(
