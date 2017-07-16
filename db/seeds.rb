@@ -169,4 +169,4 @@ end
 
 end
 
-Employee.all.each {|emp| emp.update(created_at: Time.utc(2017, rand(1..7)))}
+Employee.all.each {|emp| emp.update(created_at: Time.utc(2017, rand(1..3)))}
