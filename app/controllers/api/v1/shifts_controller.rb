@@ -2,7 +2,27 @@ class Api::V1::ShiftsController < ApplicationController
 
   def index
     @shifts = Shift.where(company_id: current_user.company_id).order(:date)
-    # @shifts = shifts.select{|shift| shift.date > (Time.now - 2.months) && shift.date < (Time.now + 2.months)}
+  end
+
+  def create
+    date = Time.utc(params[:year], params[:month], params[:day], params[:startHour], params[:startMinute])
+
+
+    shift = Shift.new(
+                      day_of_week: date.strftime('%A').downcase,
+                      time_start: date,
+                      time_end: Time.utc(params[:year], params[:month], params[:day], params[:endHour], params[:endMinute]),
+                      date: date,
+                      company_id: params[:companyId]
+                      )
+
+    if shift.save
+      flash[:success] = "Shift Successfully Created"
+      redirect_to "/shifts/#{shift.id}"
+    else
+      flash[:warning] = "Something went wrong. Try again - shift error"
+      render '/shifts/new'
+    end
   end
 
   def show
@@ -19,5 +39,6 @@ class Api::V1::ShiftsController < ApplicationController
         end
       end
     end
+
 
 end

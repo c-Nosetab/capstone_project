@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   patch '/employees/:user_id/availability/:id' => 'availability#update'
   delete '/employees/:user_id/availability/:id' => 'availability#destroy'
 
-  get '/shifts' => 'shifts#index'
+  get '/company/:company_id/shifts' => 'shifts#index'
   get '/shifts/new' => 'shifts#new'
   post '/shifts' => 'shifts#create'
   get '/shifts/:id' => 'shifts#show'
@@ -71,7 +71,9 @@ Rails.application.routes.draw do
       get '/positions/:id' => 'positions#show'
 
       get '/shifts' => 'shifts#index'
+      post '/company/:id/shifts' => 'shifts#create'
       get '/shifts/:id' => 'shifts#show'
+
 
       get '/employee_shifts' => 'employee_shifts#index'
       post '/employee_shifts' => 'employee_shifts#create'

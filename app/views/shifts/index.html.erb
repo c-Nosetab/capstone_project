@@ -1,5 +1,6 @@
 <div id="calendar">
-  <button v-on:click="redrawPopover()">change popover</button>
+
+  <button v-on:click="sayHello()">change popover</button>
   <div id="add-shift">
     <a href="/shifts/new">Add New Shift</a>
   </div>
@@ -43,7 +44,8 @@
   <tr v-for="n1 in monthWeeks">
     <td :class="findClass(new Date(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1)))))" v-for='n2 in 7' v-if="(count + (n2-1) + (7 * (n1 - 1))) <= lastOfMonth">
         <div
-          class="cal-container .popover-thing"
+          class="cal-container popover-thing"
+          v-on:click="redrawPopover(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))"
           trigger="focus"
           data-toggle="popover"
           :title="'Add Shift for ' + currentMonth + '-' + (count + (n2-1) + (7 * (n1 - 1))) + '-' + currentYear "

@@ -35,11 +35,19 @@ document.addEventListener('DOMContentLoaded', function(event) {
             monthWeeks: 0,
             lastOfMonth: 0,
 
+            startHours: '',
+            endHours: '',
+            minutes: '',
+            company: 0,
+
+
+
+
             count: 0,
 
             popoverYear: new Date().getFullYear(),
             popoverMonth: new Date().getMonth(),
-            popoverDay: 0,
+            popoverDay: new Date().getDate(),
             $popover: '',
 
 
@@ -51,6 +59,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
     },
 
     mounted: function() {
+
+      this.company = parseInt($(location).attr('href').split('/').splice(4, 1))
+
       var date = new Date;
       this.currentMonth = date.getMonth();
       this.nowMonth = this.currentMonth;
@@ -71,69 +82,95 @@ document.addEventListener('DOMContentLoaded', function(event) {
         // console.log(fullList.shifts);
         this.shifts = fullList;
         this.filterTheShifts();
-        this.createPopover();
+        this.getHoursAndMinutes();
       }.bind(this));
     },
 
     methods: {
+
+      sayHello: function(){
+        console.log($('meta[name="csrf_token"]'))
+      },
+
+      getHoursAndMinutes: function() {
+
+        var startHours = '';
+        var endHours = '';
+        var minutes = '';
+
+        for(var i = 1; i < 13; i++) {
+          if (i === 8) {
+            this.startHours += '<option selected>'+ i +'</option>'
+          } else {
+            this.startHours += '<option>'+ i +'</option>'
+          }
+        }
+
+        for(var i = 1; i < 13; i++) {
+          if (i === 4) {
+            this.endHours += '<option selected>'+ i +'</option>'
+          } else {
+            this.endHours += '<option>'+ i +'</option>'
+          }
+        }
+
+
+        for(var i = 0; i < 60; i+= 5) {
+          if (i < 10) {
+            this.minutes += '<option value="'+i+'">0' + i + '</option>'
+          } else {
+            this.minutes += '<option>'+ i +'</option>'
+          }
+        }
+
+        this.createPopover();
+      },
 
       changeYear: function() {
         this.popoverYear = 4;
       },
 
       createPopover: function() {
+        console.log(this.company)
         var year = this.popoverYear
-        var month1 = this.popoverMonth
-        var day1 = this.popoverDay
+        var month = this.popoverMonth
+        var day = this.popoverDay
 
-        this.$popover = $('[data-toggle="popover"]').popover({
+        var startHours = this.startHours;
+        var endHours = this.endHours;
+        var minutes = this.minutes;
+
+        this.$popover = $('.popover-thing').popover({
             placement: 'top',
             html: true,
             content: function(){
-              var startHours = '';
-              var endHours = '';
-              var minutes = '';
 
-              for(var i = 1; i < 13; i++) {
-                if (i === 8) {
-                  startHours += '<option selected value="' + i +'">'+ i +'</option>'
-                } else {
-                  startHours += '<option value="' + i +'">'+ i +'</option>'
-                }
-              }
-
-              for(var i = 1; i < 13; i++) {
-                if (i === 4) {
-                  endHours += '<option selected value="' + i +'">'+ i +'</option>'
-                } else {
-                  endHours += '<option value="' + i +'">'+ i +'</option>'
-                }
-              }
-
-
-              for(var i = 0; i < 60; i+= 5) {
-                if (i < 10) {
-                  minutes += '<option value="'+i+'">0' + i + '</option>'
-                } else {
-                  minutes += '<option>'+ i +'</option>'
-                }
-              }
-
-              return '<div class="popover-body"><div class="start-time">'+ year + '<select>'+ startHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select> <br></div><p style="color: black;">to</p> <div class="end-time"><select>'+ endHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option selected>PM</option></select></div><hr><div class="form-button"><button v-on:click="sayHello()">Submit</button></div></div>'
+              return '<div class="popover-body"><div class="start-time">'+ day + '<select>'+ startHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select> <br></div><p style="color: black;">to</p> <div class="end-time"><select>'+ endHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option selected>PM</option></select></div><hr><div class="form-button"><button ' + sayHello + '">Submit</button></div></div>'
             }
 
         })
       },
 
-      redrawPopover: function() {
+      redrawPopover: function(year, month, day) {
+        var year = year;
+        var month = month;
+        var date = day;
+        var company = this.company;
 
+        var startHours = this.startHours;
+        var endHours = this.endHours;
+        var minutes = this.minutes;
+        $('.popover-thing').attr('data-content', function(){
+          var script = "<script>$('button').click(function(){$.post('/api/v1/shifts', $('popoverForm').val())})</script>"
 
-        var popoverData = this.$popover.data('bs.popover');
-        popoverData['options']['content'] = 'hi';
-        console.log(popoverData);
+            // $.ajax({type:'POST', url:'/api/v1/shifts', data:{id: $('popoverForm').val()}, Accept: 'application/json'})})
 
+          return script + '<form id="popoverForm"><input type="hidden" name="year_start" value="'+ year +'"><input type="hidden" name="month_start" value="'+ month +'"><input type="hidden" name="day_start" value="'+ day +'"><div class="popover-body"><div class="start-time"><select name="hour_start">'+ startHours +'</select> : <select name="min_start">'+ minutes +'</select><br></div><p style="color: black;">to</p> <div class="end-time"><select name="hour_end">'+ endHours +'</select> : <select name="min_end">'+ minutes +'</select></div><hr><div class="form-button"><button>Submit</button></div></div></form'
 
+          // <select name="startAmPm"><option>AM</option><option>PM</option></select>
+          // <select name="endAmPm"><option>AM</option><option selected>PM</option></select>
 
+        })
 
       },
 
