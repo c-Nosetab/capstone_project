@@ -82,14 +82,29 @@ document.addEventListener('DOMContentLoaded', function(event) {
         // var day1 = this.popoverDay
 
         $('[data-toggle="popover"]').popover({
+            placement: 'top',
             html: true,
-
             content: function(){
-              var hours = ''
-              var minutes = ''
+              var startHours = '';
+              var endHours = '';
+              var minutes = '';
+
               for(var i = 1; i < 13; i++) {
-                hours += '<option value="' + i +'">'+ i +'</option>'
+                if (i === 8) {
+                  startHours += '<option selected value="' + i +'">'+ i +'</option>'
+                } else {
+                  startHours += '<option value="' + i +'">'+ i +'</option>'
+                }
               }
+
+              for(var i = 1; i < 13; i++) {
+                if (i === 4) {
+                  endHours += '<option selected value="' + i +'">'+ i +'</option>'
+                } else {
+                  endHours += '<option value="' + i +'">'+ i +'</option>'
+                }
+              }
+
 
               for(var i = 0; i < 60; i+= 5) {
                 if (i < 10) {
@@ -99,36 +114,36 @@ document.addEventListener('DOMContentLoaded', function(event) {
                 }
               }
 
-              return '<div class="popover-body"><div class="start-time"><select>'+ hours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select> <br></div><p style="color: black;">to</p> <div class="end-time"><select>'+ hours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select></div><hr><div class="form-button"><button>Submit</button></div></div>'
+              return '<div class="popover-body"><div class="start-time"><select>'+ startHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select> <br></div><p style="color: black;">to</p> <div class="end-time"><select>'+ endHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option selected>PM</option></select></div><hr><div class="form-button"><button>Submit</button></div></div>'
             }
 
         })
       },
 
-      // redrawPopover: function() {
-      //   console.log('hi')
-      //   $('popover').attr('data-content', 'hello');
-      //   var popover = $('popover').data('popover');
-      //   console.log(popover)
-      //   popover.setContent();
-      //   popover.$tip.addClass(popover.options.placement);
-      // },
+      redrawPopover: function() {
+        console.log('hi')
+        $('popover').attr('data-content', 'hello');
+        var popover = $('popover').data('popover');
+        console.log(popover)
+        popover.setContent();
+        popover.$tip.addClass(popover.options.placement);
+      },
 
-      // popoverContent: function(year, month, day) {
-      //   this.popoverYear = year;
-      //   this.popoverMonth = month;
-      //   this.popoverDay = day;
-      //   this.createPopover();
+      popoverContent: function(year, month, day) {
+        this.popoverYear = year;
+        this.popoverMonth = month;
+        this.popoverDay = day;
+        this.createPopover();
 
-      //   $('.popover').popover({
-      //     html: true,
-      //     content: function() {
-      //       return 'hi'
-      //     }
+        $('.popover').popover({
+          html: true,
+          content: function() {
+            return 'hi'
+          }
 
-      //   })
+        })
 
-      // },
+      },
 
       test: function(year, month, day) {
         this.link = '/shifts/new?y=' + year + '&m=' + (month + 1) + '&d=' + day
