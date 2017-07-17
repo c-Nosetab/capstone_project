@@ -37,9 +37,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
             count: 0,
 
-            popoverYear: 0,
-            popoverMonth: 0,
+            popoverYear: new Date().getFullYear(),
+            popoverMonth: new Date().getMonth(),
             popoverDay: 0,
+            $popover: '',
 
 
 
@@ -76,12 +77,16 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     methods: {
 
-      createPopover: function() {
-        // var year1 = this.popoverYear
-        // var month1 = this.popoverMonth
-        // var day1 = this.popoverDay
+      changeYear: function() {
+        this.popoverYear = 4;
+      },
 
-        $('[data-toggle="popover"]').popover({
+      createPopover: function() {
+        var year = this.popoverYear
+        var month1 = this.popoverMonth
+        var day1 = this.popoverDay
+
+        this.$popover = $('[data-toggle="popover"]').popover({
             placement: 'top',
             html: true,
             content: function(){
@@ -114,34 +119,21 @@ document.addEventListener('DOMContentLoaded', function(event) {
                 }
               }
 
-              return '<div class="popover-body"><div class="start-time"><select>'+ startHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select> <br></div><p style="color: black;">to</p> <div class="end-time"><select>'+ endHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option selected>PM</option></select></div><hr><div class="form-button"><button>Submit</button></div></div>'
+              return '<div class="popover-body"><div class="start-time">'+ year + '<select>'+ startHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select> <br></div><p style="color: black;">to</p> <div class="end-time"><select>'+ endHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option selected>PM</option></select></div><hr><div class="form-button"><button v-on:click="sayHello()">Submit</button></div></div>'
             }
 
         })
       },
 
       redrawPopover: function() {
-        console.log('hi')
-        $('popover').attr('data-content', 'hello');
-        var popover = $('popover').data('popover');
-        console.log(popover)
-        popover.setContent();
-        popover.$tip.addClass(popover.options.placement);
-      },
 
-      popoverContent: function(year, month, day) {
-        this.popoverYear = year;
-        this.popoverMonth = month;
-        this.popoverDay = day;
-        this.createPopover();
 
-        $('.popover').popover({
-          html: true,
-          content: function() {
-            return 'hi'
-          }
+        var popoverData = this.$popover.data('bs.popover');
+        popoverData['options']['content'] = 'hi';
+        console.log(popoverData);
 
-        })
+
+
 
       },
 
