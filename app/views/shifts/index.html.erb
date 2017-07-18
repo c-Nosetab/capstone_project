@@ -9,7 +9,7 @@
       <th colspan='7' class='main-calendar-head'>
         <button class="left-arrow" v-on:click="changeMonth(-1), createPopover()"><</button>
         {{months[currentMonth]}} - {{currentYear}}
-        <button class="right-arrow" v-on:click="changeMonth(1)">></button>
+        <button class="right-arrow" v-on:click="changeMonth(1), createPopover()">></button>
       </th>
 
     </tr>
