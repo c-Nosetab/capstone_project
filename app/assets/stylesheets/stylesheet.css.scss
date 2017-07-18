@@ -1,5 +1,6 @@
 .danger-zone a {
-  color: white
+  color: white;
+  float: right;
 }
 
 .move-right {
@@ -24,6 +25,11 @@ div.centered {
   width: 80%;
   min-width: 290px;
   margin: 0 auto;
+}
+
+section {
+  background-image: image-url('seamless_paper_texture.png');
+
 }
 
 div.test h2:before {
@@ -68,10 +74,17 @@ h2.modal-title {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
+}
+.divider {
+  pointer-events: none;
 }
 
 .employee-show img {
+  border-radius: 100px;
+}
+
+.position-photo img {
   border-radius: 100px;
 }
 
@@ -84,10 +97,26 @@ h2.modal-title {
 
 }
 
+.employee-index-text h4 {
+  padding-bottom: 5px;
+}
+
+.employee-index-text p {
+  font-weight: bolder;
+  line-height: 10px;
+  color: rgba(86, 85, 80, .8);
+}
+.employee-index-text p a {
+  color: #0a83c9;
+}
+
+.employee-index-text p a:hover {
+  color: #156899;
+}
 
 
 .address h6 {
-  line-height: 5px
+  line-height: 7px
 }
 
 .employee-index {
@@ -126,6 +155,16 @@ h2.modal-title {
 
   .no-positions {
     display: none;
+  }
+
+  .remove-position a {
+    color: #E45656;
+    cursor: pointer;
+  }
+
+  .remove-position a:hover {
+    color: red;
+    text-decoration: underline;
   }
 
 

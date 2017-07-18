@@ -76,13 +76,26 @@ class CompaniesController < ApplicationController
   end
 
   def destroy
-    if current_user.is_admin?
+    if current_user.id == current_user.company.employees.first.id
       company = Company.find(current_user.company_id)
       company_name = company.name
+
       employees = Employee.where(company_id: current_user.company_id)
       positions = Position.where(company_id: current_user.company_id)
-      if company.destroy
+      avail = Availability.where(company_id: current_user.company_id)
+      position_shifts = PositionShift.where(company_id: current_user.company_id)
+      employee_shifts = EmployeeShift.where(company_id: current_user.company_id)
+
+      if company.delete
         flash[:success] = "All information pertaining to #{company_name} has been deleted."
+        session[:user_id] = nil
+
+        employees.delete_all
+        positions.delete_all
+        avail.delete_all
+        employee_shifts.delete_all
+        position_shifts.delete_all
+        redirect_to '/'
       else
 
       end

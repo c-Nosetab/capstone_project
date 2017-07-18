@@ -5,13 +5,7 @@ class ShiftsController < ApplicationController
   def index
 
     @shifts = Shift.where(company_id: current_user.company_id).order('date')
-    @time = Time.now
-    @skip_cells = Date.today.at_beginning_of_month.strftime('%w').to_i
-    @start_count = Date.today.at_beginning_of_month.strftime('%w').to_i
-    @count = 7 - @skip_cells + 1
-
-
-
+    @time = Time.utc(Time.now.year, Time.now.month)
   end
 
   def new

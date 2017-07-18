@@ -3,8 +3,13 @@ class EmployeesController < ApplicationController
 
   def index
 
-    @positions = Position.where(company_id: current_user.company_id)
-    @employees = Employee.where(company_id: current_user.company_id)
+    if current_user.is_admin?
+      @positions = Position.where(company_id: current_user.company_id)
+      @employees = Employee.where(company_id: current_user.company_id)
+    else
+      @position = current_user.position
+      @employees = Employee.where(position_id: current_user.position_id)
+    end
 
     sort = params[:sort]
 
@@ -29,7 +34,7 @@ class EmployeesController < ApplicationController
     employee = Employee.new(
                             first_name: params[:first_name],
                             last_name: params[:last_name],
-                            password: "#{params[:last_name]}123",
+                            password: "password",
                             is_admin?: params[:is_admin?],
                             is_manager?: params[:is_manager?],
                             position_id: params[:position_id],

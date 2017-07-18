@@ -40,7 +40,7 @@
             <div class="col-sm-3 col-md-2 columns">
 
               <% if current_user %>
-                <a href="/employees/<%= current_user.id %>">
+                <a href="/employees">
                   <img class="logo logo-light" alt="On the Dot." src="/img/on_the_dot3.png">
 
                   <img class="logo logo-dark" alt="On the Dot." src="/img/on_the_dot3.png">
@@ -73,16 +73,13 @@
 
 
                   <% if current_user.is_admin? %>
+                    <li><a href="/company/<%= current_user.company_id %>/shifts">Shift Calendar</a>
                     <li class="has-dropdown"><a href="#">Admin Controls</a>
                       <ul class="subnav">
                         <li><a href="/company/<%= current_user.company_id %>/data">Company Data</a></li>
-                        <li><a href="/shifts/new">Add Shift</a></li>
-                        <li><a href="/company/<%= current_user.company_id %>/shifts">See Shifts</a></li>
-                        <li><a href="#">---</a></li>
-                        <li><a href="/positions/new">Add Position</a></li>
-                        <li><a href="/positions">See Positions</a></li>
-                        <li><a href="#">---</a></li>
+                        <li><a class="divider" href="#">---</a></li>
                         <li><a href="/employees/new">Add Employee</a></li>
+                        <li><a href="/positions">View Positions</a></li>
 
 
                       </ul>
@@ -92,10 +89,12 @@
 
 
 
-                  <li class="has-dropdown"><a href="/employees/<%= current_user.id %>"> Signed in as: <%= current_user.full_name %></a>
+                  <li class="has-dropdown" style="float: right;"><a href="/employees/<%= current_user.id %>"> Signed in as: <%= current_user.full_name %></a>
                     <ul class="subnav">
-                      <li><a href="/employees/<%= current_user.id %>/edit">Edit Profile Info</a></li>
-                      <li><a href="/employees/<%= current_user.id %>/availability">Edit Availability</a></li>
+                      <li><a href="/employees/<%= current_user.id %>">View Profile</a></li>
+                      <li><a href="/employees/<%= current_user.id %>/availability">Availability</a></li>
+                      <li><a class="divider" href="#">---</a></li>
+                      <li><a href="/employees/<%= current_user.id %>/edit">Edit Profile</a></li>
                       <li><a href="/logout">Logout</a></li>
                     </ul>
 
@@ -212,7 +211,7 @@
                         <div class="widget margin-btm40">
                             <h3>Get in touch</h3>
                             <p>
-                                Christopher Bateson is a Chicago based Developer currently. On the Dot. is Chris' first rails application. Feel free to reach out about any questions, comments or suggesstions! </p>
+                                Christopher Bateson is a Chicago based Developer. On the Dot. is Chris' first rails application. Feel free to reach out about any questions, comments or suggestions! </p>
                             <div class="contact-info">
                                 <p>
                                     <i class="icon icon_phone"></i> (312) 971-7496
@@ -313,7 +312,6 @@
 
 
 
--------------------------------------
 
 
 
