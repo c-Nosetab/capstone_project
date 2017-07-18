@@ -26,6 +26,11 @@ div.centered {
   margin: 0 auto;
 }
 
+section {
+  background-image: image-url('seamless_paper_texture.png');
+
+}
+
 div.test h2:before {
   display: block;
   content: " ";

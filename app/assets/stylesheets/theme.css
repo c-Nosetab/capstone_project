@@ -275,7 +275,7 @@ section.duplicatable-content {
   padding-bottom: 40px;
 }
 section:nth-of-type(odd) {
-  background: #f4f4f4;
+  /*background: #f4f4f4;*/
 }
 section:nth-of-type(even) {
   background: #ffffff;

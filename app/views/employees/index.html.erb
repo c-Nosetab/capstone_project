@@ -5,7 +5,7 @@
   <h1><strong>Employees of <%= current_user.company.name %>:</strong></h1>
   <% if current_user.is_admin? %>
     <div style="padding-left: 3px">
-      Jump To: <span style="padding-right: 3px;">
+      <span style="font-weight: bold;">Jump To:</span> <span style="padding-right: 3px;">
       <% @positions.each do |position| %>
         <a href="#<%=position.position_name %> "><button><%= position.position_name %></button></a>
       <% end %>
@@ -40,7 +40,7 @@
               </strong></a></h4>
               <h4>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h4>
               <h4>Phone: <%= employee.phone %></h4>
-              <hr>
+              <br>
             </div>
         <% end %>
 
@@ -65,10 +65,10 @@
 
               <h4>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h4>
               <h4>Phone: <%= employee.phone %></h4>
-              <hr>
+              <br>
             </div>
         <% end %>
-        <hr>
+        <br>
         <h5 class="col-sm-12" style="text-align: right;"><a href="#top">Back to Top</a></h5>
         <br>
         <br>

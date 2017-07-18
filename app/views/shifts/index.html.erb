@@ -1,18 +1,21 @@
 <div id="calendar">
+  <h1 style="line-height: 10px">Shift Calendar</h1>
   <div id="add-shift">
     <a href="/shifts/new">Add New Shift</a>
   </div>
   <table>
   <!-- Month -->
     <tr>
-      <th class="main-calendar-head"><button v-on:click="changeMonth(-1)"><</button></th>
-      <th colspan='5' class='main-calendar-head'>{{months[currentMonth]}} - {{currentYear}}</th>
-      <th class="main-calendar-head"><button v-on:click="changeMonth(1)">></button></th>
+      <th colspan='7' class='main-calendar-head'>
+        <button class="left-arrow" v-on:click="changeMonth(-1)"><</button>
+        {{months[currentMonth]}} - {{currentYear}}
+        <button class="right-arrow" v-on:click="changeMonth(1)">></button>
+      </th>
 
     </tr>
   <!-- Day Names -->
     <tr>
-      <th v-for="n in 7">{{days[n - 1]}}</th>
+      <th class="name-days" v-for="n in 7">{{days[n - 1]}}</th>
     </tr>
 
   <!-- First Row of Days -->
