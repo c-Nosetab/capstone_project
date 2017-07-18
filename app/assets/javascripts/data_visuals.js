@@ -24,16 +24,13 @@ function findData(id) {
     });
 }
 
-// ###########################################################################################
-// ############################## ORIGINAL BAR GRAPH #########################################
-// ###########################################################################################
 
 function drawBarGraph2(barData) {
 
   var monthData = [];
   var months = [];
   var range = [0]
-  var margin = {top: 0, right: 0, bottom: 30, left: 27}
+  var margin = {top: 0, right: 0, bottom: 25, left: 27}
   var height = 400 - margin.top - margin.bottom,
       width = 600 - margin.left - margin.right;
 
@@ -83,8 +80,8 @@ function drawBarGraph2(barData) {
 
 
   var colors = d3.scaleLinear()
-      .domain([0, d3.max(monthData) / 3, d3.max(monthData) ])
-      .range([ '#2D8BCF','#2D8BCF', '#12ed4d'])
+      .domain([0, d3.max(monthData) / 4,d3.max(monthData) / 3, d3.max(monthData) ])
+      .range([ '#7f2a2a', '#912121','#2D8BCF', '#12ed4d'])
 
   var tooltip = d3.select('body')
                   .append('div')
@@ -145,11 +142,11 @@ function drawBarGraph2(barData) {
 
 
   var yGuide = d3.select('#viz svg').append('g')
-                  .attr('transform', 'translate(20,0)')
+                  .attr('transform', 'translate(20,5)')
                   .call(yAxisTicks)
 
   var xGuide = d3.select('#viz svg').append('g')
-                  .attr('transform', 'translate(20,' + height + ')')
+                  .attr('transform', 'translate(20,' + (height + 5) + ')')
                   .call(xAxisTicks)
 
 
@@ -532,10 +529,10 @@ function drawBubblePlot(bubble_data) {
       .style('position', 'absolute')
       .style('box-shadow', '0 0 5px #999')
       .style('padding', '0 10px')
-      .style('background', 'white')
+      .style('background', 'rgba(255, 255, 255, 0.9)')
       .style('text-align', 'center')
       .style('margin-top', -10)
-      .style('opacity', 0)
+      .style('opacity', 300)
       .style('pointer-events', 'none');
 
 
@@ -581,7 +578,7 @@ function drawBubblePlot(bubble_data) {
       .on('mouseenter', function(d) {
 
         tooltip.transition().duration(200)
-          .style('opacity', .9)
+          .style('opacity', 1)
 
           employeeColor = this.style.fill
 

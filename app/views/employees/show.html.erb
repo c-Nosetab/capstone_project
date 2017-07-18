@@ -30,7 +30,7 @@
             <% end %>
           </tr>
         </table>
-          <h4 style="text-align: right; padding-top: 5px;"><a href="/employees/<%= @employee.id %>/availability">Set Current Availability</a></h4>
+          <h4 style="text-align: right; padding-top: 5px;"><a href="/employees/<%= @employee.id %>/availability">See Current Availability</a></h4>
         </div>
       </div>
   </table>
@@ -95,7 +95,7 @@
   <% if current_user.id == @employee.id%>
 
     <%= form_for @employee, url: update_image_path, html: {multipart: true} do |f| %>
-      <%= label_tag "Change Image:" %> <%= f.file_field :image %>
+      <%= label_tag "Change Profile Image:" %> <%= f.file_field :image %>
       <%= submit_tag "Update Image" %>
     <% end %>
 

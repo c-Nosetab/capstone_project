@@ -4,6 +4,7 @@
 <% else %>
   <h1>Assign New Position</h1>
 <% end %>
+
 <div style="margin: 0 auto;">
   <%= form_tag "/employees/#{@employee.id}", method: :patch do %>
     <% if @employee.id == current_user.id %>
@@ -39,7 +40,7 @@
       <input type="hidden" name="email" value="<%= @employee.email %>">
     <% end %>
     <br>
-    <% if @current_user.is_admin? && @current_user.id = !@employee.id %>
+    <% if @current_user.is_admin? %>
         <h4>Admin rights: <input name="is_admin?" type="checkbox" value="true" <%= @employee.check_admin %>/> Manager: <input id="pet_dog" name="is_manager?" type="checkbox" value="true" <%= @employee.check_manager %>/></h4>
         <br>
         <h5>Position:</h5>
