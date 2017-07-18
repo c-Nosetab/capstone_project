@@ -71,7 +71,7 @@ Rails.application.routes.draw do
       get '/positions/:id' => 'positions#show'
 
       get '/shifts' => 'shifts#index'
-      post '/company/:id/shifts' => 'shifts#create'
+      post '/shifts' => 'shifts#create'
       get '/shifts/:id' => 'shifts#show'
 
 

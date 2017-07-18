@@ -1,6 +1,4 @@
 <div id="calendar">
-
-  <button v-on:click="sayHello()">change popover</button>
   <div id="add-shift">
     <a href="/shifts/new">Add New Shift</a>
   </div>
@@ -48,7 +46,7 @@
           v-on:click="redrawPopover(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))"
           trigger="focus"
           data-toggle="popover"
-          :title="'Add Shift for ' + currentMonth + '-' + (count + (n2-1) + (7 * (n1 - 1))) + '-' + currentYear "
+          :title="'Add Shift for ' + (currentMonth+1) + '-' + (count + (n2-1) + (7 * (n1 - 1))) + '-' + currentYear "
         >
           <!-- <p v-on:click="test(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))"> -->
           <p> {{(count + (n2-1) + (7 * (n1 - 1)))}}</p>

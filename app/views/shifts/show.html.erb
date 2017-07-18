@@ -2,7 +2,6 @@
 <h1>Shift Info: <strong><%= @shift.date.strftime('%a, %D') %></a> - <%= @shift.time_start.strftime('%l:%M%P') %> - <%= @shift.time_end.strftime('%l:%M%P') %></strong></h1>
 
 <div id="shifts">
-  <button v-on:click="sayHello(), sayBye()">do the thing</button>
   <ul>
     <li v-for="error in errors"> {{error}}</li>
   </ul>
