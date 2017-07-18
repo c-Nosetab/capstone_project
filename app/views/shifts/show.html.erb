@@ -1,68 +1,71 @@
 <h5 class="move-right"><a href="/company/<%= current_user.company_id %>/shifts">Back to Shift Calendar</a></h5>
 
-<h1>Shift Info: <strong><%= @shift.date.strftime('%a, %D') %></a> - <%= @shift.time_start.strftime('%l:%M%P') %> - <%= @shift.time_end.strftime('%l:%M%P') %></strong></h1>
+<h1><strong>Shift Info: <%= @shift.date.strftime('%a, %D') %></a> - <%= @shift.time_start.strftime('%l:%M%P') %> - <%= @shift.time_end.strftime('%l:%M%P') %></strong></h1>
 
 
 <div id="shifts">
   <ul>
     <li v-for="error in errors"> {{error}}</li>
   </ul>
-  <h2>Positions Assigned to Shift:</h2>
-    <ul>
-      <li>
-        <strong>Add Position: <br></strong><select v-on:change="changeQuantity($event)">
-          <option value="" selected>Select Position</option>
-          <option v-for="(position, index) in shift.positions" v-if="!position.quantity" :value="position.id">{{position.position_name}}</option>
-        </select>
+  <% if @shift.date >= Time.now.monday - 1.week - 2.days %>
+    <strong>Add Position: </strong>
+    <select v-on:change="changeQuantity($event)">
+      <option value="" selected>Select Position</option>
+      <option v-for="(position, index) in shift.positions" v-if="!position.quantity" :value="position.id">{{position.position_name}}</option>
+    </select>
+    -- How Many:
+    <select v-model="positionQuantity" value="Select Position">
+      <option v-for="n in totalQuantity">{{n}}</option>
+    </select>
+    -
+    <button v-on:click="scheduleNewPosition">Add Position</button>
+    <br>
+    <br>
+  <% end %>
 
-        -- How Many:
-
-        <select v-model="positionQuantity" value="Select Position">
-          <option v-for="n in totalQuantity">{{n}}</option>
-        </select>
-        -
-        <button v-on:click="scheduleNewPosition">Add Position</button>
-      </li>
-    </ul>
-
-  <br>
   <div v-for="(position, pos_index) in shift.positions">
     <div v-if="position.quantity">
-      <h3>{{position.position_name}} -- {{position.quantity}} needed: </h3>
-      <br>
+      <h5 style="text-decoration: underline;">{{position.position_name}} -- {{position.quantity}} needed: </h5>
       <ol>
       <div v-if="position.quantity - position.assigned_employees.length > 0">
-        <select :ref="position.position_name">
-          <option value="">Select Employee</option>
-          <option v-for="employee in position.unassigned_employees" v-bind:value="employee.id">
-            {{employee.full_name}}
-          </option>
-        </select>
-        <button v-on:click="assignNewEmployee(position.position_name, pos_index)">Assign Employee</button>
-        <br>
-        <br>
+        <% if @shift.date >= Time.now.monday - 1.week - 2.days %>
+          <select :ref="position.position_name">
+            <option value="">Select Employee</option>
+            <option v-for="employee in position.unassigned_employees" v-bind:value="employee.id">
+              {{employee.full_name}}
+            </option>
+          </select>
+          <button v-on:click="assignNewEmployee(position.position_name, pos_index)">Assign Employee</button>
+          <br>
+          <br>
+        <% end %>
       </div>
         <li v-for="(employee, emp_index) in position.assigned_employees">
-          <a v-bind:href="'/employees/' + employee.id">{{employee.full_name}} - {{employee.position}} </a> --
-
-          <button v-on:click="unassignEmployee(employee, pos_index, emp_index)">
-            Unassign
-          </button>
+          <a v-bind:href="'/employees/' + employee.id">{{employee.full_name}} - {{employee.position}} </a>
+          <% if @shift.date >= Time.now.monday - 1.week - 2.days %>
+            --
+            <button v-on:click="unassignEmployee(employee, pos_index, emp_index)">
+              Unassign
+            </button>
+          <% end %>
         </li>
 
 
 
-
-      <br>
-      <h5><a v-on:click="deletePosition(pos_index)">Remove Position From Shift</a></h5>
-      <hr>
+      <% if @shift.date >= Time.now.monday - 1.week - 2.days %>
+        <br>
+        <h6 class="remove-position"><a v-on:click="deletePosition(pos_index)">Remove Position From Shift</a></h6>
+      <% end %>
+        <br>
     </div>
   </div>
 
 <br>
-  <div class="danger-zone">
-    <button class="btn-danger"><%= link_to 'Delete Shift', "/shifts/#{params[:id]}", method: :delete%></button>
-  </div>
+  <% if @shift.date >= Time.now.monday - 1.week - 2.days %>
+    <div class="danger-zone">
+      <button class="btn-danger"><%= link_to 'Delete Shift', "/shifts/#{params[:id]}", method: :delete%></button>
+    </div>
+  <% end %>
 </div>
 
 

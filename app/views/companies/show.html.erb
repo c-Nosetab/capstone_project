@@ -8,4 +8,8 @@
 <h4><%= @company.city %>, <%= @company.state %> <%= @company.zip %></h4>
 <br>
 
-<a href="/company/edit">Edit Company</a> | <a href="/company">Delete Company</a>
+<a href="/company/edit">Edit Company</a>
+
+<% if current_user.id == @company.employees.first.id %>
+  <button style="float:right;" class="btn-danger danger-zone"> <%= link_to 'Delete Company', "/company", method: :delete %></button>
+<% end %>

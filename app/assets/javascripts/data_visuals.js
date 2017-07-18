@@ -100,7 +100,7 @@ function drawBarGraph2(barData) {
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')')
+      .attr('transform', 'translate(' + margin.left + ',' + 4 + ')')
       .selectAll('rect').data(monthData)
         .enter().append('rect')
           .attr('fill', colors)

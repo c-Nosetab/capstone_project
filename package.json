@@ -1,7 +1,5 @@
 {
   "name": "employee-scheduler-app",
   "private": true,
-  "dependencies": {
-    "vue-strap": "^1.1.37"
-  }
+  "dependencies": {}
 }

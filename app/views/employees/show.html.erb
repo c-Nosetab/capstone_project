@@ -1,6 +1,5 @@
 <% if current_user.id == @employee.id || current_user.is_admin? || current_user.is_manager? %>
-  <h2 style="text-decoration: underline;">Upcoming Shifts:</h2>
-  <br>
+  <h1 style="text-decoration: underline;">Upcoming Shifts:</h1>
   <div class='row'>
     <div class="col-sm-12">
       <div class="larger-size">
@@ -13,11 +12,11 @@
           <tr>
             <% 7.times do |index| %>
               <% if (@time + index.days).day == Time.now.day %>
-                <td class="today">
+                <td class="show-today">
               <% elsif (@time + index.days).day < Time.now.day && Time.now.month == (Time.utc(@time.year, @time.month, @time.day) + index.days).month %>
-                <td class="past">
+                <td class="show-past">
               <% else %>
-                <td>
+                <td class="show-future">
               <% end %>
                 <% @shifts.order(:time_start).select{|shift| shift.date == (Time.utc(@time.year, @time.month, @time.day)+ index.days)}.each do |shift| %>
                   <div class="calendar-text">
@@ -73,7 +72,7 @@
       <% end %>
     </div>
     <div class="col-lg-7 col-md-6 col-xs-12 employee-text-show">
-      <h3><strong><%= "#{@employee.first_name.capitalize} #{@employee.last_name.capitalize} - #{@employee.manager?} #{@employee.position.position_name}" %></strong></h3>
+      <h3><strong><%= "#{@employee.first_name.capitalize} #{@employee.last_name.capitalize} - #{@employee.position.position_name} #{@employee.manager?}" %></strong></h3>
       <h3>Email: <a href="mailto:<%= @employee.email %>"><%= @employee.email %></a></h3>
       <h3>Phone: <%= @employee.phone %></h3>
       <br>

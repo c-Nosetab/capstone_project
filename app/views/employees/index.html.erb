@@ -1,51 +1,120 @@
 
 
 <div id="employees">
-
-  <h1><strong>Employees of <%= current_user.company.name %>:</strong></h1>
-  <% if current_user.is_admin? %>
-    <div style="padding-left: 3px">
-      <span style="font-weight: bold;">Jump To:</span> <span style="padding-right: 3px;">
-      <% @positions.each do |position| %>
-        <a href="#<%=position.position_name %> "><button><%= position.position_name %></button></a>
-      <% end %>
-      </span>
-    </div>
-    <br>
-  <% end %>
-
-  <div class='test'>
-    <% @positions.each do |position| %>
-      <h2 class="test2" style="text-decoration: underline;" id="<%= position.position_name %>"><strong><%= position.position_name %>:</strong></h2>
-
-      <div class='row employee-index'>
-        <% @employees.select{|emp| emp.position_id == position.id && emp.is_manager?}.each do |employee| %>
-            <div class="employee-index-photo col-sm-1 col-md-1">
-                <% if employee.image_file_name %>
-                  <div class="true">
-                    <a href="/employees/<%= employee.id %>">
-                      <%= image_tag employee.image.url(:thumb) %></span>
-                    </a>
-                  </div>
-                <% else %>
-                  <a href="/employees/<%= employee.id %>">
-                    <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
-                  </a>
-                <% end %>
-              </a>
-            </div>
-            <div class="employee-index-text col-sm-11 col-md-5">
-              <h4><a href="/employees/<%= employee.id %>"><strong>
-                  MANAGER - <%=  employee.full_name %>
-              </strong></a></h4>
-              <h4>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h4>
-              <h4>Phone: <%= employee.phone %></h4>
-              <br>
-            </div>
+<% if current_user.is_admin? %>
+    <h1><strong>Employees of <%= current_user.company.name %>:</strong></h1>
+    <% if current_user.is_admin? %>
+      <div style="padding-left: 3px">
+        <span style="font-weight: bold;">Jump To:</span> <span style="padding-right: 3px;">
+        <% @positions.each do |position| %>
+          <a href="#<%= position.position_name %> "><button><%= position.position_name %></button></a>
         <% end %>
+        </span>
+      </div>
+      <br>
+    <% end %>
+
+    <div class='test'>
+      <% @positions.each do |position| %>
+
+        <h2 class="test2" style="text-decoration: underline;" id="<%= position.position_name %>"><strong><%= position.position_name %>:</strong></h2>
+
+        <div class='row employee-index'>
+          <% @employees.select{|emp| emp.position_id == position.id && emp.is_manager?}.each do |employee| %>
+              <div class="employee-index-photo col-sm-1 col-md-1">
+                  <% if employee.image_file_name %>
+                    <div class="true">
+                      <a href="/employees/<%= employee.id %>">
+                        <%= image_tag employee.image.url(:thumb) %></span>
+                      </a>
+                    </div>
+                  <% else %>
+                    <a href="/employees/<%= employee.id %>">
+                      <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+                    </a>
+                  <% end %>
+                </a>
+              </div>
+              <div class="employee-index-text col-sm-11 col-md-5">
+                <h4><a href="/employees/<%= employee.id %>"><strong>
+                    MANAGER - <%=  employee.full_name %>
+                </strong></a></h4>
+                <p>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></p>
+                <p>Phone: <%= employee.phone %></p>
+                <% if @employees.where(position_id: position.id, is_manager?: true).count.even? %>
+                  <br>
+                <% end %>
+              </div>
+          <% end %>
 
 
-        <% @employees.select{|emp| emp.position_id == position.id && !emp.is_manager?}.each do |employee| %>
+          <% @employees.select{|emp| emp.position_id == position.id && !emp.is_manager?}.each do |employee| %>
+              <div style="line-height: 20px; ">
+                <div class="employee-index-photo col-sm-1 col-md-1">
+                  <% if employee.image_file_name %>
+                    <div class="true">
+                      <a href="/employees/<%= employee.id %>">
+                        <%= image_tag employee.image.url(:thumb) %></span>
+                      </a>
+                    </div>
+                  <% else %>
+                    <a href="/employees/<%= employee.id %>">
+                      <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+                    </a>
+                  <% end %>
+                </div>
+                <div class="employee-index-text col-sm-11 col-md-5">
+
+                  <h4><strong><a href="/employees/<%= employee.id %>"><%=  employee.full_name %></a></strong></h4>
+
+                  <p>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></p>
+                  <p>Phone: <%= employee.phone %></p>
+                  <br>
+                </div>
+              </div>
+          <% end %>
+          <br>
+          <h5 class="col-sm-12" style="text-align: right;"><a href="#top">Back to Top</a></h5>
+          <br>
+          <br>
+          <br>
+        </div>
+      <% end %>
+
+<% else %>
+    <h1><strong><%= @position.position_name %> Employees of <%= current_user.company.name %>:</strong></h1>
+
+    <div class='row employee-index'>
+      <% @employees.select{|emp| emp.position_id == @position.id && emp.is_manager?}.each do |employee| %>
+          <div class="employee-index-photo col-sm-1 col-md-1">
+              <% if employee.image_file_name %>
+                <div class="true">
+                  <a href="/employees/<%= employee.id %>">
+                    <%= image_tag employee.image.url(:thumb) %></span>
+                  </a>
+                </div>
+              <% else %>
+                <a href="/employees/<%= employee.id %>">
+                  <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+                </a>
+              <% end %>
+            </a>
+          </div>
+          <div class="employee-index-text col-sm-11 col-md-5">
+            <h4><a href="/employees/<%= employee.id %>"><strong>
+                MANAGER - <%=  employee.full_name %>
+            </strong></a></h4>
+            <p>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></p>
+            <p>Phone: <%= employee.phone %></p>
+            <% if @employees.where(position_id: @position.id, is_manager?: true).count.even? %>
+              <br>
+            <% end %>
+          </div>
+      <% end %>
+
+
+      <% @employees.select{|emp| emp.position_id == @position.id && !emp.is_manager?}.each do |employee| %>
+          <div style="line-height: 20px; ">
             <div class="employee-index-photo col-sm-1 col-md-1">
               <% if employee.image_file_name %>
                 <div class="true">
@@ -63,40 +132,16 @@
 
               <h4><strong><a href="/employees/<%= employee.id %>"><%=  employee.full_name %></a></strong></h4>
 
-              <h4>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h4>
-              <h4>Phone: <%= employee.phone %></h4>
+              <p>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></p>
+              <p>Phone: <%= employee.phone %></p>
               <br>
             </div>
-        <% end %>
-        <br>
-        <h5 class="col-sm-12" style="text-align: right;"><a href="#top">Back to Top</a></h5>
-        <br>
-        <br>
-      </div>
-    <% end %>
-
-
-  <!-- <div v-for="position in employees" class="test">
-      <h2 class="test2" v-bind:id="position.name" style="text-decoration: underline;"><strong>{{position.name}}:</strong></h2>
-    <div class="row">
+          </div>
+      <% end %>
       <br>
-      <div v-for="employee in position.managers" class="col-sm-12, col-md-6">
-
-        <h4><strong><a v-bind:href="'/employees/' + employee.id"><span v-if="employee.manager">MANAGER - </span>{{employee.full_name}}</a></strong></h4>
-        <h4>Email: <a v-bind:href="'mailto:' + employee.email">{{employee.email}}</a></h4>
-        <h4>Phone: {{employee.phone}}</h4>
-        <hr>
-      </div>
-      <div v-for="employee in position.employees" class="col-sm-12, col-md-6">
-        <h4><strong><a v-bind:href="'/employees/' + employee.id">{{employee.full_name}}</a></strong></h4>
-        <h4>Email: <a v-bind:href="'mailto:' + employee.email">{{employee.email}}</a></h4>
-        <h4>Phone: {{employee.phone}}</h4>
-        <hr>
-      </div>
+      <h5 class="col-sm-12" style="text-align: right;"><a href="#top">Back to Top</a></h5>
+      <br>
+      <br>
+      <br>
     </div>
-        <h5 class="col-sm-12" style="text-align: right;"><a href="#top">Back to Top</a></h5>
-        <br>
-        <br>
-  </div>
-</div>
- -->
+<% end %>

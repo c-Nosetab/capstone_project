@@ -1,4 +1,10 @@
-<h1>Create new position:</h1>
+
+<% if !current_user.position_id %>
+  <h1>Your Position Name:</h1>
+<% else %>
+  <h1>Create new position:</h1>
+<% end %>
+
 <%= form_tag '/positions', method: :post do %>
   <input type="name" name="position_name">
   <input type="submit" value="Submit">

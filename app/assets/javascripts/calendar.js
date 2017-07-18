@@ -88,10 +88,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     methods: {
 
-      sayHello: function(){
-        console.log($('meta[name="csrf_token"]'))
-      },
-
       getHoursAndMinutes: function() {
 
         var startHours = '';
@@ -152,6 +148,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
       },
 
       redrawPopover: function(year, month, day) {
+
+
         var year = year;
         var month = month;
         var date = day;
@@ -160,15 +158,20 @@ document.addEventListener('DOMContentLoaded', function(event) {
         var startHours = this.startHours;
         var endHours = this.endHours;
         var minutes = this.minutes;
-        $('.popover-thing').attr('data-content', function(){
-          var script = "<script>$('button').click(function(e){$.ajax({type:'POST',Accept: 'application/json', url:'/api/v1/shifts',data: {year_start: $('#popoverYear').val(),month_start: $('#popoverMonth').val(),day_start: $('#popoverDay').val(),hour_start: $('#popoverHourStart').val(),min_start: $('#popoverMinStart').val(),hour_end: $('#popoverHourEnd').val(),min_end: $('#popoverMinEnd').val(),company_id: $('#companyId').val()},success: function(result){ window.location.href ='/shifts/'+ result['id']}})})</script>"
 
-          return script + '<input id="companyId" type="hidden" name="company_id" value="'+ company +'"><input id="popoverYear"type="hidden" name="year_start" value="'+ year +'"><input type="hidden" id="popoverMonth" name="month_start" value="'+ (month + 1) +'"><input type="hidden" id="popoverDay" name="day_start" value="'+ day +'"><div class="popover-body"><div class="start-time"><select id="popoverHourStart" name="hour_start">'+ startHours +'</select> : <select id="popoverMinStart" name="min_start">'+ minutes +'</select><br></div><p style="color: black;">to</p> <div class="end-time"><select id="popoverHourEnd" name="hour_end">'+ endHours +'</select> : <select id="popoverMinEnd" name="min_end">'+ minutes +'</select></div><hr><div class="form-button"><button>Submit</button></div></div>'
+        var title = 'Add Shift for ' + (month + 1) + '-' + day + '-' + year
+
+
+        $('.popover-thing').attr('data-original-title', title);
+        $('.popover-thing').attr('data-content', function(){
+          var script = "<script>$('#popoverButton').click(function(e){$.ajax({type:'POST',Accept: 'application/json', url:'/api/v1/shifts',data: {year_start: $('#popoverYear').val(),month_start: $('#popoverMonth').val(),day_start: $('#popoverDay').val(),hour_start: $('#popoverHourStart').val(),min_start: $('#popoverMinStart').val(),hour_end: $('#popoverHourEnd').val(),min_end: $('#popoverMinEnd').val(),company_id: $('#companyId').val()},success: function(result){ window.location.href ='/shifts/'+ result['id']}})})</script>"
+
+          return script + '<input id="companyId" type="hidden" name="company_id" value="'+ company +'"><input id="popoverYear"type="hidden" name="year_start" value="'+ year +'"><input type="hidden" id="popoverMonth" name="month_start" value="'+ (month + 1) +'"><input type="hidden" id="popoverDay" name="day_start" value="'+ day +'"><div class="popover-body"><div class="start-time"><select id="popoverHourStart" name="hour_start">'+ startHours +'</select> : <select id="popoverMinStart" name="min_start">'+ minutes +'</select><br></div><p style="color: black;">to</p> <div class="end-time"><select id="popoverHourEnd" name="hour_end">'+ endHours +'</select> : <select id="popoverMinEnd" name="min_end">'+ minutes +'</select></div><hr><div class="form-button"><button id="popoverButton">Submit</button></div></div>'
 
           // <select name="startAmPm"><option>AM</option><option>PM</option></select>
           // <select name="endAmPm"><option>AM</option><option selected>PM</option></select>
 
-        })
+        });
 
       },
 

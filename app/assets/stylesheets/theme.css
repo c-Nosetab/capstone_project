@@ -276,6 +276,8 @@ section.duplicatable-content {
 }
 section:nth-of-type(odd) {
   /*background: #f4f4f4;*/
+  /*background: rgba(200, 150, 100, 0.2);*/
+  /*background: rgba(237, 192, 135, 0.4)*/
 }
 section:nth-of-type(even) {
   background: #ffffff;
@@ -491,7 +493,7 @@ nav hr {
 .menu {
   padding: 0;
   margin: 0;
-  display: inline-block;
+  display: block;
   position: relative;
   top: 2px;
 }
@@ -2860,6 +2862,11 @@ footer.short-2 .contact-action:hover {
   nav .columns {
     width: 100%;
   }
+
+  .columns li {
+
+  }
+
   nav .social-icons {
     display: none;
   }

@@ -12,11 +12,14 @@ class PositionsController < ApplicationController
     position = Position.new(position_name: params[:position_name], company_id: current_user.company_id)
 
     if position.save
+      if !current_user.position_id
+        current_user.update(position_id: position.id)
+      end
       flash[:success] = "Position successfully created."
       redirect_to "/positions"
     else
       flash[:warning] = "Something went wrong. Please try again."
-      redirect_to '/positions/new'
+      redirect_to '/employees'
     end
   end
 

@@ -36,7 +36,7 @@ class Employee < ApplicationRecord
 
   def manager?
     if is_manager?
-      "Manager of "
+      "Manager "
     end
   end
 

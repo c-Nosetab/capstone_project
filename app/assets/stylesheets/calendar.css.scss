@@ -85,6 +85,13 @@ div.cal-container li {
   line-height: 18px;
 }
 
+td.show-today {
+  background: #F6D5D5;
+  font-weight: bold;
+  box-shadow: 0 0 2px #999;
+  text-align: center;
+  color: rgba(0,0,0, 0.5);
+}
 
 td.today {
   background: #F6D5D5;
@@ -93,6 +100,12 @@ td.today {
   text-align: center;
   color: rgba(0,0,0, 0.5);
 
+}
+
+td.show-past {
+  background: #EAEAEA;
+  color: rgba(80,80,80, 0.2);
+  pointer-events: none;
 }
 
 td.past {

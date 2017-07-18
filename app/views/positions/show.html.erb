@@ -1,28 +1,39 @@
 
 <h1><%= @position.position_name %> List:</h1>
 <% if current_user.is_admin? %>
-  <h4><a href="/positions/<%= @position.id %>/edit">Edit Position Name</a> | <%= link_to "Delete Position", "/positions/#{@position.id}", method: :delete %></h4>
+  <h4><a href="/positions/<%= @position.id %>/edit">Edit Position Name</a></h4>
 
 <% end %>
 <hr>
-
 <% @employees.each do |employee| %>
-  <div class="employee" style="line-height: 12px">
-    <h4><%= employee.company.name %></h4>
-    <h2><a href="/employees/<%= employee.id %>">Name: <%= "#{employee.first_name} #{employee.last_name}" %></a></h2>
-    <h2>Position: <%= employee.manager? %> <%= employee.position.position_name %></h2>
-    <h3>Email: <%= employee.email %></h3>
-    <h3>Phone: <%= employee.phone %></h3>
-    <h3>Address</h3>
-    <div class="address" style="line-height: 20px;">
-      <ul>
-        <li><%= "#{employee.address}, #{employee.address2}" %></li>
-        <li><%= "#{employee.city}, #{employee.state} #{employee.zip}" %></li>
-      </ul>
+  <div class='row employee-show'>
+    <div class="col-lg-2 col-md-6 col-xs-12 position-photo">
+      <% if employee.image_file_name %>
+        <div class='true'>
+          <%= image_tag employee.image.url(:thumb) %>
+        </div>
+      <% else %>
+        <img src="https://www.betafy.co/assets/img/default_user.png" alt="profile picture placeholder">
+      <% end %>
     </div>
-    manager <%= employee.is_manager? %>
-    admin <%= employee.is_admin? %>
+    <div class="col-lg-8 col-md-6 col-xs-12 employee-text-show">
+      <h3><strong><%= "#{employee.first_name.capitalize} #{employee.last_name.capitalize} - #{employee.position.position_name} #{employee.manager?}" %></strong></h3>
+      <h3>Email: <a href="mailto:<%= employee.email %>"><%= employee.email %></a></h3>
+      <h3>Phone: <%= employee.phone %></h3>
+      <br>
+      <% if current_user.is_admin? || current_user.id == employee.id %>
+        <div class="address">
+          <h6>Address:</h6>
+          <h6><%= "#{employee.address}, #{employee.address2}" %></h6>
+          <h6><%= "#{employee.city}, #{employee.state} #{employee.zip}" %></h6>
+          <% if current_user.id == employee.id %>
+            <%= link_to "Edit Info", "employees/#{employee.id}/edit" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
-  <hr>
-
+  <br>
 <% end %>
+
+<button class="btn-danger danger-zone" style="float:right;"><%= link_to "Delete Position", "/positions/#{@position.id}", method: :delete %></button>
