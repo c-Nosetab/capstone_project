@@ -1,5 +1,11 @@
-
 document.addEventListener('DOMContentLoaded', function(event) {
+
+
+  Vue.component('modal', {
+    template: '#modal-template'
+  })
+
+
 
 // MAIN CODE
   var cal = new Vue({
@@ -14,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 
             link: '',
+            test: 'wow!',
 
 
             nowYear: 0,
@@ -28,7 +35,20 @@ document.addEventListener('DOMContentLoaded', function(event) {
             monthWeeks: 0,
             lastOfMonth: 0,
 
+            startHours: '',
+            endHours: '',
+            minutes: '',
+            company: 0,
+
+
+
+
             count: 0,
+
+            popoverYear: new Date().getFullYear(),
+            popoverMonth: new Date().getMonth(),
+            popoverDay: new Date().getDate(),
+            $popover: '',
 
 
 
@@ -39,6 +59,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
     },
 
     mounted: function() {
+
+      this.company = parseInt($(location).attr('href').split('/').splice(4, 1))
+
       var date = new Date;
       this.currentMonth = date.getMonth();
       this.nowMonth = this.currentMonth;
@@ -58,14 +81,95 @@ document.addEventListener('DOMContentLoaded', function(event) {
       $.get('/api/v1/shifts.json', function(fullList) {
         // console.log(fullList.shifts);
         this.shifts = fullList;
-        this.filterTheShifts()
+        this.filterTheShifts();
+        this.getHoursAndMinutes();
       }.bind(this));
     },
 
     methods: {
 
-      goAway: function() {
-        this.showModal = false
+      sayHello: function(){
+        console.log($('meta[name="csrf_token"]'))
+      },
+
+      getHoursAndMinutes: function() {
+
+        var startHours = '';
+        var endHours = '';
+        var minutes = '';
+
+        for(var i = 1; i < 13; i++) {
+          if (i === 8) {
+            this.startHours += '<option selected>'+ i +'</option>'
+          } else {
+            this.startHours += '<option>'+ i +'</option>'
+          }
+        }
+
+        for(var i = 1; i < 13; i++) {
+          if (i === 4) {
+            this.endHours += '<option selected>'+ i +'</option>'
+          } else {
+            this.endHours += '<option>'+ i +'</option>'
+          }
+        }
+
+
+        for(var i = 0; i < 60; i+= 5) {
+          if (i < 10) {
+            this.minutes += '<option value="'+i+'">0' + i + '</option>'
+          } else {
+            this.minutes += '<option>'+ i +'</option>'
+          }
+        }
+
+        this.createPopover();
+      },
+
+      changeYear: function() {
+        this.popoverYear = 4;
+      },
+
+      createPopover: function() {
+        console.log(this.company)
+        var year = this.popoverYear
+        var month = this.popoverMonth
+        var day = this.popoverDay
+
+        var startHours = this.startHours;
+        var endHours = this.endHours;
+        var minutes = this.minutes;
+
+        this.$popover = $('.popover-thing').popover({
+            placement: 'top',
+            html: true,
+            content: function(){
+
+              return '<div class="popover-body"><div class="start-time">'+ day + '<select>'+ startHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option>PM</option></select> <br></div><p style="color: black;">to</p> <div class="end-time"><select>'+ endHours +'</select> : <select>'+ minutes +'</select><select><option>AM</option><option selected>PM</option></select></div><hr><div class="form-button"><button ' + sayHello + '">Submit</button></div></div>'
+            }
+
+        })
+      },
+
+      redrawPopover: function(year, month, day) {
+        var year = year;
+        var month = month;
+        var date = day;
+        var company = this.company;
+
+        var startHours = this.startHours;
+        var endHours = this.endHours;
+        var minutes = this.minutes;
+        $('.popover-thing').attr('data-content', function(){
+          var script = "<script>$('button').click(function(e){$.ajax({type:'POST',Accept: 'application/json', url:'/api/v1/shifts',data: {year_start: $('#popoverYear').val(),month_start: $('#popoverMonth').val(),day_start: $('#popoverDay').val(),hour_start: $('#popoverHourStart').val(),min_start: $('#popoverMinStart').val(),hour_end: $('#popoverHourEnd').val(),min_end: $('#popoverMinEnd').val(),company_id: $('#companyId').val()},success: function(result){ window.location.href ='/shifts/'+ result['id']}})})</script>"
+
+          return script + '<input id="companyId" type="hidden" name="company_id" value="'+ company +'"><input id="popoverYear"type="hidden" name="year_start" value="'+ year +'"><input type="hidden" id="popoverMonth" name="month_start" value="'+ (month + 1) +'"><input type="hidden" id="popoverDay" name="day_start" value="'+ day +'"><div class="popover-body"><div class="start-time"><select id="popoverHourStart" name="hour_start">'+ startHours +'</select> : <select id="popoverMinStart" name="min_start">'+ minutes +'</select><br></div><p style="color: black;">to</p> <div class="end-time"><select id="popoverHourEnd" name="hour_end">'+ endHours +'</select> : <select id="popoverMinEnd" name="min_end">'+ minutes +'</select></div><hr><div class="form-button"><button>Submit</button></div></div>'
+
+          // <select name="startAmPm"><option>AM</option><option>PM</option></select>
+          // <select name="endAmPm"><option>AM</option><option selected>PM</option></select>
+
+        })
+
       },
 
       test: function(year, month, day) {

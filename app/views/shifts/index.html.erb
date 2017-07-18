@@ -25,7 +25,11 @@
       <div>
         <td :class="findClass(new Date(currentYear, currentMonth, n))" v-for="n in (7-firstOfMonth)">
           <div class="cal-container">
-            <p v-on:click="test(currentYear, currentMonth, n)">{{n}}</p>
+            <p v-on:dblclick="" data-toggle="popover" data-placement="top" data-container="body" title="Hooray!" html="
+            <div>hello</div>
+
+            ">{{n}}</p>
+
               <ul>
                 <li v-for="shift in filteredShifts" v-if="shift.day === n"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
               </ul>
@@ -37,8 +41,15 @@
 
   <tr v-for="n1 in monthWeeks">
     <td :class="findClass(new Date(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1)))))" v-for='n2 in 7' v-if="(count + (n2-1) + (7 * (n1 - 1))) <= lastOfMonth">
-        <div class="cal-container" >
-          <p v-on:click="test(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))">{{(count + (n2-1) + (7 * (n1 - 1)))}}</p>
+        <div
+          class="cal-container popover-thing"
+          v-on:click="redrawPopover(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))"
+          trigger="focus"
+          data-toggle="popover"
+          :title="'Add Shift for ' + (currentMonth+1) + '-' + (count + (n2-1) + (7 * (n1 - 1))) + '-' + currentYear "
+        >
+          <!-- <p v-on:click="test(currentYear, currentMonth, (count + (n2-1) + (7 * (n1 - 1))))"> -->
+          <p> {{(count + (n2-1) + (7 * (n1 - 1)))}}</p>
           <ul>
             <li v-for="shift in filteredShifts" v-if="shift.day === (count + (n2-1) + (7 * (n1 - 1)))"><a :href="'/shifts/' + shift.id">{{shift.time}}</a></li>
           </ul>
@@ -47,9 +58,7 @@
     </tr>
   </table>
 
-  <!-- MODAL STUFF -->
+  <!-- Popover STUFF -->
 
 
-</div>
-
-
+ </div>

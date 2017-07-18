@@ -2,9 +2,6 @@
   "name": "employee-scheduler-app",
   "private": true,
   "dependencies": {
-    "fullcalendar": "^3.4.0",
-    "vue-full-calendar": "^2.0.2",
-    "vue-js-modal": "^1.2.4",
-    "vue-popperjs": "^1.1.2"
+    "vue-strap": "^1.1.37"
   }
 }

@@ -1,8 +1,9 @@
 class ShiftsController < ApplicationController
-  before_action :authenticate_admin!
+  # before_action :authenticate_admin!
 
 
   def index
+
     @shifts = Shift.where(company_id: current_user.company_id).order('date')
     @time = Time.now
     @skip_cells = Date.today.at_beginning_of_month.strftime('%w').to_i
@@ -19,9 +20,7 @@ class ShiftsController < ApplicationController
   end
 
   def create
-
     date = Time.utc(params[:year_start], params[:month_start], params[:day_start], params[:hour_start], params[:min_start])
-
     shift = Shift.new(
                       day_of_week: date.strftime('%A').downcase,
                       time_start: date,
@@ -31,26 +30,22 @@ class ShiftsController < ApplicationController
                       date: date,
                       company_id: current_user.company_id
                       )
-
     if shift.save
       flash[:success] = "Shift Successfully Created"
       redirect_to "/shifts/#{shift.id}"
     else
       flash[:warning] = "Something went wrong. Try again - shift error"
-      render '/shifts/new'
+      render "/company/#{current_user.company_id}/shifts"
     end
-
   end
 
   def show
     @shift = Shift.find(params[:id])
-
   end
 
   def edit
     @shift = Shift.find(params[:id])
     @positions = Position.where(company_id: current_user.company_id)
-
   end
 
   def update
@@ -86,7 +81,7 @@ class ShiftsController < ApplicationController
       positions.each {|pos| pos.delete}
       employees.each {|emp| emp.delete}
       flash[:success] = "Shift successfully deleted."
-      redirect_to '/shifts'
+      redirect_to "/company/#{current_user.company_id}/shifts"
     else
       flash[:warning] = "Something went wrong. Please try again."
       redirect_to "/shifts/#{shift.id}"

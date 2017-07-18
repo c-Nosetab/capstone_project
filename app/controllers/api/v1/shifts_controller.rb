@@ -2,7 +2,19 @@ class Api::V1::ShiftsController < ApplicationController
 
   def index
     @shifts = Shift.where(company_id: current_user.company_id).order(:date)
-    # @shifts = shifts.select{|shift| shift.date > (Time.now - 2.months) && shift.date < (Time.now + 2.months)}
+  end
+
+  def create
+    # {"year_start"=>"2017", "month_start"=>"6", "day_start"=>"21", "hour_start"=>"8", "min_start"=>"0", "hour_end"=>"4", "min_end"=>"0", "company_id"=>"1"}
+    date = Time.utc(params[:year_start], (params[:month_start]), params[:day_start], params[:hour_start], params[:min_start])
+    @shift = Shift.create!(
+                      day_of_week: date.strftime('%A').downcase,
+                      time_start: date,
+                      time_end: Time.utc(params[:year_start], params[:month_start], params[:day_start], params[:hour_end], params[:min_end]),
+                      date: date,
+                      company_id: params[:company_id]
+                      )
+    render :show
   end
 
   def show
@@ -19,5 +31,6 @@ class Api::V1::ShiftsController < ApplicationController
         end
       end
     end
+
 
 end
