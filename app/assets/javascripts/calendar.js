@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         var endHours = '';
         var minutes = '';
 
-        for(var i = 1; i < 13; i++) {
+        for(var i = 1; i < 23; i++) {
           if (i === 8) {
             this.startHours += '<option selected>'+ i +'</option>'
           } else {
@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
           }
         }
 
-        for(var i = 1; i < 13; i++) {
-          if (i === 4) {
+        for(var i = 1; i < 23; i++) {
+          if (i === 16) {
             this.endHours += '<option selected>'+ i +'</option>'
           } else {
             this.endHours += '<option>'+ i +'</option>'
