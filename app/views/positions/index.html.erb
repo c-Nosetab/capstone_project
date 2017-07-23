@@ -1,8 +1,8 @@
 
 <h1>Positions: </h1>
-
 <% @positions.each do |position| %>
   <h2> <a href="/positions/<%= position.id %>"><%=  position.position_name%></a> - <%= Employee.where(position_id: position.id).count %> currently employed.</h2>
 
 <% end %>
-
+<br>
+<h5><a class="btn-primary" href="/shifts/new">Add New Position</a></h5>

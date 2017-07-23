@@ -339,7 +339,7 @@ section:nth-of-type(even) {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #3498db;
+  color: white;
 }
 .btn-primary.btn-filled {
   background: #0375c1;
